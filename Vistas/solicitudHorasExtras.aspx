@@ -264,6 +264,8 @@
                     <asp:TextBox ID="motivo" TextMode="MultiLine" runat="server" placeholder="Ingresa el motivo de la solicitud de horas extra."></asp:TextBox>
                     <br />
                     <asp:Button ID="submit" runat="server" Text="Enviar" OnClick="submit_Click"/>
+                    <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
+
                 </div>
             </section>
             <section class="seccion-imagen">
