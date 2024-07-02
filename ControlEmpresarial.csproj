@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Estilos\app.css" />
+    <Content Include="Imagenes\jefe.png" />
     <Content Include="Vistas\login.aspx" />
     <Content Include="Vistas\registro.aspx" />
     <Content Include="Vistas\solicitudHorasExtras.aspx" />
@@ -98,7 +99,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Imagenes\jefe.webp" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
