@@ -169,3 +169,29 @@ button {
         max-width: 100%;
         height: 580px;
     }
+
+.footer {
+    background-color: #2B3238;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: flex-start;
+}
+
+    .footer__container_copyright div {
+        flex: 1;
+        text-align: left;
+        margin-right: 20px;
+    }
+.footer h3 {
+    margin-bottom: 10px; 
+}
+.footer p {
+    margin-bottom: 10px; /* Espacio bajo cada párrafo */
+    line-height: 1.6; /* Altura de línea para mayor espaciado entre líneas */
+    overflow-wrap: break-word; /* Rompe palabras largas si no caben en una línea */
+    max-width: 600px; /* Ancho máximo del párrafo para controlar la longitud de línea */
+    text-align: justify; /* Justificar el texto */
+    text-justify: inter-word; /* Justificación de palabras para mejorar la legibilidad */
+}

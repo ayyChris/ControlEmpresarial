@@ -11,18 +11,16 @@
     <link href="../Estilos/app.css" rel="stylesheet">
     <style>
     .divisor-forma-personalizado {
-        position: absolute;
-        bottom: 0;
-        left: 0;
+        position: relative; /* Cambiar a relative para mantener su posición */
         width: 100%;
         overflow: hidden;
         line-height: 0;
         transform: rotate(180deg);
         z-index: 1;
+        margin-top: -300px;
      }
 
     .divisor-forma-personalizado svg {
-        position: relative;
         display: block;
         width: calc(100% + 1.3px);
         height: 405px;
@@ -110,5 +108,25 @@
             </svg>
         </div>
     </form>
+    <footer class="footer">
+        <div>
+            <h3>About</h3>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when 
+                an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into 
+                electronic typesetting, remaining essentially unchanged.</p>
+        </div>
+        <div>
+            <h3>Tags</h3>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when 
+    an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into 
+    electronic typesetting, remaining essentially unchanged.</p>
+        </div>
+        <div>
+            <h3>Recent Comments</h3>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when 
+    an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into 
+    electronic typesetting, remaining essentially unchanged.</p>
+        </div>
+    </footer>
 </body>
 </html>
