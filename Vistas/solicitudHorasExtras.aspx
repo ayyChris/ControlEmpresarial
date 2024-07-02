@@ -11,7 +11,7 @@
     <link href="../Estilos/app.css" rel="stylesheet">
     <style>
     .divisor-forma-personalizado {
-        position: relative; /* Cambiar a relative para mantener su posición */
+        position: relative; /* Cambiar a relative para mantener su posición, no mover*/
         width: 100%;
         overflow: hidden;
         line-height: 0;
