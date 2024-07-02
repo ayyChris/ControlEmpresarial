@@ -229,7 +229,7 @@
             </nav>
             <div class="cabecera-derecha">
                 <button class="boton-notificacion">
-                    <img src="icons8-bell.gif" alt="Notificación">
+                    <img src="../Imagenes/notifacion.png" alt="Notificación">
                 </button>
             </div>
         </header>
@@ -269,7 +269,7 @@
                 </div>
             </section>
             <section class="seccion-imagen">
-                <img src="../Imagenes/jefe.webp" alt="Ilustración de una persona trabajando horas extra">
+                <img src="../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra">
             </section>
         </main>
         <div class="divisor-forma-personalizado">
