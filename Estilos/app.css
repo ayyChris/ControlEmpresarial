@@ -39,19 +39,19 @@ nav ul {
     list-style: none;
 }
 
-    nav ul li {
-        margin-right: 20px;
-    }
+nav ul li {
+    margin-right: 20px;
+}
 
-        nav ul li a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-        }
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
 
-            nav ul li a:hover {
-                color: #7033ff;
-            }
+nav ul li a:hover {
+    color: #7033ff;
+}
 
 .cabecera-derecha .boton-notificacion {
     background: none;
@@ -82,10 +82,10 @@ main {
     position: relative;
 }
 
-    .tarjeta-formulario h2 {
-        font-size: 42px;
-        color: #000000;
-    }
+.tarjeta-formulario h2 {
+    font-size: 42px;
+    color: #000000;
+}
 
 .fuente-delgada {
     font-weight: 100;
@@ -140,13 +140,13 @@ input, select, textarea {
     justify-content: space-between;
 }
 
-    .entradas-horario div {
-        flex: 1;
-    }
+.entradas-horario div {
+    flex: 1;
+}
 
-        .entradas-horario div:first-child {
-            margin-right: 10px;
-        }
+.entradas-horario div:first-child {
+    margin-right: 10px;
+}
 
 .button {
     border-radius: 5px;
@@ -183,10 +183,10 @@ input, select, textarea {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-    .button-blanco:hover {
-        background-color: #cecdcd;
-        color: #3c31dd;
-    }
+.button-blanco:hover {
+    background-color: #cecdcd;
+    color: #3c31dd;
+}
 
 .seccion-imagen {
     flex: 1;
@@ -197,11 +197,11 @@ input, select, textarea {
     z-index: 2;
 }
 
-    .seccion-imagen img {
-        position: relative;
-        max-width: 100%;
-        height: 580px;
-    }
+.seccion-imagen img {
+    position: relative;
+    max-width: 100%;
+    height: 580px;
+}
 
 .seccion-imagen-izquierda {
     flex: 1;
@@ -212,11 +212,11 @@ input, select, textarea {
     z-index: 2;
 }
 
-    .seccion-imagen img-izquierda {
-        max-width: 100%;
-        height: 580px;
-        position:relative;
-    }
+.seccion-imagen img-izquierda {
+    max-width: 100%;
+    height: 580px;
+    position:relative;
+}
 
 .footer {
     background-color: #2B3238;
@@ -259,19 +259,19 @@ input, select, textarea {
     margin-bottom: 20px;
 }
 
-    .calendar-header button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 20px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
+.calendar-header button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-    .calendar-header h3 {
-        margin: 0;
-        font-size: 24px;
-    }
+.calendar-header h3 {
+    margin: 0;
+    font-size: 24px;
+}
 
 .calendar {
     display: grid;
@@ -282,37 +282,37 @@ input, select, textarea {
     margin: 0 auto;
 }
 
-    .calendar div {
-        border: 1px solid #ccc;
-        padding: 20px;
-        box-sizing: border-box;
-        text-align: center;
-    }
+.calendar div {
+    border: 1px solid #ccc;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
 
-    .calendar .header {
-        background-color: #e9e9e9;
-        font-weight: bold;
-        padding: 15px 0;
-    }
+.calendar .header {
+    background-color: #e9e9e9;
+    font-weight: bold;
+    padding: 15px 0;
+}
 
-    .calendar .day {
-        background-color: #ffffff;
-        transition: background-color 0.3s;
-    }
+.calendar .day {
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+}
 
-    .calendar .free-day {
-        background-color: #007bff;
-        color: white;
-        transition: background-color 0.3s;
-    }
+.calendar .free-day {
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
 
-    .calendar .day:hover {
-        background-color: #f0f8ff;
-    }
+.calendar .day:hover {
+    background-color: #f0f8ff;
+}
 
-    .calendar .free-day:hover {
-        background-color: #0056b3;
-    }
+.calendar .free-day:hover {
+    background-color: #0056b3;
+}
 
 .calendar-footer {
     display: flex;
@@ -321,9 +321,37 @@ input, select, textarea {
     margin-top: 20px;
 }
 
-    .calendar-footer span {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 5px;
-    }
+.calendar-footer span {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.marcas-contenedor {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 5rem;
+    border-radius: 8px;
+    margin: 0 auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.clock-icon {
+    width: 400px;
+    height: 400px;
+}
+
+.info {
+    font-size: 1.5em;
+    padding: 0 0 0 300px; /* top, right, bottom, left */
+}
+
+.info h2 {
+    color: #7033ff;
+}
+
+.info p {
+    margin-top: 10px; /* Añadir espacio entre párrafos */
+}

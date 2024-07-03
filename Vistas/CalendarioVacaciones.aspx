@@ -41,8 +41,8 @@
     <form id="form1" runat="server">
          <header>
      <div class="cabecera-izquierda">
-         <h1>Jefatura</h1>
-         <p>Esteban Mata</p>
+         <h1>Colaborador</h1>
+         <p>Christian Barquero</p>
      </div>
      <nav>
         <ul>

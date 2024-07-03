@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitud de Horas Extra</title>
+    <title>Solicitar Vacaciones</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link href="../Estilos/app.css" type="text/css" rel="stylesheet">
     <style>
@@ -52,7 +52,7 @@
                     <li><a class="activo" href="#">Vacaciones</a></li>
                     <li><a href="#">Actividades</a></li>
                     <li><a href="#">Solicitudes</a></li>
-                    <li><a href="#">Marcas</a></li>
+                    <li><a href="./marcas.aspx">Marcas</a></li>
                 </ul>
             </nav>
             <div class="cabecera-derecha">

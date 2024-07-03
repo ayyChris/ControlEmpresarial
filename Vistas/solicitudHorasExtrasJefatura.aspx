@@ -54,7 +54,7 @@
                         <a class="activo" href="#">Horas Extra</a>
                     </li>
                     <li><a href="#">Solicitudes</a></li>
-                    <li><a href="#">Marcas</a></li>
+                    <li><a href="./marcas.aspx">Marcas</a></li>
                 </ul>
             </nav>
             <div class="cabecera-derecha">

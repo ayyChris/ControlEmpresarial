@@ -36,37 +36,6 @@
                 height: 500px;
             }
         }
-
-        .container {
-            display: flex;
-            align-items: center;
-            background-color: white;
-            padding: 5rem;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .clock-icon {
-            width: 400px;
-            height: 400px;
-        }
-
-        .info {
-            font-size: 1.5em;
-            padding: 0 0 0 300px; /* top, right, bottom, left */
-        }
-
-        .info h2 {
-            color: #7033ff;
-        }
-
-        .info p {
-            margin-top: 10px; /* Añadir espacio entre párrafos */
-        }
-
-        .button {
-            margin-top: 20px; /* Añadir espacio superior a los botones */
-        }
     </style>
     <script type="text/javascript">
         function updateClock() {
@@ -96,7 +65,7 @@
                 <ul>
                     <li><a href="#">Permisos</a></li>
                     <li><a href="#">Inconsistencias</a></li>
-                    <li><a href="#">Vacaciones</a></li>
+                    <li><a href="./solicitarVacacionColaborador.aspx">Vacaciones</a></li>
                     <li><a href="#">Actividades</a></li>
                     <li><a href="#">Solicitudes</a></li>
                     <li><a class="activo" href="#">Marcas</a></li>
@@ -109,7 +78,7 @@
             </div>
         </header>
         <main>
-            <div class="container">
+            <div class="marcas-contenedor">
                 <img src="../Imagenes/reloj.png" alt="Clock Icon" class="clock-icon" />
                 <div class="info">
                     <h2 id="clock">Hora</h2>
