@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="solicitudHorasExtras.aspx.cs" Inherits="ControlEmpresarial.Vistas.solicitudHorasExtras" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SolicitudVacacionesJefatura.aspx.cs" Inherits="ControlEmpresarial.Vistas.SolicitudVacacionesJefatura" %>
 
 <!DOCTYPE html>
 
@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitud de Horas Extra</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link href="../Estilos/app.css" rel="stylesheet">
+    <link href="../Estilos/app.css" type="text/css" rel="stylesheet">
     <style>
     .divisor-forma-personalizado {
         position: relative; /* Cambiar a relative para mantener su posición, no mover*/
@@ -50,11 +50,12 @@
                     <li><a href="#">Colaborador</a></li>
                     <li><a href="#">Asignar Actividades</a></li>
                     <li><a href="#">Reposición</a></li>
-                    <li class="dropdown">
-                        <a class="activo" href="#">Horas Extra</a>
-                    </li>
+                    <li><a href="#">Horas Extras</a></li>
                     <li><a href="#">Solicitudes</a></li>
                     <li><a href="#">Marcas</a></li>
+                    <li class="dropdown">
+                    <a class="activo" href="#">Vacaciones</a>
+                    </li>
                 </ul>
             </nav>
             <div class="cabecera-derecha">
@@ -64,43 +65,27 @@
             </div>
         </header>
         <main>
-            <section class="seccion-formulario">
-                <div class="tarjeta-formulario">
-                    <h2><span class="fuente-delgada">Solicitud de</span><br><span class="fuente-gruesa">Horas Extra</span></h2>
-                    <p>Haz tu solicitud para horas extra al colaborador.</p>
-                    <label class="fuente-morada" for="colaboradorACargo">Colaborador a cargo</label>
-                    <asp:DropDownList ID="colaborador" runat="server">
-                        <asp:ListItem Text="Seleccione" Value="" />
-                    </asp:DropDownList>
-                    <br />
-
-                    <label class="fuente-morada" for="dia">Día</label>
-                    <asp:TextBox ID="dia" runat="server" placeholder="Ej. 30/06/2024"></asp:TextBox>
-                    <br />
-
-                    <div class="entradas-horario">
-                        <div>
-                            <label class="fuente-morada" for="hora-inicio">Hora inicio</label>
-                            <asp:TextBox ID="horaInicio" runat="server"></asp:TextBox>
-                        </div>
-                        <div>
-                            <label class="fuente-morada" for="hora-final">Hora final</label>
-                            <asp:TextBox ID="horaFinal" runat="server"></asp:TextBox>
-                        </div>
-                    </div>
-                    <br />
-
-                    <label class="fuente-morada" for="motivo">Motivo</label>
-                    <asp:TextBox ID="motivo" TextMode="MultiLine" runat="server" placeholder="Ingresa el motivo de la solicitud de horas extra."></asp:TextBox>
-                    <br />
-                    <asp:Button ID="submit" runat="server" Text="Enviar" OnClick="submit_Click"/>
-                    <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
-
-                </div>
-            </section>
-            <section class="seccion-imagen">
-                <img src="../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra">
-            </section>
+             <section class="seccion-imagen">
+        <img src="../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra">
+    </section>
+        <section class="seccion-formulario">
+            <div class="tarjeta-formulario">
+                <h2><span class="fuente-gruesa">Solicitud</span><br><span class="fuente-delgada">Empleado</span></h2>
+                <p>Vacaciones.</p>
+                <br />
+                <br />
+                <h2><span class="fuente-delgada">10 dias</span></h2>
+                <br>
+                <h2><span class="fuente-delgada">20/06/24 - 30/06/24</span></h2>
+                <br>
+                <br />
+                <br />
+                <asp:Button ID="submit" runat="server" Text="Aceptar" CssClass="button" OnClick="submit_Click"/>
+                <br>
+                <br />
+                <asp:Button ID="buttonDenegar" runat="server" Text="Denegar" CssClass="button-blanco" OnClick="buttonDenegar_Click"/>    
+            </div>
+        </section>
         </main>
             <div class="divisor-forma-personalizado">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -130,3 +115,4 @@
     </footer>
 </body>
 </html>
+
