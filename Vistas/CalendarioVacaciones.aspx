@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CalendarioVacaciones.aspx.cs" Inherits="ControlEmpresarial.Vistas.CalendarioVacaciones" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="calendarioVacaciones.aspx.cs" Inherits="ControlEmpresarial.Vistas.CalendarioVacaciones" %>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -45,17 +45,14 @@
          <p>Esteban Mata</p>
      </div>
      <nav>
-         <ul>
-             <li><a href="#">Colaborador</a></li>
-             <li><a href="#">Asignar Actividades</a></li>
-             <li><a href="#">Reposición</a></li>
-             <li><a href="#">Horas Extras</a></li>
-             <li><a href="#">Solicitudes</a></li>
-             <li><a href="#">Marcas</a></li>
-             <li class="dropdown">
-             <a class="activo" href="#">Vacaciones</a>
-             </li>
-         </ul>
+        <ul>
+            <li><a href="#">Permisos</a></li>
+            <li><a href="#">Inconsistencias</a></li>
+            <li><a class="activo" href="#">Vacaciones</a></li>
+            <li><a href="#">Actividades</a></li>
+            <li><a href="#">Solicitudes</a></li>
+            <li><a href="#">Marcas</a></li>
+        </ul>
      </nav>
      <div class="cabecera-derecha">
          <button class="boton-notificacion">

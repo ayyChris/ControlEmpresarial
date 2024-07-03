@@ -11,7 +11,7 @@ namespace ControlEmpresarial.Vistas
 {
 
 
-    public partial class SolicitudVacacionesJefatura
+    public partial class marcas
     {
 
         /// <summary>
@@ -24,21 +24,30 @@ namespace ControlEmpresarial.Vistas
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// submit control.
+        /// dayOfWeek control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button submit;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dayOfWeek;
 
         /// <summary>
-        /// buttonDenegar control.
+        /// btnEntrada control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonDenegar;
+        protected global::System.Web.UI.WebControls.Button btnEntrada;
+
+        /// <summary>
+        /// btnSalida control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSalida;
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="solicitudHorasExtras.aspx.cs" Inherits="ControlEmpresarial.Vistas.solicitudHorasExtras" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="solicitudHorasExtrasJefatura.aspx.cs" Inherits="ControlEmpresarial.Vistas.solicitudHorasExtras" %>
 
 <!DOCTYPE html>
 

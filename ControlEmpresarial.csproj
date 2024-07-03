@@ -88,23 +88,25 @@
     <Content Include="Estilos\app.css" />
     <Content Include="Imagenes\jefe.png" />
     <Content Include="Imagenes\notificacion.gif" />
-    <Content Include="Vistas\CalendarioVacaciones.aspx" />
+    <Content Include="Imagenes\reloj.png" />
+    <Content Include="Vistas\calendarioVacaciones.aspx" />
     <Content Include="Vistas\login.aspx" />
+    <Content Include="Vistas\marcas.aspx" />
     <Content Include="Vistas\registro.aspx" />
-    <Content Include="Vistas\SolicitarVacacion.aspx" />
-    <Content Include="Vistas\solicitudHorasExtras.aspx" />
-    <Content Include="Vistas\SolicitudVacacionesJefatura.aspx" />
-    <Content Include="Vistas\VacacionColectiva.aspx" />
+    <Content Include="Vistas\solicitarVacacionColaborador.aspx" />
+    <Content Include="Vistas\solicitudHorasExtrasJefatura.aspx" />
+    <Content Include="Vistas\solicitudVacacionesJefatura.aspx" />
+    <Content Include="Vistas\vacacionColectiva.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vistas\CalendarioVacaciones.aspx.cs">
-      <DependentUpon>CalendarioVacaciones.aspx</DependentUpon>
+    <Compile Include="Vistas\calendarioVacaciones.aspx.cs">
+      <DependentUpon>calendarioVacaciones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\CalendarioVacaciones.aspx.designer.cs">
-      <DependentUpon>CalendarioVacaciones.aspx</DependentUpon>
+    <Compile Include="Vistas\calendarioVacaciones.aspx.designer.cs">
+      <DependentUpon>calendarioVacaciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>
@@ -113,6 +115,13 @@
     <Compile Include="Vistas\login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\marcas.aspx.cs">
+      <DependentUpon>marcas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\marcas.aspx.designer.cs">
+      <DependentUpon>marcas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\registro.aspx.cs">
       <DependentUpon>registro.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -120,33 +129,33 @@
     <Compile Include="Vistas\registro.aspx.designer.cs">
       <DependentUpon>registro.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\SolicitarVacacion.aspx.cs">
-      <DependentUpon>SolicitarVacacion.aspx</DependentUpon>
+    <Compile Include="Vistas\solicitarVacacionColaborador.aspx.cs">
+      <DependentUpon>solicitarVacacionColaborador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\SolicitarVacacion.aspx.designer.cs">
-      <DependentUpon>SolicitarVacacion.aspx</DependentUpon>
+    <Compile Include="Vistas\solicitarVacacionColaborador.aspx.designer.cs">
+      <DependentUpon>solicitarVacacionColaborador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\solicitudHorasExtras.aspx.cs">
-      <DependentUpon>solicitudHorasExtras.aspx</DependentUpon>
+    <Compile Include="Vistas\solicitudHorasExtrasJefatura.aspx.cs">
+      <DependentUpon>solicitudHorasExtrasJefatura.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\solicitudHorasExtras.aspx.designer.cs">
-      <DependentUpon>solicitudHorasExtras.aspx</DependentUpon>
+    <Compile Include="Vistas\solicitudHorasExtrasJefatura.aspx.designer.cs">
+      <DependentUpon>solicitudHorasExtrasJefatura.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\SolicitudVacacionesJefatura.aspx.cs">
-      <DependentUpon>SolicitudVacacionesJefatura.aspx</DependentUpon>
+    <Compile Include="Vistas\solicitudVacacionesJefatura.aspx.cs">
+      <DependentUpon>solicitudVacacionesJefatura.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\SolicitudVacacionesJefatura.aspx.designer.cs">
-      <DependentUpon>SolicitudVacacionesJefatura.aspx</DependentUpon>
+    <Compile Include="Vistas\solicitudVacacionesJefatura.aspx.designer.cs">
+      <DependentUpon>solicitudVacacionesJefatura.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\VacacionColectiva.aspx.cs">
-      <DependentUpon>VacacionColectiva.aspx</DependentUpon>
+    <Compile Include="Vistas\vacacionColectiva.aspx.cs">
+      <DependentUpon>vacacionColectiva.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\VacacionColectiva.aspx.designer.cs">
-      <DependentUpon>VacacionColectiva.aspx</DependentUpon>
+    <Compile Include="Vistas\vacacionColectiva.aspx.designer.cs">
+      <DependentUpon>vacacionColectiva.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

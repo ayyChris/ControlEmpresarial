@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SolicitarVacacion.aspx.cs" Inherits="ControlEmpresarial.Vistas.SolicitarVacacion" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="solicitarVacacionColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.SolicitarVacacion" %>
 
 <!DOCTYPE html>
 
@@ -42,20 +42,17 @@
     <form id="form1" runat="server">
         <header>
             <div class="cabecera-izquierda">
-                <h1>Jefatura</h1>
-                <p>Esteban Mata</p>
+                <h1>Colaborador</h1>
+                <p>Christian Barquero</p>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#">Colaborador</a></li>
-                    <li><a href="#">Asignar Actividades</a></li>
-                    <li><a href="#">Reposición</a></li>
-                    <li><a href="#">Horas Extras</a></li>
+                    <li><a href="#">Permisos</a></li>
+                    <li><a href="#">Inconsistencias</a></li>
+                    <li><a class="activo" href="#">Vacaciones</a></li>
+                    <li><a href="#">Actividades</a></li>
                     <li><a href="#">Solicitudes</a></li>
                     <li><a href="#">Marcas</a></li>
-                    <li class="dropdown">
-                    <a class="activo" href="#">Vacaciones</a>
-                    </li>
                 </ul>
             </nav>
             <div class="cabecera-derecha">

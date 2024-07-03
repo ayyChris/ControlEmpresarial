@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SolicitudVacacionesJefatura.aspx.cs" Inherits="ControlEmpresarial.Vistas.SolicitudVacacionesJefatura" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="solicitudVacacionesJefatura.aspx.cs" Inherits="ControlEmpresarial.Vistas.SolicitudVacacionesJefatura" %>
 
 <!DOCTYPE html>
 
@@ -51,11 +51,8 @@
                     <li><a href="#">Asignar Actividades</a></li>
                     <li><a href="#">Reposición</a></li>
                     <li><a href="#">Horas Extras</a></li>
-                    <li><a href="#">Solicitudes</a></li>
+                    <li><a class="activo" href="#">Solicitudes</a></li>
                     <li><a href="#">Marcas</a></li>
-                    <li class="dropdown">
-                    <a class="activo" href="#">Vacaciones</a>
-                    </li>
                 </ul>
             </nav>
             <div class="cabecera-derecha">

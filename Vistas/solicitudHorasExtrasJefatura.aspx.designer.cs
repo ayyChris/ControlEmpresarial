@@ -11,7 +11,7 @@ namespace ControlEmpresarial.Vistas
 {
 
 
-    public partial class VacacionColectiva
+    public partial class solicitudHorasExtras
     {
 
         /// <summary>
@@ -22,6 +22,24 @@ namespace ControlEmpresarial.Vistas
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// colaborador control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList colaborador;
+
+        /// <summary>
+        /// dia control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox dia;
 
         /// <summary>
         /// horaInicio control.

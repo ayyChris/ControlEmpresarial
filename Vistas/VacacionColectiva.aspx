@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VacacionColectiva.aspx.cs" Inherits="ControlEmpresarial.Vistas.VacacionColectiva" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="vacacionColectiva.aspx.cs" Inherits="ControlEmpresarial.Vistas.VacacionColectiva" %>
 
 <!DOCTYPE html>
 
@@ -53,9 +53,7 @@
                     <li><a href="#">Horas Extras</a></li>
                     <li><a href="#">Solicitudes</a></li>
                     <li><a href="#">Marcas</a></li>
-                    <li class="dropdown">
-                    <a class="activo" href="#">Vacaciones</a>
-                    </li>
+                    <li><a class="activo" href="#">Vacaciones</a></li>
                 </ul>
             </nav>
             <div class="cabecera-derecha">

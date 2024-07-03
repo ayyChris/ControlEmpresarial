@@ -11,7 +11,7 @@ namespace ControlEmpresarial.Vistas
 {
 
 
-    public partial class SolicitudVacacionesJefatura
+    public partial class SolicitarVacacion
     {
 
         /// <summary>
@@ -24,6 +24,33 @@ namespace ControlEmpresarial.Vistas
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// horaInicio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox horaInicio;
+
+        /// <summary>
+        /// horaFinal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox horaFinal;
+
+        /// <summary>
+        /// motivo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox motivo;
+
+        /// <summary>
         /// submit control.
         /// </summary>
         /// <remarks>
@@ -33,12 +60,12 @@ namespace ControlEmpresarial.Vistas
         protected global::System.Web.UI.WebControls.Button submit;
 
         /// <summary>
-        /// buttonDenegar control.
+        /// lblMensaje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button buttonDenegar;
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }
