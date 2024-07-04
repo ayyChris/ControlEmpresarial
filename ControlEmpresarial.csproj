@@ -90,6 +90,7 @@
     <Content Include="Imagenes\notificacion.gif" />
     <Content Include="Imagenes\reloj.png" />
     <Content Include="Vistas\calendarioVacaciones.aspx" />
+    <Content Include="Vistas\Incapacidades.aspx" />
     <Content Include="Vistas\login.aspx" />
     <Content Include="Vistas\marcas.aspx" />
     <Content Include="Vistas\registro.aspx" />
@@ -107,6 +108,13 @@
     </Compile>
     <Compile Include="Vistas\calendarioVacaciones.aspx.designer.cs">
       <DependentUpon>calendarioVacaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades.aspx.cs">
+      <DependentUpon>Incapacidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades.aspx.designer.cs">
+      <DependentUpon>Incapacidades.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\login.aspx.cs">
       <DependentUpon>login.aspx</DependentUpon>

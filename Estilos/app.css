@@ -135,6 +135,11 @@ input, select, textarea {
     width: 100%;
 }
 
+.Division-elementos {
+    display: flex;
+    justify-content: space-between;
+}
+
 .entradas-horario {
     display: flex;
     justify-content: space-between;
