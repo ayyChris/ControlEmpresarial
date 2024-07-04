@@ -161,6 +161,11 @@ input, select, textarea {
     justify-content: space-between;
 }
 
+.contenedor-elementos {
+    display:flex;
+    flex-direction: column;
+}
+
 .entradas-horario {
     display: flex;
     justify-content: space-between;

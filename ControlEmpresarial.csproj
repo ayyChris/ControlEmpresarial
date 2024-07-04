@@ -91,6 +91,7 @@
     <Content Include="Imagenes\notificacion.gif" />
     <Content Include="Imagenes\planta.png" />
     <Content Include="Imagenes\reloj.png" />
+    <Content Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx" />
     <Content Include="Vistas\Pagina Principal\contactenos.aspx" />
     <Content Include="Vistas\Pagina Principal\dobleFactor.aspx" />
     <Content Include="Vistas\Pagina Principal\inicio.aspx" />
@@ -113,6 +114,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx.cs">
+      <DependentUpon>ControlActividadesColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx.designer.cs">
+      <DependentUpon>ControlActividadesColaborador.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Pagina Principal\contactenos.aspx.cs">
       <DependentUpon>contactenos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
