@@ -90,6 +90,8 @@
     <Content Include="Imagenes\notificacion.gif" />
     <Content Include="Imagenes\reloj.png" />
     <Content Include="Vistas\calendarioVacaciones.aspx" />
+    <Content Include="Vistas\HistoricoActividades.aspx" />
+    <Content Include="Vistas\HistoricoHorasExtras.aspx" />
     <Content Include="Vistas\Incapacidades.aspx" />
     <Content Include="Vistas\login.aspx" />
     <Content Include="Vistas\marcas.aspx" />
@@ -98,6 +100,11 @@
     <Content Include="Vistas\solicitudHorasExtrasJefatura.aspx" />
     <Content Include="Vistas\solicitudVacacionesJefatura.aspx" />
     <Content Include="Vistas\vacacionColectiva.aspx" />
+    <Content Include="Vistas\VisualizacionEmpleados.aspx" />
+    <Content Include="Vistas\VisualizacionIncapacidad.aspx" />
+    <Content Include="Vistas\VisualizacionInconsistencias.aspx" />
+    <Content Include="Vistas\VisualizacionPermisos.aspx" />
+    <Content Include="Vistas\VisualizacionRebajos.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +115,20 @@
     </Compile>
     <Compile Include="Vistas\calendarioVacaciones.aspx.designer.cs">
       <DependentUpon>calendarioVacaciones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\HistoricoActividades.aspx.cs">
+      <DependentUpon>HistoricoActividades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\HistoricoActividades.aspx.designer.cs">
+      <DependentUpon>HistoricoActividades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\HistoricoHorasExtras.aspx.cs">
+      <DependentUpon>HistoricoHorasExtras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\HistoricoHorasExtras.aspx.designer.cs">
+      <DependentUpon>HistoricoHorasExtras.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Incapacidades.aspx.cs">
       <DependentUpon>Incapacidades.aspx</DependentUpon>
@@ -164,6 +185,41 @@
     </Compile>
     <Compile Include="Vistas\vacacionColectiva.aspx.designer.cs">
       <DependentUpon>vacacionColectiva.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionEmpleados.aspx.cs">
+      <DependentUpon>VisualizacionEmpleados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionEmpleados.aspx.designer.cs">
+      <DependentUpon>VisualizacionEmpleados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionIncapacidad.aspx.cs">
+      <DependentUpon>VisualizacionIncapacidad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionIncapacidad.aspx.designer.cs">
+      <DependentUpon>VisualizacionIncapacidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionInconsistencias.aspx.cs">
+      <DependentUpon>VisualizacionInconsistencias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionInconsistencias.aspx.designer.cs">
+      <DependentUpon>VisualizacionInconsistencias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionPermisos.aspx.cs">
+      <DependentUpon>VisualizacionPermisos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionPermisos.aspx.designer.cs">
+      <DependentUpon>VisualizacionPermisos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionRebajos.aspx.cs">
+      <DependentUpon>VisualizacionRebajos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\VisualizacionRebajos.aspx.designer.cs">
+      <DependentUpon>VisualizacionRebajos.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
