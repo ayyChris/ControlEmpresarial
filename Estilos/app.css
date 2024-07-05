@@ -386,3 +386,30 @@ input, select, textarea {
 .info p {
     margin-top: 10px; /* Añadir espacio entre párrafos */
 }
+
+.inicioSesion {
+    border: none;
+    border-bottom: 3px solid;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    outline: none;
+}
+
+    .inicioSesion:focus {
+        border-bottom-color: #5E58F8;
+    }
+
+.boton-logo {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .boton-logo img {
+        width: 130px;
+        height: 70px;
+    }

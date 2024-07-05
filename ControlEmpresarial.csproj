@@ -86,6 +86,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Estilos\app.css" />
+    <Content Include="Imagenes\colaborador.png" />
+    <Content Include="Imagenes\contactenos-imagen.png" />
     <Content Include="Imagenes\icono-actividades.png" />
     <Content Include="Imagenes\icono-escritura.png" />
     <Content Include="Imagenes\icono-horasExtras.png" />
