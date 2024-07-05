@@ -86,6 +86,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Estilos\app.css" />
+    <Content Include="Imagenes\icono-actividades.png" />
+    <Content Include="Imagenes\icono-escritura.png" />
+    <Content Include="Imagenes\icono-horasExtras.png" />
+    <Content Include="Imagenes\icono-inconsistencias.png" />
+    <Content Include="Imagenes\icono-marcas.png" />
+    <Content Include="Imagenes\icono-permisos.png" />
+    <Content Include="Imagenes\icono-reposiciones.png" />
+    <Content Include="Imagenes\icono-tiempo.png" />
+    <Content Include="Imagenes\icono-vacaciones.png" />
     <Content Include="Imagenes\jefe.png" />
     <Content Include="Imagenes\logo.png" />
     <Content Include="Imagenes\notificacion.gif" />
@@ -96,6 +105,9 @@
     <Content Include="Vistas\Pagina Principal\contactenos.aspx" />
     <Content Include="Vistas\Pagina Principal\dobleFactor.aspx" />
     <Content Include="Vistas\Pagina Principal\inicio.aspx" />
+    <Content Include="Vistas\Pagina Principal\MenuColaborador.aspx" />
+    <Content Include="Vistas\Pagina Principal\MenuJefatura.aspx" />
+    <Content Include="Vistas\Pagina Principal\MenuSupervisor.aspx" />
     <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesJefatura.aspx" />
@@ -143,6 +155,27 @@
     </Compile>
     <Compile Include="Vistas\Pagina Principal\inicio.aspx.designer.cs">
       <DependentUpon>inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Pagina Principal\MenuColaborador.aspx.cs">
+      <DependentUpon>MenuColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Pagina Principal\MenuColaborador.aspx.designer.cs">
+      <DependentUpon>MenuColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Pagina Principal\MenuJefatura.aspx.cs">
+      <DependentUpon>MenuJefatura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Pagina Principal\MenuJefatura.aspx.designer.cs">
+      <DependentUpon>MenuJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Pagina Principal\MenuSupervisor.aspx.cs">
+      <DependentUpon>MenuSupervisor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Pagina Principal\MenuSupervisor.aspx.designer.cs">
+      <DependentUpon>MenuSupervisor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Permisos\PermisosColaborador.aspx.cs">
       <DependentUpon>PermisosColaborador.aspx</DependentUpon>
