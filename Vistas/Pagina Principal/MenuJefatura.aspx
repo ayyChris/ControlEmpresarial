@@ -6,31 +6,7 @@
 <head runat="server">
     <title>ActivitySync</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
-    <link href="~/Estilos/app.css" type="text/css" rel="stylesheet"/>
-    <style>
-        .container-menu {
-            background-color: #5E58F8;
-            color: white;
-            text-align: center;
-            padding: 50px;
-        }
-        .header-menu {
-            margin-bottom: 50px;
-        }
-        .options-menu {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-        }
-        .option-menu {
-            width: 30%;
-            margin: 10px 0;
-        }
-        .option img {
-            width: 50px;
-            height: 50px;
-        }
-    </style>
+    <link href="../../Estilos/app.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -107,26 +83,36 @@
                 
             </div>
         </div>
-        <footer class="footer">
-            <div>
-                <h3>About</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when 
-                    an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into 
-                    electronic typesetting, remaining essentially unchanged.</p>
-            </div>
-            <div>
-                <h3>Tags</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when 
-                    an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into 
-                    electronic typesetting, remaining essentially unchanged.</p>
-            </div>
-            <div>
-                <h3>Recent Comments</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when 
-                    an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into 
-                    electronic typesetting, remaining essentially unchanged.</p>
-            </div>
-        </footer>
+     <footer class="footer">
+    <div>
+        <h3>About</h3>
+        <p>"ActivitySync proporciona una solución integral para la gestión eficiente de actividades dentro de tu empresa. Desde la 
+            marcación de inconsistencias hasta el registro de entradas y salidas de empleados, así como el seguimiento detallado de 
+            sus actividades diarias, nuestro software está diseñado para optimizar la productividad y mejorar la organización empresarial."</p>
+    </div>
+    <div>
+        <h3>Tags</h3>
+        <ul class="tag-list">
+            <li><a href="#">Permisos</a></li>
+            <li><a href="#">Incapacidades</a></li>
+            <li><a href="#">Inconsistencias</a></li>
+            <li><a href="#">Asignar Actividades</a></li>
+            <li><a href="#">Reposiciones</a></li>
+            <li><a href="#">Horas Extras</a></li>
+            <li><a href="#">Vacaciones</a></li>
+            <li><a href="#">Marcas</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3>Contactenos</h3>
+        <p>ActivitySync ofrece servicios al cliente cuales estén interesados a nuestra gestión de actividades</p>
+        <p>Contactenos:</p>
+        <ul>
+            <li>Email: support@activitysync.com</li>
+            <li>Phone: +1-800-123-4567</li>
+        </ul>
+    </div>
+</footer>
     </form>
 </body>
 </html>
