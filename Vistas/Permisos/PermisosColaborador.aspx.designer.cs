@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas.Control_de_Actividades
+namespace ControlEmpresarial.Vistas.Permisos
 {
 
 
-    public partial class ControlActividadesColaborador
+    public partial class PermisosColaborador
     {
 
         /// <summary>
@@ -42,22 +42,22 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
         protected global::System.Web.UI.WebControls.TextBox final;
 
         /// <summary>
-        /// Control horas.
+        /// Control tipo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox horas;
+        protected global::System.Web.UI.WebControls.TextBox tipo;
 
         /// <summary>
-        /// Control actividad.
+        /// Control motivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox actividad;
+        protected global::System.Web.UI.WebControls.TextBox motivo;
 
         /// <summary>
         /// Control submit.

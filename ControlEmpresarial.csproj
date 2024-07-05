@@ -90,11 +90,13 @@
     <Content Include="Imagenes\logo.png" />
     <Content Include="Imagenes\notificacion.gif" />
     <Content Include="Imagenes\planta.png" />
+    <Content Include="Imagenes\PulgaresArriba.png" />
     <Content Include="Imagenes\reloj.png" />
     <Content Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx" />
     <Content Include="Vistas\Pagina Principal\contactenos.aspx" />
     <Content Include="Vistas\Pagina Principal\dobleFactor.aspx" />
     <Content Include="Vistas\Pagina Principal\inicio.aspx" />
+    <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasJefatura.aspx" />
@@ -141,6 +143,13 @@
     </Compile>
     <Compile Include="Vistas\Pagina Principal\inicio.aspx.designer.cs">
       <DependentUpon>inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Permisos\PermisosColaborador.aspx.cs">
+      <DependentUpon>PermisosColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Permisos\PermisosColaborador.aspx.designer.cs">
+      <DependentUpon>PermisosColaborador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Vacaciones\calendarioVacaciones.aspx.cs">
       <DependentUpon>calendarioVacaciones.aspx</DependentUpon>

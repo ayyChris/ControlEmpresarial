@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ControlActividadesColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.Control_de_Actividades.ControlActividadesColaborador" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PermisosColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.Permisos.PermisosColaborador" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Control de Actividades</title>
+    <title>Permisos</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
     <link href="~/Estilos/app.css" type="text/css" rel="stylesheet"/>
     <style>
@@ -39,7 +39,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <header>
+       <header>
             <div class="cabecera-izquierda">
                 <h1>Colaborador</h1>
                 <p>Christian Barquero</p>
@@ -66,7 +66,7 @@
              <section class="seccion-formulario">
                 <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
                     <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
-                    <h2><span class="fuente-delgada">Control de</span><br/><span class="fuente-gruesa">Actividades</span></h2>
+                    <h2><span class="fuente-delgada">Solicitud de</span><br/><span class="fuente-gruesa">Permisos</span></h2>
                     <p>Ingrese las actividades que ha realizado.</p>
                     <br />
                     <br />
@@ -80,10 +80,10 @@
                             <asp:TextBox type="date" id="final" runat="server" >Final</asp:TextBox>
                         </div>
                     </div>
-                    <label class="fuente-morada">Horas</label>
-                    <asp:TextBox ID="horas" runat="server" placeholder="Ingrese las horas realizadas"></asp:TextBox>
-                    <label class="fuente-morada">Actividad</label>
-                    <asp:TextBox ID="actividad" runat="server" TextMode="MultiLine" Rows="4" Columns="40" placeholder="Ingrese la actividad realizada."></asp:TextBox>
+                    <label class="fuente-morada">Tipo</label>
+                    <asp:TextBox ID="tipo" runat="server" placeholder="Ej: Médico"></asp:TextBox>
+                    <label class="fuente-morada">Motivo</label>
+                    <asp:TextBox ID="motivo" runat="server" TextMode="MultiLine" Rows="4" Columns="40" placeholder="Ingrese el motivo de la solicitud."></asp:TextBox>
                     <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button"/>
                 </div>
             </section>
