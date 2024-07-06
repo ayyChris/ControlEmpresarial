@@ -101,7 +101,7 @@
             </svg>
         </div>
 
-          <footer class="footer">
+         <footer class="footer">
     <div>
         <h3>About</h3>
         <p>"ActivitySync proporciona una solución integral para la gestión eficiente de actividades dentro de tu empresa. Desde la 

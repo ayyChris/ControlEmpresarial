@@ -113,20 +113,30 @@
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="relleno-forma"></path>
             </svg>
         </div>
-        <footer class="footer">
-            <div>
-                <h3>About</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-            </div>
-            <div>
-                <h3>Tags</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-            </div>
-            <div>
-                <h3>Recent Comments</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-            </div>
-        </footer>
+         <footer class="footer">
+    <div>
+        <h3>About</h3>
+        <p>"ActivitySync proporciona una solución integral para la gestión eficiente de actividades dentro de tu empresa. Desde la 
+            marcación de inconsistencias hasta el registro de entradas y salidas de empleados, así como el seguimiento detallado de 
+            sus actividades diarias, nuestro software está diseñado para optimizar la productividad y mejorar la organización empresarial."</p>
+    </div>
+    <div>
+        <h3>Tags</h3>
+        <ul class="tag-list">
+            <li><a href="#">Rebajos Extras</a></li>
+            <li><a href="#">Vacaciones Colectivas</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3>Contactenos</h3>
+        <p>ActivitySync ofrece servicios al cliente cuales estén interesados a nuestra gestión de actividades</p>
+        <p>Contactenos:</p>
+        <ul>
+            <li>Email: support@activitysync.com</li>
+            <li>Phone: +1-800-123-4567</li>
+        </ul>
+    </div>
+</footer>
     </form>
 </body>
 </html>

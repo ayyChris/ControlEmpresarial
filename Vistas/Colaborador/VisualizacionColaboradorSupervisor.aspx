@@ -113,19 +113,29 @@
             </svg>
         </div>
         <footer class="footer">
-            <div>
-                <h3>About</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-            </div>
-            <div>
-                <h3>Tags</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-            </div>
-            <div>
-                <h3>Recent Comments</h3>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-            </div>
-        </footer>
+    <div>
+        <h3>About</h3>
+        <p>"ActivitySync proporciona una solución integral para la gestión eficiente de actividades dentro de tu empresa. Desde la 
+            marcación de inconsistencias hasta el registro de entradas y salidas de empleados, así como el seguimiento detallado de 
+            sus actividades diarias, nuestro software está diseñado para optimizar la productividad y mejorar la organización empresarial."</p>
+    </div>
+    <div>
+        <h3>Tags</h3>
+        <ul class="tag-list">
+            <li><a href="#">Rebajos Extras</a></li>
+            <li><a href="#">Vacaciones Colectivas</a></li>
+        </ul>
+    </div>
+    <div>
+        <h3>Contactenos</h3>
+        <p>ActivitySync ofrece servicios al cliente cuales estén interesados a nuestra gestión de actividades</p>
+        <p>Contactenos:</p>
+        <ul>
+            <li>Email: support@activitysync.com</li>
+            <li>Phone: +1-800-123-4567</li>
+        </ul>
+    </div>
+</footer>
     </form>
 </body>
 </html>
