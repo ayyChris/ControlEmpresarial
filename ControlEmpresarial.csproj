@@ -110,7 +110,9 @@
     <Content Include="Vistas\Pagina Principal\MenuColaborador.aspx" />
     <Content Include="Vistas\Pagina Principal\MenuJefatura.aspx" />
     <Content Include="Vistas\Pagina Principal\MenuSupervisor.aspx" />
+    <Content Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx" />
     <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
+    <Content Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasJefatura.aspx" />
@@ -179,12 +181,26 @@
     <Compile Include="Vistas\Pagina Principal\MenuSupervisor.aspx.designer.cs">
       <DependentUpon>MenuSupervisor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx.cs">
+      <DependentUpon>AceptacionNegacionPermisoJefe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx.designer.cs">
+      <DependentUpon>AceptacionNegacionPermisoJefe.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Permisos\PermisosColaborador.aspx.cs">
       <DependentUpon>PermisosColaborador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Permisos\PermisosColaborador.aspx.designer.cs">
       <DependentUpon>PermisosColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx.cs">
+      <DependentUpon>TablaPreVisualizacionPermisosJefe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx.designer.cs">
+      <DependentUpon>TablaPreVisualizacionPermisosJefe.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Vacaciones\calendarioVacaciones.aspx.cs">
       <DependentUpon>calendarioVacaciones.aspx</DependentUpon>

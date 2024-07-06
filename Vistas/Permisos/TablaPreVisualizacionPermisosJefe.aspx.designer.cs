@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas
+namespace ControlEmpresarial.Vistas.Permisos
 {
 
 
-    public partial class VisualizacionPermisos
+    public partial class TablaPreVisualizacionPermisosJefe
     {
 
         /// <summary>
