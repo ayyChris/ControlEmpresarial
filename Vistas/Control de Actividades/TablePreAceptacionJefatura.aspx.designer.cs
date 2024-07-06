@@ -7,11 +7,11 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas
+namespace ControlEmpresarial.Vistas.Control_de_Actividades
 {
 
 
-    public partial class HistoricoActividades
+    public partial class TablePreAceptacionJefatura
     {
 
         /// <summary>

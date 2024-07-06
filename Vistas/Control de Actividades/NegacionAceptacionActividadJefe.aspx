@@ -1,13 +1,13 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="HistoricoActividadesJefatura.aspx.cs" Inherits="ControlEmpresarial.Vistas.HistoricoActividades" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="NegacionAceptacionActividadJefe.aspx.cs" Inherits="ControlEmpresarial.Vistas.Control_de_Actividades.NegacionAceptacionActividadJefe" %>
 
 <!DOCTYPE html>
-<html lang="es">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solicitud Actividades</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link href="~/Estilos/app.css" type="text/css" rel="stylesheet">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Control de Actividades</title>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="../../Estilos/app.css" type="text/css" rel="stylesheet"/>
     <style>
         .divisor-forma-personalizado {
             position: relative;
@@ -18,43 +18,28 @@
             z-index: 1;
             margin-top: -300px;
         }
+
         .divisor-forma-personalizado svg {
             display: block;
             width: calc(100% + 1.3px);
             height: 405px;
         }
+
         .divisor-forma-personalizado .relleno-forma {
             fill: #5E58F8;
         }
+
         @media (min-width: 768px) and (max-width: 1023px) {
             .divisor-forma-personalizado svg {
                 width: calc(100% + 1.3px);
                 height: 500px;
             }
         }
-        .table-container {
-            padding: 20px;
-            margin: 20px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-        }
-        .table-container table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .table-container th, .table-container td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
-        }
-        .table-container th {
-            background-color: #f2f2f2;
-        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
-         <header>
+        <header>
     <div class="cabecera-izquierda">
         <h1>Jefatura</h1>
         <p>Esteban Mata</p>
@@ -78,38 +63,44 @@
         </button>
     </div>
 </header>
+
         <main>
-            <section class="seccion-imagen">
-                <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra">
+                 <section class="seccion-imagen">
+                <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra"/>
             </section>
-            <section class="seccion-formulario">
-                <div class="tarjeta-formulario">
-                    <h2>Colaborador</h2>
-                    <asp:DropDownList ID="ddlDepartamento" runat="server"></asp:DropDownList>
+            <section class="seccion-formulario"/>
+    <section class="seccion-formulario">
+        <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
+               <h2><span class="fuente-delgada">Avtividad</span><br/><span class="fuente-gruesa">Dinamic Name</span></h2>
+            <br />
+            <br />
+             <div class="Division-elementos">
+                <div>
+                    <label>Incio:</label>
+                    <asp:Label>Dinamic</asp:Label>
                 </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Fecha Inicial</th>
-                                <th>Fecha Final</th>
-                                <th>Horas Trabajadas</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Aquí se agregarán dinámicamente las filas de datos -->
-                        </tbody>
-                    </table>
+                <div>
+                    <label>Fin:</label>
+                    <asp:Label>Dinamic</asp:Label>
                 </div>
-            </section>
+            </div>
+            <label>Horas:</label>
+            <asp:Label>Dinamic</asp:Label>
+            <br />
+            <asp:Label CssClass="">Dinamic description of the activity</asp:Label>
+            <br />
+            <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar"/>
+            <br />
+            <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar"/>
+        </div>
+    </section>
         </main>
-        <div class="divisor-forma-personalizado">
+          <div class="divisor-forma-personalizado">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="relleno-forma"></path>
             </svg>
         </div>
+
           <footer class="footer">
     <div>
         <h3>About</h3>

@@ -61,7 +61,6 @@
                 </button>
             </div>
         </header>
-
         <main>
              <section class="seccion-formulario">
                 <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
