@@ -35,6 +35,53 @@
                 height: 500px;
             }
         }
+             header nav ul {
+             list-style-type: none;
+             padding: 0;
+             margin: 0;
+             display: flex;
+             gap: 20px; 
+             }
+
+            header nav ul li {
+               position: relative;
+            }
+
+             header nav ul li a {
+                 text-decoration: none;
+                 padding: 10px;
+                 display: block;
+                 color: #000; 
+                 }
+            header nav ul li.has-submenu .submenu {
+              display: none;
+              position: absolute;
+              top: 100%;
+              left: 0;
+              background-color: white;
+              box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+              z-index: 1;
+              min-width: 200px;
+               }
+
+            header nav ul li.has-submenu:hover .submenu {
+                display: block;
+                color:#5E58F8;
+            }
+
+            header nav ul li.has-submenu .submenu li {
+                padding: 0;
+            }
+
+            header nav ul li.has-submenu .submenu li a {
+                padding: 10px;
+                color: black;
+                white-space: nowrap;
+                display: block;
+            }
+            header nav ul li.has-submenu .submenu li a:hover {
+                color: #5E58F8; /*color texto*/
+            }
     </style>
 </head>
 <body>
@@ -44,17 +91,53 @@
                 <h1>Colaborador</h1>
                 <p>Christian Barquero</p>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#">Horas Extras</a></li>
-                    <li><a href="#">Permisos</a></li>
-                    <li><a href="#">Inconsistencias</a></li>
-                    <li><a href="#">Reposiciones</a></li>
-                    <li><a href="#">Vacaciones</a></li>
-                    <li><a href="#">Actividades</a></li>
-                    <li><a href="#">Marcas</a></li>
-                </ul>
-            </nav>
+                        <nav>
+    <ul>
+        <li class="has-submenu">
+            <a href="#">Horas Extras</a>
+            <ul class="submenu">
+                <li><a href="#">Solicitar Horas Extras</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Permisos</a>
+            <ul class="submenu">
+                <li><a href="../Permisos/PermisosColaborador.aspx">Solicitar Permiso</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Inconsistencias</a>
+            <ul class="submenu">
+                <li><a href="#">Justificar Inconsistencia.</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Reposiciones</a>
+            <ul class="submenu">
+                <li><a href="#">Revisar Reposiciones</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Vacaciones</a>
+            <ul class="submenu">
+                <li><a href="../Vacaciones/solicitarVacacionColaborador.aspx">Solicitar Vacaciones</a></li>
+                <li><a href="../Vacaciones/calendarioVacaciones.aspx">Calendario de Vacaciones</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Actividades</a>
+            <ul class="submenu">
+                <li><a href="../Control de Actividades/ControlActividadesColaborador.aspx">Registrar Actividades</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Marcas</a>
+            <ul class="submenu">
+                <li><a href="../Marcas/marcas.aspx">Registre su hora de marca</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
             <div class="cabecera-derecha">
                 <button class="boton-notificacion">
                     <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>

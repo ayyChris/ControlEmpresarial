@@ -36,6 +36,54 @@
                 height: 500px;
             }
         }
+
+    header nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px; 
+    }
+
+   header nav ul li {
+      position: relative;
+   }
+
+    header nav ul li a {
+        text-decoration: none;
+        padding: 10px;
+        display: block;
+        color: #000; 
+        }
+   header nav ul li.has-submenu .submenu {
+     display: none;
+     position: absolute;
+     top: 100%;
+     left: 0;
+     background-color: white;
+     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+     z-index: 1;
+     min-width: 200px;
+      }
+
+   header nav ul li.has-submenu:hover .submenu {
+       display: block;
+       color:#5E58F8;
+   }
+
+   header nav ul li.has-submenu .submenu li {
+       padding: 0;
+   }
+
+   header nav ul li.has-submenu .submenu li a {
+       padding: 10px;
+       color: black;
+       white-space: nowrap;
+       display: block;
+   }
+   header nav ul li.has-submenu .submenu li a:hover {
+       color: #5E58F8; /*color texto*/
+   }
     </style>
 </head>
 <body>
@@ -45,23 +93,62 @@
                 <h1>Jefatura</h1>
                 <p>Esteban Mata</p>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#">Colaborador</a></li>
-                    <li><a href="#">Rebajos</a></li>
-                    <li><a href="#">Permisos</a></li>
-                    <li><a href="#">Incapacidades</a></li>
-                    <li><a href="#">Inconsistencias</a></li>
-                    <li><a href="#">Asignar Actividades</a></li>
-                    <li><a href="#">Reposición</a></li>
-                    <li class="dropdown">
-                        <a class="activo" href="#">Horas Extra</a>
-                    </li>
-                    <li><a href="#">Vacaciones</a></li>
-                    <li><a href="#">Solicitudes</a></li>
-                    <li><a href="#">Marcas</a></li>
-                </ul>
-            </nav>
+                     <nav>
+    <ul>
+        <li class="has-submenu">
+            <a href="#">Permisos</a>
+            <ul class="submenu">
+                <li><a href="../Permisos/TablaPreVisualizacionPermisosJefe.aspx">Revisar Permisos</a></li>
+                <li><a href="../Permisos/VisualizacionPermisos.aspx">Ver Permisos</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Incapacidades</a>
+            <ul class="submenu">
+                <li><a href="../Incapacidades/SolicitarIncapacidadesJefatura.aspx">Registrar incapacidades</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Inconsistencias</a>
+            <ul class="submenu">
+                <li><a href="../Inconsistencias/SolicitarIncapacidadesJefatura.aspx">Revisar Inconsistencias.</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Actividades</a>
+            <ul class="submenu">
+                <li><a href="../Control De Actividades/TablaPreAceptacionJefatura.aspx">Revisar Actividades de colaboradores</a></li>
+                <li><a href="../Control De Actividades/TablaPreAceptacionJefatura.aspx">Historial de Actividades</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Reposiciones</a>
+            <ul class="submenu">
+                <li><a href="#">Verificar Reposiciones</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Horas Extras</a>
+            <ul class="submenu">
+                <li><a href="../Horas Extra/solicitudHorasExtrasJefatura.aspx">Asignar Horas Extras</a></li>
+                <li><a href="#">Aceptar Horas Extras</a></li>
+                <li><a href="../Horas Extra/HistoricoHorasExtrasJefatura.aspx">Historial Horas Extras</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Vacaciones</a>
+            <ul class="submenu">
+                <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Aceptar Vacaciones de Colaboradores</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+    <a href="#">Marcas</a>
+    <ul class="submenu">
+        <li><a href="../Marcas/marcas.aspx">Registre su hora de marca</a></li>
+    </ul>
+</li>
+    </ul>
+</nav>
             <div class="cabecera-derecha">
                 <button class="boton-notificacion">
                     <img src="../../Imagenes/notificacion.gif" alt="Notificación">

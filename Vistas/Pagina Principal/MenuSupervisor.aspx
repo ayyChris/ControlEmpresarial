@@ -6,6 +6,56 @@
     <title>ActivitySync</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
     <link href="../../Estilos/app.css" type="text/css" rel="stylesheet"/>
+     <style>
+  header nav ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 20px; 
+      }
+
+     header nav ul li {
+        position: relative;
+     }
+
+      header nav ul li a {
+          text-decoration: none;
+          padding: 10px;
+          display: block;
+          color: #000; 
+          }
+     header nav ul li.has-submenu .submenu {
+       display: none;
+       position: absolute;
+       top: 100%;
+       left: 0;
+       background-color: white;
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       z-index: 1;
+       min-width: 200px;
+        }
+
+     header nav ul li.has-submenu:hover .submenu {
+         display: block;
+         color:#5E58F8;
+     }
+
+     header nav ul li.has-submenu .submenu li {
+         padding: 0;
+     }
+
+     header nav ul li.has-submenu .submenu li a {
+         padding: 10px;
+         color: black;
+         white-space: nowrap;
+         display: block;
+     }
+     header nav ul li.has-submenu .submenu li a:hover {
+         color: #5E58F8; /*color texto*/
+     }
+     
+ </style>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -21,6 +71,55 @@
             <li><a href="#">Vacaciones Colectivas</a></li>
         </ul>
     </nav>
+
+ <nav>
+    <ul>
+        <li class="has-submenu">
+            <a href="#">Rebajos</a>
+            <ul class="submenu">
+                <li><a href="../Rebajos/VisualizacionRebajos.aspx">Historial de Rebajos</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+            <a href="#">Vacaciones Colectivas</a>
+            <ul class="submenu">
+                <li><a href="../Vacaciones/vacacionColectiva.aspx">Solicitar Permiso</a></li>
+            </ul>
+        </li>
+        <li class="has-submenu">
+    <a href="#">Colaborador</a>
+    <ul class="submenu">
+        <li><a href="../Vacaciones/VisualizacionColaboradorSupervisor.aspx">Registrar Colaborador</a></li>
+        <li><a href="#">Ver Colaboradores</a></li>
+    </ul>
+</li>
+    <li class="has-submenu">
+    <a href="#">Incapacidades</a>
+    <ul class="submenu">
+        <li><a href="../Incapacidades/VisualizacionIncapacidad.aspx">Historial de incapacidades</a></li>
+    </ul>
+</li>
+       <li class="has-submenu">
+    <a href="#">Inconsistencias</a>
+    <ul class="submenu">
+        <li><a href="../Inconsistencias/VisualizacionInconsistencias.aspx">Historial de inconsistencias</a></li>
+    </ul>
+</li>
+       <li class="has-submenu">
+    <a href="#">Permisos</a>
+    <ul class="submenu">
+        <li><a href="../Permisos/VisualizacionPermisos.aspx">Historial de Permisos</a></li>
+    </ul>
+</li>
+     <li class="has-submenu">
+    <a href="#">Reposiciones</a>
+    <ul class="submenu">
+        <li><a href="../Reposicion/.aspx">Historial de Reposiciones</a></li>
+    </ul>
+</li>
+
+    </ul>
+</nav>
     <div class="cabecera-derecha">
         <button class="boton-notificacion">
             <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>
@@ -29,7 +128,7 @@
 </header>
         <div class="container-menu">
             <div class="header-menu">
-                <h1>Revisa nuestras opciones de gestión para la jefatura</h1>
+                <h1>Revisa nuestras opciones de gestión para los supervisores</h1>
                 <p>ActivitySync ofrecemos distintas opciones para la gestión de nuestros empleados con la intención de mantener un sistema autogestionable.</p>
             </div>
             <div class="options-menu">

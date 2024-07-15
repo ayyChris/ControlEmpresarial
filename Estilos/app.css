@@ -72,7 +72,6 @@ main {
     justify-content: space-between;
     padding: 40px;
     position: relative;
-    z-index: 2;
 }
 
 .seccion-formulario {
@@ -267,12 +266,12 @@ input, select, textarea {
     margin-bottom: 10px; 
 }
 .footer p {
-    margin-bottom: 10px; /* Espacio bajo cada párrafo */
-    line-height: 1.6; /* Altura de línea para mayor espaciado entre líneas */
+    margin-bottom: 10px; 
+    line-height: 1.6; 
     overflow-wrap: break-word; /* Rompe palabras largas si no caben en una línea */
-    max-width: 600px; /* Ancho máximo del párrafo para controlar la longitud de línea */
-    text-align: justify; /* Justificar el texto */
-    text-justify: inter-word; /* Justificación de palabras para mejorar la legibilidad */
+    max-width: 600px; 
+    text-align: justify; 
+    text-justify: inter-word; 
 }
 
 .container {
@@ -281,6 +280,7 @@ input, select, textarea {
     padding: 40px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    z-index:2;
 }
 
 .calendar-header {
@@ -367,6 +367,7 @@ input, select, textarea {
     border-radius: 8px;
     margin: 0 auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index:2;
 }
 
 .clock-icon {
