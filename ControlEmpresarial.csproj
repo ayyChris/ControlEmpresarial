@@ -103,6 +103,7 @@
     <Content Include="Imagenes\planta.png" />
     <Content Include="Imagenes\PulgaresArriba.png" />
     <Content Include="Imagenes\reloj.png" />
+    <Content Include="Vistas\Colaborador\agregarColaboradorJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx" />
     <Content Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionJefatura.aspx" />
@@ -134,6 +135,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Vistas\Colaborador\agregarColaboradorJefe.aspx.cs">
+      <DependentUpon>agregarColaboradorJefe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\agregarColaboradorJefe.aspx.designer.cs">
+      <DependentUpon>agregarColaboradorJefe.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx.cs">
       <DependentUpon>ControlActividadesColaborador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
