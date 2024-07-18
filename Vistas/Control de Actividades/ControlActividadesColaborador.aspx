@@ -4,6 +4,7 @@
    <head runat="server">
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
       <title>Control de Actividades</title>
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
       <link href="~/Estilos/app.css" type="text/css" rel="stylesheet"/>
       <style>
