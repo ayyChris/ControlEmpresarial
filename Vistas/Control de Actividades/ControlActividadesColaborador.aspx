@@ -75,7 +75,7 @@
       </style>
    </head>
    <body>
-      <form id="form1" runat="server">
+     <form id="form1" runat="server">
          <header>
             <div class="cabecera-izquierda">
                <h1>Colaborador</h1>
@@ -134,35 +134,37 @@
                </button>
             </div>
          </header>
-         <main>
+        <main>
             <section class="seccion-formulario">
-               <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
-               <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
-                  <h2><span class="fuente-delgada">Control de</span><br/><span class="fuente-gruesa">Actividades</span></h2>
-                  <p>Ingrese las actividades que ha realizado.</p>
-                  <br />
-                  <br />
-                  <div class="Division-elementos">
-                     <div>
-                        <label class="fuente-morada">Inicio</label>
-                        <asp:TextBox type="date" id="inicio" runat="server" >Inicio</asp:TextBox>
-                     </div>
-                     <div>
-                        <label class="fuente-morada">Final</label>
-                        <asp:TextBox type="date" id="final" runat="server" >Final</asp:TextBox>
-                     </div>
-                  </div>
-                  <label class="fuente-morada">Horas</label>
-                  <asp:TextBox ID="horas" runat="server" placeholder="Ingrese las horas realizadas"></asp:TextBox>
-                  <label class="fuente-morada">Actividad</label>
-                  <asp:TextBox ID="actividad" runat="server" TextMode="MultiLine" Rows="4" Columns="40" placeholder="Ingrese la actividad realizada."></asp:TextBox>
-                  <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button"/>
-               </div>
+                <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
+                    <h2><span class="fuente-delgada">Control de</span><br /><span class="fuente-gruesa">Actividades</span></h2>
+                    <p>Ingrese las actividades que ha realizado.</p>
+                    <br />
+                    <br />
+                    <div class="Division-elementos">
+                        <div>
+                            <label class="fuente-morada">Inicio</label>
+                            <asp:TextBox ID="inicio" runat="server" TextMode="Date"></asp:TextBox>
+                        </div>
+                        <div>
+                            <label class="fuente-morada">Final</label>
+                            <asp:TextBox ID="final" runat="server" TextMode="Date"></asp:TextBox>
+                        </div>
+                    </div>
+                    <label class="fuente-morada">Horas</label>
+                    <asp:TextBox ID="horas" runat="server" placeholder="Ingrese las horas realizadas"></asp:TextBox>
+                    <label class="fuente-morada">Actividad</label>
+                    <asp:TextBox ID="actividad" runat="server" TextMode="MultiLine" Rows="4" Columns="40" placeholder="Ingrese la actividad realizada."></asp:TextBox>
+                    <asp:Button ID="submit" runat="server" Text="Enviar" OnClick="submit_Click" CssClass="button" />
+                    <asp:Label ID="debugLabel" runat="server" CssClass="debug-label" />
+
+                </div>
             </section>
             <section class="seccion-imagen">
-               <img src="../../Imagenes/office.jpg" alt="Image of office">
+                <img src="../../Imagenes/office.jpg" alt="Image of office" />
             </section>
-         </main>
+        </main>
+
          <div class="divisor-forma-personalizado">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="relleno-forma"></path>
