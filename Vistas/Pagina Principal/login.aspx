@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="ControlEmpresarial.Vistas.login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="ControlEmpresarial.Vistas.Login" %>
 <!DOCTYPE html>
 <html lang="es">
    <head runat="server">
@@ -95,7 +95,7 @@
                   <label class="fuente-morada" for="contrasena">Olvidé mi contraseña</label>
                   <br />
                   <br />
-                  <asp:Button ID="submit" runat="server" Text="Ingresar" CssClass="button" />
+                  <asp:Button ID="submit" runat="server" Text="Ingresar" CssClass="button" OnClick="submit_Click" />
                   <br />
                   <asp:Button ID="crearCuenta" runat="server" Text="Crear Cuenta" CssClass="button-blanco" />
                   <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
