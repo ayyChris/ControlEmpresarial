@@ -225,7 +225,6 @@
     </Compile>
     <Compile Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx.cs">
       <DependentUpon>AgregarPuestoTrabajo.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx.designer.cs">
       <DependentUpon>AgregarPuestoTrabajo.aspx</DependentUpon>
