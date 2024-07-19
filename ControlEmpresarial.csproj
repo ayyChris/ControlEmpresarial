@@ -218,7 +218,6 @@
     </Compile>
     <Compile Include="Vistas\Colaborador\AgregarHorario.aspx.cs">
       <DependentUpon>AgregarHorario.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Colaborador\AgregarHorario.aspx.designer.cs">
       <DependentUpon>AgregarHorario.aspx</DependentUpon>
