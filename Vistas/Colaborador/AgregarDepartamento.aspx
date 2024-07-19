@@ -169,7 +169,7 @@ color: #5E58F8; /*color texto*/
                   <br />
                   <div>
                      <label class="fuente-delgada" for="cedula">Departamento</label>
-                     <asp:TextBox CssClass="inicioSesion" ID="puestoTrabajo" runat="server" placeholder="Ej.Recursos Humanos"></asp:TextBox>
+                     <asp:TextBox CssClass="inicioSesion" ID="txtNombreDepartamento" runat="server" placeholder="Ej.Recursos Humanos"></asp:TextBox>
                   </div>
                   <br />
                   <br />

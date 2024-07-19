@@ -212,7 +212,6 @@
     </Compile>
     <Compile Include="Vistas\Colaborador\AgregarDepartamento.aspx.cs">
       <DependentUpon>AgregarDepartamento.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Colaborador\AgregarDepartamento.aspx.designer.cs">
       <DependentUpon>AgregarDepartamento.aspx</DependentUpon>
