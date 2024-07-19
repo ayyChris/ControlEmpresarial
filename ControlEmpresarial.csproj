@@ -155,6 +155,9 @@
     <Content Include="Imagenes\PulgaresArriba.png" />
     <Content Include="Imagenes\reloj.png" />
     <Content Include="Vistas\Colaborador\agregarColaboradorJefe.aspx" />
+    <Content Include="Vistas\Colaborador\AgregarDepartamento.aspx" />
+    <Content Include="Vistas\Colaborador\AgregarHorario.aspx" />
+    <Content Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx" />
     <Content Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx" />
     <Content Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionJefatura.aspx" />
@@ -187,6 +190,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controlador\AgregarDepartamento.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\AgregarHorario.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\AgregarPuestoTrabajo.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\Login.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -197,6 +209,27 @@
     </Compile>
     <Compile Include="Vistas\Colaborador\agregarColaboradorJefe.aspx.designer.cs">
       <DependentUpon>agregarColaboradorJefe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\AgregarDepartamento.aspx.cs">
+      <DependentUpon>AgregarDepartamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\AgregarDepartamento.aspx.designer.cs">
+      <DependentUpon>AgregarDepartamento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\AgregarHorario.aspx.cs">
+      <DependentUpon>AgregarHorario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\AgregarHorario.aspx.designer.cs">
+      <DependentUpon>AgregarHorario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx.cs">
+      <DependentUpon>AgregarPuestoTrabajo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx.designer.cs">
+      <DependentUpon>AgregarPuestoTrabajo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx.cs">
       <DependentUpon>ControlActividadesColaborador.aspx</DependentUpon>

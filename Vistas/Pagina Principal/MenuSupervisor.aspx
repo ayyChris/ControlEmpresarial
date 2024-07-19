@@ -59,13 +59,6 @@
             </div>
             <nav>
                <ul>
-                  <li><a class="activo" href="#">Supervisor</a></li>
-                  <li><a href="#">Rebajos</a></li>
-                  <li><a href="#">Vacaciones Colectivas</a></li>
-               </ul>
-            </nav>
-            <nav>
-               <ul>
                   <li class="has-submenu">
                      <a href="#">Rebajos</a>
                      <ul class="submenu">
