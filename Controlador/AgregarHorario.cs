@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Globalization;
 using System.Web.UI;
 
 namespace ControlEmpresarial.Vistas.Colaborador
@@ -8,7 +9,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
     {
         protected void volverMenu_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void ingresar_Click(object sender, EventArgs e)
@@ -48,67 +49,65 @@ namespace ControlEmpresarial.Vistas.Colaborador
             }
             catch (ArgumentException ex)
             {
-                //  días no válidos
+                // Días no válidos
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error: {ex.Message}')", true);
             }
             catch (FormatException ex)
             {
-                //  formato incorrecto de hora
+                // Formato incorrecto de hora
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error en formato de hora: {ex.Message}')", true);
+                System.Diagnostics.Debug.WriteLine($"Formato incorrecto de hora: {ex.Message}");
             }
             catch (MySqlException ex)
             {
-                // SQL
+                // Error de MySQL
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error de MySQL: {ex.Message} - Código: {ex.Number}')", true);
+                System.Diagnostics.Debug.WriteLine($"Error de MySQL: {ex.Message} - Código: {ex.Number}");
             }
             catch (Exception ex)
             {
-                //  errores inesperados
+                // Otros errores inesperados
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error inesperado: {ex.Message}')", true);
+                System.Diagnostics.Debug.WriteLine($"Error inesperado: {ex.Message}");
             }
         }
-
-
 
         private bool ValidarRangoDias(string diaInicio, string diaFin)
         {
             try
             {
                 System.Diagnostics.Debug.WriteLine($"checkpoint3");
-                // convertir dias en español
+                // Convertir días a enum DayOfWeek
                 DayOfWeek diaInicioEnum = ConvertirDiaSemana(diaInicio);
                 DayOfWeek diaFinEnum = ConvertirDiaSemana(diaFin);
 
-                // 5 dias consecutivos
-                int cantidadDias = (diaFinEnum - diaInicioEnum + 1 + 7) % 7; // Sumar 7 y luego tomar módulo 7 para manejar los casos circulares
+                // Validar que sean 5 días consecutivos
+                int cantidadDias = (diaFinEnum - diaInicioEnum + 1 + 7) % 7;
                 return cantidadDias == 5;
-                
             }
             catch (ArgumentException ex)
             {
-                // dia no valido
+                // Día no válido
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error: {ex.Message}')", true);
                 return false;
             }
             catch (Exception ex)
             {
+                // Otros errores inesperados
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error inesperado: {ex.Message}')", true);
                 return false;
             }
         }
 
-
-
         private int CalcularCantidadHoras(string horaEntrada, string horaSalida)
         {
             System.Diagnostics.Debug.WriteLine($"checkpoint4");
+            // Calcular diferencia de horas
             TimeSpan horaInicio = TimeSpan.Parse(horaEntrada);
             TimeSpan horaFinal = TimeSpan.Parse(horaSalida);
-
-            // Calcular la diferencia de horas
             TimeSpan diferencia = horaFinal - horaInicio;
 
-            // Retornar la cantidad de horas en formato entero
+            // Retornar cantidad de horas en formato entero
             return (int)diferencia.TotalHours;
         }
 
@@ -116,18 +115,29 @@ namespace ControlEmpresarial.Vistas.Colaborador
         {
             try
             {
+                // Convertir las cadenas de hora al formato SQL requerido
+                string horaEntradaSQL = ConvertirHoraParaSQL(horaEntrada);
+                string horaSalidaSQL = ConvertirHoraParaSQL(horaSalida);
+
+                // Debug para verificar los valores antes de la inserción
+                System.Diagnostics.Debug.WriteLine(tipoJornada);
+                System.Diagnostics.Debug.WriteLine(diaSemana);
+                System.Diagnostics.Debug.WriteLine(horaEntradaSQL);
+                System.Diagnostics.Debug.WriteLine(horaSalidaSQL);
+                System.Diagnostics.Debug.WriteLine(cantidadHoras);
+
                 using (MySqlConnection conn = new MySqlConnection(connectionString))
                 {
                     conn.Open();
 
                     string query = "INSERT INTO Horario (TipoJornada, diaSemana, horaEntrada, horaSalida, cantidadHoras) " +
-                                   "VALUES (@tipoJornada, @diaSemana, @horaEntrada, @horaSalida, @cantidadHoras)";
+                                   "VALUES (@TipoJornada, @diaSemana, @horaEntrada, @horaSalida, @cantidadHoras)";
 
                     MySqlCommand cmd = new MySqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@tipoJornada", tipoJornada);
+                    cmd.Parameters.AddWithValue("@TipoJornada", tipoJornada);
                     cmd.Parameters.AddWithValue("@diaSemana", diaSemana);
-                    cmd.Parameters.AddWithValue("@horaEntrada", horaEntrada);
-                    cmd.Parameters.AddWithValue("@horaSalida", horaSalida);
+                    cmd.Parameters.AddWithValue("@horaEntrada", horaEntradaSQL); //formato hh:mm:ss
+                    cmd.Parameters.AddWithValue("@horaSalida", horaSalidaSQL);   //formato hh:mm:ss
                     cmd.Parameters.AddWithValue("@cantidadHoras", cantidadHoras);
 
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -142,23 +152,49 @@ namespace ControlEmpresarial.Vistas.Colaborador
                     }
                 }
             }
+            catch (FormatException ex)
+            {
+                // Capturar error de formato de hora
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error en formato de hora: {ex.Message}')", true);
+            }
             catch (MySqlException ex)
             {
-                // SQL
+                // Capturar error específico de MySQL
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error al ingresar el horario: {ex.Message} - {ex.InnerException?.Message}')", true);
             }
             catch (Exception ex)
             {
+                // Capturar otros errores generales
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error general al ingresar el horario: {ex.Message}')", true);
             }
         }
 
+        private string ConvertirHoraParaSQL(string hora)
+        {
+            try
+            {
+                // Parsear la cadena de hora en un TimeSpan
+                TimeSpan tiempo = TimeSpan.ParseExact(hora, "hh\\:mm", CultureInfo.InvariantCulture);
 
+                // Formatear el TimeSpan en formato "hh:mm:ss"
+                return tiempo.ToString(@"hh\:mm\:ss");
+            }
+            catch (FormatException ex)
+            {
+                // Capturar errores de formato y relanzar excepción
+                throw new FormatException("Formato incorrecto de hora. Debe ser hh:mm.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Capturar otros errores inesperados
+                throw new Exception("Error al convertir hora para SQL.", ex);
+            }
+        }
 
         private DayOfWeek ConvertirDiaSemana(string nombreDia)
         {
             System.Diagnostics.Debug.WriteLine($"checkpointdias");
-            switch (nombreDia.ToLower()) // Convertir a minúsculas para evitar problemas de mayúsculas/minúsculas
+            switch (nombreDia.ToLower())
             {
                 case "lunes":
                     return DayOfWeek.Monday;
@@ -178,7 +214,5 @@ namespace ControlEmpresarial.Vistas.Colaborador
                     throw new ArgumentException($"El día '{nombreDia}' no es válido.");
             }
         }
-
-
     }
 }
