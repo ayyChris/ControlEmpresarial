@@ -162,6 +162,7 @@
     <Content Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx" />
+    <Content Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
     <Content Include="Vistas\Pagina Principal\contactenos.aspx" />
     <Content Include="Vistas\Pagina Principal\dobleFactor.aspx" />
@@ -200,6 +201,15 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\AgregarPuestoTrabajo.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorPreVisualizacionHorasExtra.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorRespuestaHorasExtraColaborador.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorSolicitudHorasExtra.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\Login.cs">
@@ -258,9 +268,14 @@
     <Compile Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx.designer.cs">
       <DependentUpon>AceptarDenegarHorasExtraJefatura.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx.cs">
+      <DependentUpon>PreAceptacionHorasExtra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx.designer.cs">
+      <DependentUpon>PreAceptacionHorasExtra.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx.cs">
       <DependentUpon>RespuestaHorasExtraColaborador.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx.designer.cs">
       <DependentUpon>RespuestaHorasExtraColaborador.aspx</DependentUpon>
@@ -379,7 +394,6 @@
     </Compile>
     <Compile Include="Vistas\Horas Extra\solicitudHorasExtrasJefatura.aspx.cs">
       <DependentUpon>solicitudHorasExtrasJefatura.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Horas Extra\solicitudHorasExtrasJefatura.aspx.designer.cs">
       <DependentUpon>solicitudHorasExtrasJefatura.aspx</DependentUpon>

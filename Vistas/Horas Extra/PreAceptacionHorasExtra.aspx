@@ -1,11 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RespuestaHorasExtraColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.Horas_Extra.RespuestaHorasExtra" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PreAceptacionHorasExtra.aspx.cs" Inherits="ControlEmpresarial.Vistas.Horas_Extra.PreAceptacionHorasExtra" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Horas Extra</title>
+   <title>Horas Extra</title>
      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
     <link href="../../Estilos/app.css" rel="stylesheet"/>
     <style>
@@ -83,11 +83,10 @@
             color: #5E58F8; /*color texto*/
         }
         
-    </style>
+    </style>0
 </head>
-    <body>
-  <form id="form1" runat="server">
-
+<body>
+     <form id="form1" runat="server">
         <header>
         <div class="cabecera-izquierda">
             <h1>Colaborador</h1>
@@ -147,41 +146,32 @@
         </div>
     </header>
 
-      <main>
-          <section class="seccion-imagen">
-                <img src="../../Imagenes/PulgaresArriba.png" alt="Ilustración de una persona trabajando horas extra"/>
+         <main>
+            <section class="seccion-imagen">
+               <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra"/>
             </section>
+            <section class="seccion-formulario">
+                <div class="table-container">
+                    <asp:GridView ID="gridViewHorasExtra" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gridViewHorasExtra_RowCommand">
+                 <Columns>
+                     <asp:BoundField DataField="FechaInicioSolicitud" HeaderText="Fecha de Solicitud" />
+                     <asp:BoundField DataField="FechaFinalSolicitud" HeaderText="Día" />
+                     <asp:BoundField DataField="HoraInicialExtra" HeaderText="Hora Inicial" />
+                     <asp:BoundField DataField="HoraFinalExtra" HeaderText="Hora Final" />
+                     <asp:BoundField DataField="HorasSolicitadas" HeaderText="Horas Totales" />
+                     <asp:BoundField DataField="Motivo" HeaderText="Motivo" />
+                     <asp:TemplateField HeaderText="Acción">
+                         <ItemTemplate>
+                             <asp:Button ID="btnAccion" runat="server" Text="Acción" CommandName="Accion" CommandArgument='<%# Eval("idSolicitud") %>' />
+                         </ItemTemplate>
+                     </asp:TemplateField>
+                 </Columns>
+             </asp:GridView>
+         </div>
+            </section>
+        </main>
 
-          <section class="seccion-formulario">
-              <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
-                  <h2><span class="fuente-delgada">Solicitud </span><span class="fuente-gruesa">de</span></h2>
-            <br />
-                   <!-- Label para mostrar el idSolicitud -->
-                 <asp:Label ID="lblSolicitudId" runat="server" Text="ID de Solicitud: " Font-Bold="True" />
-            <p>Horas Extra</p>
-            <br />
-                   <label>Horas Solicitadas:</label>
-            <asp:Label ID="lblHorasSolicitadas" runat="server" />
-            <div class="Division-elementos">
-                <div>
-                    <label>Incio:</label>
-                    <asp:Label ID="lblHoraInicialExtra" runat="server" />
-                </div>
-                <div>
-                    <label>Fin:</label>
-                    <asp:Label ID="lblHoraFinalExtra" runat="server" />
-                </div>
-            </div>
-            <asp:Label ID="lblMotivo" runat="server" />
-            <br />
-            <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar"/>
-            <br />
-            <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar"/>
-              </div>
-          </section>
-      </main>
-
-      <div class="divisor-forma-personalizado">
+         <div class="divisor-forma-personalizado">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="relleno-forma"></path>
             </svg>
