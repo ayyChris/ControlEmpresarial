@@ -164,31 +164,39 @@
                   <div class="entradas-horario">
                      <div>
                         <label class="fuente-morada" for="hora-inicio">Nombre</label>
-                        <asp:TextBox ID="horaInicio" runat="server" placeholder=""></asp:TextBox>
+                        <asp:TextBox ID="nombreUsuario" runat="server" placeholder=""></asp:TextBox>
                      </div>
                      <div>
                         <label class="fuente-morada" for="hora-final">Apellidos</label>
-                        <asp:TextBox ID="horaFinal" runat="server" placeholder=""></asp:TextBox>
+                        <asp:TextBox ID="apellidosUsuario" runat="server" placeholder=""></asp:TextBox>
                      </div>
                   </div>
                   <div class="entradas-horario">
                      <div>
                         <label class="fuente-morada" for="hora-inicio">Cedula</label>
-                        <asp:TextBox ID="TextBox1" runat="server" placeholder=""></asp:TextBox>
+                        <asp:TextBox ID="cedulaUsuario" runat="server" placeholder=""></asp:TextBox>
                      </div>
+                    <div>
+                   <label class="fuente-morada" for="hora-inicio">Correo</label>
+                   <asp:TextBox ID="correoUsuario" runat="server" placeholder=""></asp:TextBox>
+                </div>
                      <div>
-                        <label class="fuente-morada" for="hora-final">Contraseña temporal</label>
-                        <asp:TextBox ID="TextBox2" runat="server" placeholder=""></asp:TextBox>
+                        <label class="fuente-morada" for="hora-final">Contraseña</label>
+                        <asp:TextBox ID="passwordUsuario" runat="server" placeholder=""></asp:TextBox>
                      </div>
                   </div>
                   <label class="fuente-morada" for="colaboradorACargo">Puesto</label>
                   <asp:DropDownList ID="puesto" runat="server">
                      <asp:ListItem Text="Seleccione" Value="" />
                   </asp:DropDownList>
-                  <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button" />
-                  <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
+                   <div>
+            <label class="fuente-morada" for="horario">Tipo de Jornada</label>
+            <asp:DropDownList ID="horario" runat="server">
+                <asp:ListItem Text="Seleccione" Value="" />
+            </asp:DropDownList>
+        </div>
+                  <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button" OnClick="submit_Click"/>
                </div>
-            </section>
             </section>
             <section class="seccion-imagen">
                 <img src="../../Imagenes/colaborador.png" alt="Image of office">
