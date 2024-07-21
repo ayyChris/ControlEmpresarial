@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="login.aspx.cs" Inherits="ControlEmpresarial.Vistas.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DobleFactor.aspx.cs" Inherits="ControlEmpresarial.Vistas.DobleFactor" %>
 <!DOCTYPE html>
 <html lang="es">
    <head runat="server">
@@ -61,7 +61,7 @@
          <header>
             <div class="cabecera-izquierda">
                <h1>Activity Sync</h1>
-               <p>Por favor ingrese sus credenciales.</p>
+               <p>Se ha enviado a su correo un codigo de verificacion.</p>
             </div>
             <nav>
                <ul>
@@ -79,25 +79,20 @@
          <main>
             <section class="seccion-formulario">
                <div class="tarjeta-formulario-login" style="max-width: 700px; margin: 0 auto;">
-                  <h2><span class="fuente-gruesa">Inicia sesion</span><br><span class="fuente-delgada">en tu cuenta</span></h2>
+                  <h2><span class="fuente-delgada">Autenticacion de</span><br><span class="fuente-gruesa">Doble Factor</span></h2>
                   <p></p>
                   <br />
-                  <div>
-                     <label class="fuente-delgada" for="cedula">Cedula</label>
-                     <asp:TextBox CssClass="inicioSesion" ID="cedula" runat="server" placeholder="Ej. 305520445"></asp:TextBox>
-                  </div>
+                  <br />
                   <br />
                   <div>
-                     <label class="fuente-delgada" for="contrasena">Contraseña</label>
-                     <asp:TextBox CssClass="inicioSesion" ID="contrasena" runat="server"></asp:TextBox>
+                     <label class="fuente-delgada" for="Codigo">Codigo</label>
+                     <asp:TextBox CssClass="inicioSesion" ID="Codigo" runat="server"></asp:TextBox>
                   </div>
                   <br />
-                  <label class="fuente-morada" for="contrasena">Olvidé mi contraseña</label>
                   <br />
                   <br />
-                  <asp:Button ID="submit" runat="server" Text="Ingresar" CssClass="button" OnClick="submit_Click" />
+                  <asp:Button ID="submit" runat="server" Text="Ingresar" CssClass="button" OnClick="submit_Click"/>
                   <br />
-                  <asp:Button ID="crearCuenta" runat="server" Text="Crear Cuenta" CssClass="button-blanco" />
                   <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
                </div>
             </section>

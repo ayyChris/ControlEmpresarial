@@ -164,12 +164,12 @@
     <Content Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
-    <Content Include="Vistas\Pagina Principal\contactenos.aspx" />
-    <Content Include="Vistas\Pagina Principal\dobleFactor.aspx" />
-    <Content Include="Vistas\Pagina Principal\inicio.aspx" />
-    <Content Include="Vistas\Pagina Principal\MenuColaborador.aspx" />
-    <Content Include="Vistas\Pagina Principal\MenuJefatura.aspx" />
-    <Content Include="Vistas\Pagina Principal\MenuSupervisor.aspx" />
+    <Content Include="Vistas\PaginaPrincipal\Contactenos.aspx" />
+    <Content Include="Vistas\PaginaPrincipal\DobleFactor.aspx" />
+    <Content Include="Vistas\PaginaPrincipal\Inicio.aspx" />
+    <Content Include="Vistas\PaginaPrincipal\MenuColaborador.aspx" />
+    <Content Include="Vistas\PaginaPrincipal\MenuJefatura.aspx" />
+    <Content Include="Vistas\PaginaPrincipal\MenuSupervisor.aspx" />
     <Content Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx" />
     <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
     <Content Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx" />
@@ -177,7 +177,7 @@
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasJefatura.aspx" />
     <Content Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx" />
-    <Content Include="Vistas\Pagina Principal\login.aspx" />
+    <Content Include="Vistas\PaginaPrincipal\Login.aspx" />
     <Content Include="Vistas\Marcas\marcas.aspx" />
     <Content Include="Vistas\Vacaciones\solicitarVacacionColaborador.aspx" />
     <Content Include="Vistas\Horas Extra\solicitudHorasExtrasJefatura.aspx" />
@@ -210,6 +210,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\ControladorSolicitudHorasExtra.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\DobleFactor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\Login.cs">
@@ -280,46 +283,46 @@
     <Compile Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx.designer.cs">
       <DependentUpon>RespuestaHorasExtraColaborador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\contactenos.aspx.cs">
-      <DependentUpon>contactenos.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\Contactenos.aspx.cs">
+      <DependentUpon>Contactenos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\contactenos.aspx.designer.cs">
-      <DependentUpon>contactenos.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\Contactenos.aspx.designer.cs">
+      <DependentUpon>Contactenos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\dobleFactor.aspx.cs">
-      <DependentUpon>dobleFactor.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\DobleFactor.aspx.cs">
+      <DependentUpon>DobleFactor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\dobleFactor.aspx.designer.cs">
-      <DependentUpon>dobleFactor.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\DobleFactor.aspx.designer.cs">
+      <DependentUpon>DobleFactor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\inicio.aspx.cs">
-      <DependentUpon>inicio.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\Inicio.aspx.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\inicio.aspx.designer.cs">
-      <DependentUpon>inicio.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\Inicio.aspx.designer.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\MenuColaborador.aspx.cs">
+    <Compile Include="Vistas\PaginaPrincipal\MenuColaborador.aspx.cs">
       <DependentUpon>MenuColaborador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\MenuColaborador.aspx.designer.cs">
+    <Compile Include="Vistas\PaginaPrincipal\MenuColaborador.aspx.designer.cs">
       <DependentUpon>MenuColaborador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\MenuJefatura.aspx.cs">
+    <Compile Include="Vistas\PaginaPrincipal\MenuJefatura.aspx.cs">
       <DependentUpon>MenuJefatura.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\MenuJefatura.aspx.designer.cs">
+    <Compile Include="Vistas\PaginaPrincipal\MenuJefatura.aspx.designer.cs">
       <DependentUpon>MenuJefatura.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\MenuSupervisor.aspx.cs">
+    <Compile Include="Vistas\PaginaPrincipal\MenuSupervisor.aspx.cs">
       <DependentUpon>MenuSupervisor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\MenuSupervisor.aspx.designer.cs">
+    <Compile Include="Vistas\PaginaPrincipal\MenuSupervisor.aspx.designer.cs">
       <DependentUpon>MenuSupervisor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx.cs">
@@ -371,12 +374,12 @@
     <Compile Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx.designer.cs">
       <DependentUpon>SolicitarIncapacidadesJefatura.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\login.aspx.cs">
-      <DependentUpon>login.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Pagina Principal\login.aspx.designer.cs">
-      <DependentUpon>login.aspx</DependentUpon>
+    <Compile Include="Vistas\PaginaPrincipal\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Marcas\marcas.aspx.cs">
       <DependentUpon>marcas.aspx</DependentUpon>

@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="dobleFactor.aspx.cs" Inherits="ControlEmpresarial.Vistas.Pagina_Principal.dobleFactor" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Inicio.aspx.cs" Inherits="ControlEmpresarial.Vistas.Pagina_Principal.inicio" %>
 <!DOCTYPE html>
 <html lang="es">
    <head runat="server">
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Solicitar Vacaciones</title>
+      <title>Inicio</title>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
       <link href="~/Estilos/app.css" type="text/css" rel="stylesheet">
       <style>
@@ -32,7 +32,7 @@
          height: 70px; 
          }
          .divisor-forma-personalizado {
-         position: relative; 
+         position: relative; /* Cambiar a relative para mantener su posición, no mover*/
          width: 100%;
          overflow: hidden;
          line-height: 0;
@@ -48,10 +48,65 @@
          .divisor-forma-personalizado .relleno-forma {
          fill: #5E58F8;
          }
-         @media (min-width: 768px) and (max-width: 1023px) {
-         .divisor-forma-personalizado svg {
-         width: calc(100% + 1.3px);
-         height: 500px;
+         .container {
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         margin-top: 10px;
+         }
+         .welcome-section {
+         text-align: center;
+         margin-bottom: 20px;
+         }
+         .welcome-section h1 {
+         color: #000;
+         font-size: 2.5em;
+         margin: 0;
+         }
+         .welcome-section h1 span {
+         color: #7033ff;
+         }
+         .welcome-section p {
+         color: #000;
+         font-size: 1.2em;
+         margin: 10px 0 0 0;
+         }
+         .content-section {
+         background: #7033ff;
+         padding: 20px;
+         border-radius: 10px;
+         color: white;
+         width: 80%;
+         display: flex;
+         justify-content: space-around;
+         align-items: center;
+         margin-bottom: 50px;
+         }
+         .content-section .left,
+         .content-section .right {
+         flex: 1;
+         text-align: center;
+         }
+         .content-section .left {
+         border-right: 1px solid #fff;
+         padding-right: 20px;
+         }
+         .content-section .right {
+         padding-left: 20px;
+         }
+         @media (max-width: 768px) {
+         .content-section {
+         flex-direction: column;
+         }
+         .content-section .left {
+         border-right: none;
+         border-bottom: 1px solid #fff;
+         padding-right: 0;
+         padding-bottom: 20px;
+         margin-bottom: 20px;
+         }
+         .content-section .right {
+         padding-left: 0;
          }
          }
       </style>
@@ -61,44 +116,40 @@
          <header>
             <div class="cabecera-izquierda">
                <h1>Activity Sync</h1>
-               <p>Se ha enviado a su correo un codigo de verificacion.</p>
+               <p>Bienvenido!</p>
             </div>
             <nav>
                <ul>
-                  <li><a href="#">Inicio</a></li>
-                  <li><a href="#">Contactenos</a></li>
-                  <li><a class="activo" href="#">Iniciar Sesion</a></li>
+                  <li><a class="activo" href="Inicio.aspx">Inicio</a></li>
+                  <li><a href="Contactenos.aspx">Contactenos</a></li>
+                  <li><a href="Login.aspx">Iniciar Sesion</a></li>
                </ul>
             </nav>
             <div class="cabecera-derecha">
                <button class="boton-logo">
-               <img src="../../Imagenes/logo.png" alt="Notificación">
+               <img src="../../Imagenes/logo.png" alt="Logo">
                </button>
             </div>
          </header>
          <main>
-            <section class="seccion-formulario">
-               <div class="tarjeta-formulario-login" style="max-width: 700px; margin: 0 auto;">
-                  <h2><span class="fuente-delgada">Autenticacion de</span><br><span class="fuente-gruesa">Doble Factor</span></h2>
-                  <p></p>
-                  <br />
-                  <br />
-                  <br />
-                  <div>
-                     <label class="fuente-delgada" for="Codigo">Codigo</label>
-                     <asp:TextBox CssClass="inicioSesion" ID="Codigo" runat="server"></asp:TextBox>
-                  </div>
-                  <br />
-                  <br />
-                  <br />
-                  <asp:Button ID="submit" runat="server" Text="Ingresar" CssClass="button" />
-                  <br />
-                  <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
+            <div class="container">
+               <div class="welcome-section">
+                  <img src="../../Imagenes/colaborador.png" alt="Welcome Image" style="border-radius: 10%; width: 200px; height: 300px;">
+                  <h1 class="fuente-delgada">Bienvenido al sistema de gestión de </h1>
+                  <h1 style="color:#7033ff;">Activity Sync</h1>
                </div>
-            </section>
-            <section class="seccion-imagen">
-               <img src="../../Imagenes/planta.png" alt="Ilustración de una persona trabajando horas extra">
-            </section>
+               <div class="content-section">
+                  <div class="left">
+                     <p>Tu control de tus labores como empleado de Imperion es nuestra prioridad</p>
+                  </div>
+                  <div class="right">
+                     <p>"ActivitySync proporciona una solución integral para la gestión eficiente de actividades dentro de tu empresa. Desde la 
+                        marcación de inconsistencias hasta el registro de entradas y salidas de empleados, así como el seguimiento detallado de 
+                        sus actividades diarias, nuestro software está diseñado para optimizar la productividad y mejorar la organización empresarial."
+                     </p>
+                  </div>
+               </div>
+            </div>
          </main>
          <div class="divisor-forma-personalizado">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">

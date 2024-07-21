@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="contactenos.aspx.cs" Inherits="ControlEmpresarial.Vistas.Pagina_Principal.contactenos" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Contactenos.aspx.cs" Inherits="ControlEmpresarial.Vistas.Pagina_Principal.contactenos" %>
 <!DOCTYPE html>
 <html lang="es">
    <head runat="server">
@@ -75,9 +75,9 @@
             </div>
             <nav>
                <ul>
-                  <li><a href="#">Inicio</a></li>
-                  <li><a class="activo" href="#">Contactenos</a></li>
-                  <li><a href="#">Iniciar Sesion</a></li>
+                  <li><a href="Inicio.aspx">Inicio</a></li>
+                  <li><a class="activo" href="Contactenos.aspx">Contactenos</a></li>
+                  <li><a href="Login.aspx">Iniciar Sesion</a></li>
                </ul>
             </nav>
             <div class="cabecera-derecha">

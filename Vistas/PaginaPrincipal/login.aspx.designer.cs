@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas.Pagina_Principal
+namespace ControlEmpresarial.Vistas
 {
 
 
-    public partial class dobleFactor
+    public partial class Login
     {
 
         /// <summary>
@@ -24,13 +24,22 @@ namespace ControlEmpresarial.Vistas.Pagina_Principal
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Codigo control.
+        /// txtCedula control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Codigo;
+        protected global::System.Web.UI.WebControls.TextBox txtCedula;
+
+        /// <summary>
+        /// txtContrasena control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtContrasena;
 
         /// <summary>
         /// submit control.
@@ -40,6 +49,15 @@ namespace ControlEmpresarial.Vistas.Pagina_Principal
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button submit;
+
+        /// <summary>
+        /// crearCuenta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button crearCuenta;
 
         /// <summary>
         /// lblMensaje control.
