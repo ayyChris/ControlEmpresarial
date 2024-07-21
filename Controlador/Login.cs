@@ -52,6 +52,7 @@ namespace ControlEmpresarial.Vistas
                                 string nombre = lector["Nombre"].ToString();
                                 string correo = lector["Correo"].ToString();
                                 string idPuesto = lector["idPuesto"].ToString();
+                                string idDepartamento = lector["idDepartamento"].ToString();
 
                                 // Crear cookie con información del usuario
                                 HttpCookie userCookie = new HttpCookie("UserInfo");
@@ -60,6 +61,7 @@ namespace ControlEmpresarial.Vistas
                                 userCookie["Cedula"] = cedula;
                                 userCookie["Correo"] = correo;
                                 userCookie["idPuesto"] = idPuesto;
+                                userCookie["idDepartamento"] = idDepartamento;
                                 userCookie.Expires = DateTime.Now.AddMinutes(30); // Expira en 30 minutos
                                 Response.Cookies.Add(userCookie);
 

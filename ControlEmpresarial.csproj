@@ -218,6 +218,9 @@
     <Compile Include="Controlador\Login.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\VisualizacionColaboradorSupervisor.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vistas\Colaborador\agregarColaboradorJefe.aspx.cs">
       <DependentUpon>agregarColaboradorJefe.aspx</DependentUpon>
@@ -417,7 +420,6 @@
     </Compile>
     <Compile Include="Vistas\Colaborador\VisualizacionColaboradorSupervisor.aspx.cs">
       <DependentUpon>VisualizacionColaboradorSupervisor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Colaborador\VisualizacionColaboradorSupervisor.aspx.designer.cs">
       <DependentUpon>VisualizacionColaboradorSupervisor.aspx</DependentUpon>

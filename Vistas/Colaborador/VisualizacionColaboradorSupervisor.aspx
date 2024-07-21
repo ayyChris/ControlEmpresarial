@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VisualizacionColaboradorSupervisor.aspx.cs" Inherits="ControlEmpresarial.Vistas.VisualizacionEmpleados" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VisualizacionColaboradorSupervisor.aspx.cs" Inherits="ControlEmpresarial.Vistas.VisualizacionColaboradorSupervisor" %>
 <!DOCTYPE html>
 <html lang="es">
    <head runat="server">
@@ -86,23 +86,19 @@
             <section class="seccion-formulario">
                <div class="tarjeta-formulario">
                   <h2>Departamento</h2>
-                  <asp:DropDownList ID="ddlDepartamento" runat="server"></asp:DropDownList>
+                  <asp:DropDownList ID="ddlDepartamento" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlDepartamento_SelectedIndexChanged"></asp:DropDownList>
                </div>
                <div class="table-container">
-                  <table>
-                     <thead>
-                        <tr>
-                           <th>Nombre</th>
-                           <th>Apellidos</th>
-                           <th>Cédula</th>
-                           <th>Puesto</th>
-                           <th>Estado</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <!-- Aquí se agregarán dinámicamente las filas de datos -->
-                     </tbody>
-                  </table>
+                  <asp:GridView ID="gridEmpleados" runat="server" AutoGenerateColumns="False">
+                    <Columns>
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="Apellidos" HeaderText="Apellidos" />
+                        <asp:BoundField DataField="Cedula" HeaderText="Cedula" />
+                        <asp:BoundField DataField="NombrePuesto" HeaderText="Puesto" />
+                        <asp:BoundField DataField="Estado" HeaderText="Estado" />
+                    </Columns>
+                </asp:GridView>
+
                </div>
             </section>
          </main>

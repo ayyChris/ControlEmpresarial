@@ -43,9 +43,9 @@ namespace ControlEmpresarial.Vistas.Colaborador
 
             // Valores quemados
             int diasDeVacaciones = 0;
-            string estado = "Activo"; 
-            int idDepartamento = 1; 
-
+            string estado = "Activo";
+            int idDepartamento = Session["idDepartamento"] != null ? Convert.ToInt32(Session["idDepartamento"]) : 0;
+            //int idDepartamento = 1;
             // Guardar en la base de datos
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
             try
