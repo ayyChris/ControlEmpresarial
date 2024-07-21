@@ -91,7 +91,7 @@
         <header>
         <div class="cabecera-izquierda">
             <h1>Colaborador</h1>
-            <p>Christian Barquero</p>
+            <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
         </div>
             <nav>
     <ul>

@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using System.Web;
 
 namespace ControlEmpresarial.Vistas.Colaborador
 {
@@ -12,6 +13,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
         {
             if (!IsPostBack)
             {
+                CargarNombreUsuario();
                 CargarPuestos();
                 CargarTiposJornada();
             }
@@ -173,6 +175,24 @@ namespace ControlEmpresarial.Vistas.Colaborador
         private void MostrarAlerta(string mensaje)
         {
             ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('{mensaje}');", true);
+        }
+
+        private void CargarNombreUsuario()
+        {
+            // Obtener el nombre de las cookies
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                string nombre = cookie["Nombre"];
+                string apellidos = cookie["Apellidos"];
+                lblNombre.Text = nombre + " " + apellidos;
+                lblNombre.Visible = true;
+            }
+            else
+            {
+                lblNombre.Text = "Error";
+                lblNombre.Visible = true;
+            }
         }
     }
 }

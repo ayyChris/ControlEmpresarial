@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MenuSupervisor.aspx.cs" Inherits="ControlEmpresarial.Vistas.Pagina_Principal.MenuSupervisor" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MenuSupervisor.aspx.cs" Inherits="ControlEmpresarial.Vistas.MenuSupervisor" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
    <head runat="server">
@@ -55,7 +55,7 @@
          <header>
             <div class="cabecera-izquierda">
                <h1>Supervisor</h1>
-               <p>Jaim Martinez</p>
+               <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
             </div>
             <nav>
                <ul>

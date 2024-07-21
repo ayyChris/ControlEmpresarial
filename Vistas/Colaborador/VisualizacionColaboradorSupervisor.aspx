@@ -56,7 +56,7 @@
          <header>
             <div class="cabecera-izquierda">
                <h1>Supervisor</h1>
-               <p>Esteban Mata</p>
+               <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
             </div>
             <nav>
                <ul>

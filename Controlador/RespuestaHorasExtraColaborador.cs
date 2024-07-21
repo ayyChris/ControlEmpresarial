@@ -15,6 +15,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         {
             if (!IsPostBack)
             {
+                CargarNombreUsuario();
                 idSolicitud = Request.QueryString["idSolicitud"];
                 if (!string.IsNullOrEmpty(idSolicitud))
                 {
@@ -85,6 +86,23 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 da.Fill(dt);
             }
             return dt;
+        }
+        private void CargarNombreUsuario()
+        {
+            // Obtener el nombre de las cookies
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                string nombre = cookie["Nombre"];
+                string apellidos = cookie["Apellidos"];
+                lblNombre.Text = nombre + " " + apellidos;
+                lblNombre.Visible = true;
+            }
+            else
+            {
+                lblNombre.Text = "Error";
+                lblNombre.Visible = true;
+            }
         }
     }
 }

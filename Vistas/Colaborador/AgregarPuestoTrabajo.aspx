@@ -105,7 +105,7 @@ color: #5E58F8; /*color texto*/
           <header>
     <div class="cabecera-izquierda">
        <h1>Supervisor</h1>
-       <p>Jaim Martinez</p>
+       <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
     </div>
     <nav>
    <ul>

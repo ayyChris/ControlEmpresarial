@@ -203,10 +203,10 @@
     <Compile Include="Controlador\AgregarPuestoTrabajo.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controlador\ControladorPreVisualizacionHorasExtra.cs">
+    <Compile Include="Controlador\PreAceptacionHorasExtra.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controlador\ControladorRespuestaHorasExtraColaborador.cs">
+    <Compile Include="Controlador\RespuestaHorasExtraColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\ControladorSolicitudHorasExtra.cs">
@@ -216,6 +216,15 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\Login.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\MenuColaborador.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\MenuJefatura.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\MenuSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\VisualizacionColaboradorSupervisor.cs">

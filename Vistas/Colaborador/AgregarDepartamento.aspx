@@ -6,7 +6,7 @@
    <head runat="server">
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Solicitar Vacaciones</title>
+      <title>Agregar Departamento</title>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
       <link href="~/Estilos/app.css" type="text/css" rel="stylesheet">
       <style>
@@ -58,47 +58,47 @@
          }
 
          header nav ul {
-list-style-type: none;
-padding: 0;
-margin: 0;
-display: flex;
-gap: 20px; 
-}
-header nav ul li {
-position: relative;
-}
-header nav ul li a {
-text-decoration: none;
-padding: 10px;
-display: block;
-color: #000; 
-}
-header nav ul li.has-submenu .submenu {
-display: none;
-position: absolute;
-top: 100%;
-left: 0;
-background-color: white;
-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-z-index: 1;
-min-width: 200px;
-}
-header nav ul li.has-submenu:hover .submenu {
-display: block;
-color:#5E58F8;
-}
-header nav ul li.has-submenu .submenu li {
-padding: 0;
-}
-header nav ul li.has-submenu .submenu li a {
-padding: 10px;
-color: black;
-white-space: nowrap;
-display: block;
-}
-header nav ul li.has-submenu .submenu li a:hover {
-color: #5E58F8; /*color texto*/
-}
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 20px; 
+        }
+        header nav ul li {
+        position: relative;
+        }
+        header nav ul li a {
+        text-decoration: none;
+        padding: 10px;
+        display: block;
+        color: #000; 
+        }
+        header nav ul li.has-submenu .submenu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: white;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        min-width: 200px;
+        }
+        header nav ul li.has-submenu:hover .submenu {
+        display: block;
+        color:#5E58F8;
+        }
+        header nav ul li.has-submenu .submenu li {
+        padding: 0;
+        }
+        header nav ul li.has-submenu .submenu li a {
+        padding: 10px;
+        color: black;
+        white-space: nowrap;
+        display: block;
+        }
+        header nav ul li.has-submenu .submenu li a:hover {
+        color: #5E58F8; /*color texto*/
+        }
       </style>
    </head>
    <body>
@@ -106,7 +106,7 @@ color: #5E58F8; /*color texto*/
           <header>
     <div class="cabecera-izquierda">
        <h1>Supervisor</h1>
-       <p>Jaim Martinez</p>
+       <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
     </div>
    <nav>
    <ul>

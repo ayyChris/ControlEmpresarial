@@ -50,6 +50,7 @@ namespace ControlEmpresarial.Vistas
                                 // Obtener información del usuario
                                 string idEmpleado = lector["idEmpleado"].ToString();
                                 string nombre = lector["Nombre"].ToString();
+                                string apellidos = lector["Apellidos"].ToString();
                                 string correo = lector["Correo"].ToString();
                                 string idPuesto = lector["idPuesto"].ToString();
                                 string idDepartamento = lector["idDepartamento"].ToString();
@@ -58,6 +59,7 @@ namespace ControlEmpresarial.Vistas
                                 HttpCookie userCookie = new HttpCookie("UserInfo");
                                 userCookie["idEmpleado"] = idEmpleado;
                                 userCookie["Nombre"] = nombre;
+                                userCookie["Apellidos"] = apellidos;
                                 userCookie["Cedula"] = cedula;
                                 userCookie["Correo"] = correo;
                                 userCookie["idPuesto"] = idPuesto;
