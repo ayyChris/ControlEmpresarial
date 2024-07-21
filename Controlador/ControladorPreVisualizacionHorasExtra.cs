@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas.Horas_Extra
@@ -11,9 +12,22 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         {
             if (!IsPostBack)
             {
-                // Para ambiente de prueba, usa idEmpleado 1
-                int idEmpleado = 1;
-                CargarDatosTabla(idEmpleado);
+                HttpCookie userCookie = Request.Cookies["UserInfo"];
+                if (userCookie != null)
+                {
+                    // Obtener idEmpleado de la cookie
+                    int idEmpleado = int.Parse(userCookie["idEmpleado"]);
+
+                    // Usar idEmpleado para cargar datos
+                    CargarDatosTabla(idEmpleado);
+                }
+                else
+                {
+                    // Manejar el caso en el que la cookie no existe
+                    lblMensaje.Text = "No se ha encontrado la cookie de usuario.";
+                    lblMensaje.ForeColor = System.Drawing.Color.Red;
+                    lblMensaje.Visible = true;
+                }
             }
         }
 

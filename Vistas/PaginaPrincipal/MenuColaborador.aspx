@@ -62,7 +62,7 @@
                   <li class="has-submenu">
                      <a href="#">Horas Extras</a>
                      <ul class="submenu">
-                        <li><a href="#">Solicitar Horas Extras</a></li>
+                        <li><a href="../Horas Extra/PreAceptacionHorasExtra.aspx">Solicitudes Horas Extras</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">

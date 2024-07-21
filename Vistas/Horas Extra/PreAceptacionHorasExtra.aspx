@@ -168,6 +168,7 @@
                  </Columns>
              </asp:GridView>
          </div>
+                <asp:Label ID="lblMensaje" runat="server"></asp:Label>    
             </section>
         </main>
 

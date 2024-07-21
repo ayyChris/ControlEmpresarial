@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
+using System.Web;
 using System.Web.UI;
 
 namespace ControlEmpresarial.Vistas.Horas_Extra
@@ -23,7 +24,38 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 }
             }
         }
+        protected void AceptarButton_Click(object sender, EventArgs e)
+        {
+            HttpCookie userCookie = Request.Cookies["UserInfo"];
+            if (userCookie != null)
+            {
+                int idEmpleado = int.Parse(userCookie["idEmpleado"]);
+                string enlaceEvidencia = "Aceptada";
+                DateTime fechaEvidencia = DateTime.Now;
+                string estado = "Pendiente"; // Ajusta según sea necesario
 
+                InsertarEvidencia(idSolicitud, idEmpleado, enlaceEvidencia, fechaEvidencia, estado);
+            }
+        }
+
+        private void InsertarEvidencia(string idSolicitud, int idEmpleado, string enlaceEvidencia, DateTime fechaEvidencia, string estado)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "INSERT INTO evidenciahorasextras (idSolicitud, idEmpleado, EnlaceEvidencia, FechaEvidencia, Estado) " +
+                               "VALUES (@idSolicitud, @idEmpleado, @EnlaceEvidencia, @FechaEvidencia, @Estado)";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
+                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@EnlaceEvidencia", enlaceEvidencia);
+                cmd.Parameters.AddWithValue("@FechaEvidencia", fechaEvidencia);
+                cmd.Parameters.AddWithValue("@Estado", estado);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
         private void CargarDatos()
         {
             DataTable dt = ObtenerDatosBD();
