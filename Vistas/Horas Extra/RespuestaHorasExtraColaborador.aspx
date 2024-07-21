@@ -156,10 +156,10 @@
               <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
                   <h2><span class="fuente-delgada">Solicitud </span><span class="fuente-gruesa">de</span></h2>
             <br />
-                   <!-- Label para mostrar el idSolicitud -->
-                 <asp:Label ID="lblSolicitudId" runat="server" Text="ID de Solicitud: " Font-Bold="True" />
             <p>Horas Extra</p>
             <br />
+            <!-- Label para mostrar el idSolicitud -->
+                 <asp:Label ID="lblSolicitudId" runat="server" Text="ID de Solicitud: " Font-Bold="True" />
                    <label>Horas Solicitadas:</label>
             <asp:Label ID="lblHorasSolicitadas" runat="server" />
             <div class="Division-elementos">
@@ -174,9 +174,10 @@
             </div>
             <asp:Label ID="lblMotivo" runat="server" />
             <br />
-            <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar"/>
+            <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar" OnClick="AceptarButton_Click" />
             <br />
-            <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar"/>
+            <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar" OnClick="DenegarButton_Click" />
+
               </div>
           </section>
       </main>

@@ -149,6 +149,7 @@
     <Content Include="Imagenes\icono-tiempo.png" />
     <Content Include="Imagenes\icono-vacaciones.png" />
     <Content Include="Imagenes\jefe.png" />
+    <Content Include="Imagenes\like.svg" />
     <Content Include="Imagenes\logo.png" />
     <Content Include="Imagenes\notificacion.gif" />
     <Content Include="Imagenes\planta.png" />
@@ -162,6 +163,7 @@
     <Content Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx" />
+    <Content Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Contactenos.aspx" />
@@ -201,6 +203,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\AgregarPuestoTrabajo.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorAcceptDenyBoss.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorEvidenciaHorasExtra.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\PreAceptacionHorasExtra.cs">
@@ -278,10 +286,15 @@
     </Compile>
     <Compile Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx.cs">
       <DependentUpon>AceptarDenegarHorasExtraJefatura.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx.designer.cs">
       <DependentUpon>AceptarDenegarHorasExtraJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx.cs">
+      <DependentUpon>EvidenciaHorasExtra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx.designer.cs">
+      <DependentUpon>EvidenciaHorasExtra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx.cs">
       <DependentUpon>PreAceptacionHorasExtra.aspx</DependentUpon>

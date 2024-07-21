@@ -11,7 +11,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 {
 
 
-    public partial class RespuestaHorasExtra
+    public partial class EvidenciaHorasExtra
     {
 
         /// <summary>
@@ -33,66 +33,39 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         protected global::System.Web.UI.WebControls.Label lblNombre;
 
         /// <summary>
-        /// Control lblSolicitudId.
+        /// Control colaborador.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSolicitudId;
+        protected global::System.Web.UI.WebControls.DropDownList colaborador;
 
         /// <summary>
-        /// Control lblHorasSolicitadas.
+        /// Control Evidencia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHorasSolicitadas;
+        protected global::System.Web.UI.WebControls.TextBox Evidencia;
 
         /// <summary>
-        /// Control lblHoraInicialExtra.
+        /// Control submit.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHoraInicialExtra;
+        protected global::System.Web.UI.WebControls.Button submit;
 
         /// <summary>
-        /// Control lblHoraFinalExtra.
+        /// Control lblMensaje.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHoraFinalExtra;
-
-        /// <summary>
-        /// Control lblMotivo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMotivo;
-
-        /// <summary>
-        /// Control AceptarButton.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button AceptarButton;
-
-        /// <summary>
-        /// Control DenegarButton.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button DenegarButton;
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

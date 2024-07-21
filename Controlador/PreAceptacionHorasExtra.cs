@@ -49,7 +49,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             {
                 string query = "SELECT idSolicitud, FechaInicioSolicitud, FechaFinalSolicitud, HoraInicialExtra, HoraFinalExtra, HorasSolicitadas, Motivo " +
                                "FROM solicitudhorasextras " +
-                               "WHERE idEmpleado = @idEmpleado";
+                               "WHERE idEmpleado = @idEmpleado AND Estado = 'Activo'";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);

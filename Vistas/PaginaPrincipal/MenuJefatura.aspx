@@ -95,7 +95,7 @@
                      <a href="#">Horas Extras</a>
                      <ul class="submenu">
                         <li><a href="../Horas Extra/solicitudHorasExtrasJefatura.aspx">Asignar Horas Extras</a></li>
-                        <li><a href="#">Aceptar Horas Extras</a></li>
+                        <li><a href="../Horas Extra/AceptarDenegarHorasExtraJefatura.aspx">Aceptar Horas Extras</a></li>
                         <li><a href="../Horas Extra/HistoricoHorasExtrasJefatura.aspx">Historial Horas Extras</a></li>
                      </ul>
                   </li>

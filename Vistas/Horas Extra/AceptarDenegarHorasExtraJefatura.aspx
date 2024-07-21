@@ -130,7 +130,7 @@
             <a href="#">Horas Extras</a>
             <ul class="submenu">
                 <li><a href="../Horas Extra/solicitudHorasExtrasJefatura.aspx">Asignar Horas Extras</a></li>
-                <li><a href="#">Aceptar Horas Extras</a></li>
+                <li><a href="../Horas Extra/AceptarDenegarHorasExtraJefatura.aspx">Aceptar Horas Extras</a></li>
                 <li><a href="../Horas Extra/HistoricoHorasExtrasJefatura.aspx">Historial Horas Extras</a></li>
             </ul>
         </li>
@@ -155,28 +155,28 @@
     </div>
 </header>
         <main>
-             <section class="seccion-imagen">
-                <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra"/>
-            </section>
-            <section class="seccion-formulario"/>
+    <section class="seccion-imagen">
+        <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra"/>
+    </section>
     <section class="seccion-formulario">
+         
         <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
-               <h2><span class="fuente-delgada">Evidencia de</span><br/><span class="fuente-gruesa">Dinamic Name</span></h2>
-            <br />
-            <p>Horas Extra</p>
+            <h2><spam class="fuente-delgada">Empleado</spam></h2>
+            <asp:DropDownList ID="colaborador" runat="server" AutoPostBack="True" OnSelectedIndexChanged="colaborador_SelectedIndexChanged"></asp:DropDownList>
+            <h2><span class="fuente-delgada">Evidencia de</span><br/><span class="fuente-gruesa">Horas Extra</span></h2>
             <br />
             <label>Fecha de respuesta:</label>
-            <asp:Label>Dinamic</asp:Label>
-            <div class="Division-elementos">
-            </div>
-            <asp:Label CssClass="">Dinamic Response</asp:Label>
+            <asp:Label ID="lblFechaRespuesta" runat="server" CssClass="dinamic-label"></asp:Label>
+            <br />
+            <asp:Label ID="lblEvidencia" runat="server" CssClass="dinamic-label"></asp:Label>
             <br />
             <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar"/>
             <br />
             <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar"/>
         </div>
     </section>
-        </main>
+</main>
+
         <div class="divisor-forma-personalizado">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="relleno-forma"></path>
