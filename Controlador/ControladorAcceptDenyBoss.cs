@@ -67,6 +67,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 }
             }
         }
+
         private DataTable ObtenerData(int idEmpleado)
         {
             DataTable dt = new DataTable();
@@ -74,9 +75,10 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string query = "SELECT idEvidencia, idSolicitud " +
-                               "FROM evidenciahorasextras " +
-                               "WHERE idEmpleado = @idEmpleado AND Estado = 'Evidenciada'";
+                string query = "SELECT e.idEvidencia, e.idSolicitud, en.idEntrada " +
+                               "FROM evidenciahorasextras e " +
+                               "JOIN entradas en ON e.idEmpleado = en.idEmpleado " +
+                               "WHERE e.idEmpleado = @idEmpleado AND e.Estado = 'Evidenciada'";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -89,6 +91,39 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
             return dt;
         }
+        private bool ActualizarEstado(int idSolicitud, int idEmpleado)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "UPDATE evidenciahorasextras " +
+                               "SET Estado = 'Revisada' " +
+                               "WHERE idSolicitud = @idSolicitud AND idEmpleado = @idEmpleado";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
+                    cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+
+                    try
+                    {
+                        conn.Open();
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        lblMensaje.Text = ("Error al actualizar: "+ex);
+                        lblMensaje.CssClass = "mensaje-exito";
+                        lblMensaje.Visible = true;
+                        return false;
+                    }
+                }
+            }
+        }
+
+
         private DataTable ObtenerEvidencias(int idEmpleado)
         {
             DataTable dt = new DataTable();
@@ -112,5 +147,194 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             return dt;
         }
 
+        private DataTable ObtenerDatosSolicitud(int idSolicitud)
+        {
+            DataTable dt = new DataTable();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT FechaFinalSolicitud, HorasSolicitadas " +
+                               "FROM solicitudhorasextras " +
+                               "WHERE idSolicitud = @idSolicitud";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
+                    conn.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+        protected void DenegarButton_Click(object sender, EventArgs e)
+        {
+            int idEmpleado;
+            if (int.TryParse(colaborador.SelectedValue, out idEmpleado))
+            {
+                DataTable dtEvidencias = ObtenerData(idEmpleado);
+
+                if (dtEvidencias.Rows.Count > 0)
+                {
+                    DataRow row = dtEvidencias.Rows[0];
+
+                    int idEvidencia = Convert.ToInt32(row["idEvidencia"]);
+                    int idEntrada = Convert.ToInt32(row["idEntrada"]);
+                    int idSolicitud = Convert.ToInt32(row["idSolicitud"]);
+
+                    DataTable dtSolicitud = ObtenerDatosSolicitud(idSolicitud);
+                    if (dtSolicitud.Rows.Count > 0)
+                    {
+                        DataRow solicitudRow = dtSolicitud.Rows[0];
+
+                        DateTime fechaTrabajo = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
+                        int horasTrabajadas = Convert.ToInt32(solicitudRow["HorasSolicitadas"]);
+                        string Aceptacion = "Denegada";
+
+                        bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
+
+                        if (insertado)
+                        {
+                            // Actualizar el estado después de la inserción
+                            bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
+                            if (estadoActualizado)
+                            {
+                                lblMensaje.Text = "Horas extras insertadas y estado actualizado correctamente.";
+                                lblMensaje.CssClass = "mensaje-exito";
+                                lblMensaje.Visible = true;
+                            }
+                            else
+                            {
+                                lblMensaje.Text = "Horas extras insertadas, pero no se pudo actualizar el estado.";
+                                lblMensaje.CssClass = "mensaje-error";
+                                lblMensaje.Visible = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "No se encontraron datos de la solicitud.";
+                        lblMensaje.CssClass = "mensaje-error";
+                        lblMensaje.Visible = true;
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "No hay evidencias disponibles para el empleado seleccionado.";
+                    lblMensaje.CssClass = "mensaje-error";
+                    lblMensaje.Visible = true;
+                }
+            }
+            else
+            {
+                lblMensaje.Text = "Seleccione un colaborador válido.";
+                lblMensaje.CssClass = "mensaje-error";
+                lblMensaje.Visible = true;
+            }
+        }
+
+        protected void AceptarButton_Click(object sender, EventArgs e)
+        {
+            int idEmpleado;
+            if (int.TryParse(colaborador.SelectedValue, out idEmpleado))
+            {
+                DataTable dtEvidencias = ObtenerData(idEmpleado);
+
+                if (dtEvidencias.Rows.Count > 0)
+                {
+                    DataRow row = dtEvidencias.Rows[0];
+
+                    int idEvidencia = Convert.ToInt32(row["idEvidencia"]);
+                    int idEntrada = Convert.ToInt32(row["idEntrada"]);
+                    int idSolicitud = Convert.ToInt32(row["idSolicitud"]);
+
+                    DataTable dtSolicitud = ObtenerDatosSolicitud(idSolicitud);
+                    if (dtSolicitud.Rows.Count > 0)
+                    {
+                        DataRow solicitudRow = dtSolicitud.Rows[0];
+
+                        DateTime fechaTrabajo = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
+                        int horasTrabajadas = Convert.ToInt32(solicitudRow["HorasSolicitadas"]);
+                        string Aceptacion = "Aceptada";
+
+                        bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
+
+                        if (insertado)
+                        {
+                            // Actualizar el estado después de la inserción
+                            bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
+                            if (estadoActualizado)
+                            {
+                                lblMensaje.Text = "Horas extras insertadas y estado actualizado correctamente.";
+                                lblMensaje.CssClass = "mensaje-exito";
+                                lblMensaje.Visible = true;
+                            }
+                            else
+                            {
+                                lblMensaje.Text = "Horas extras insertadas, pero no se pudo actualizar el estado.";
+                                lblMensaje.CssClass = "mensaje-error";
+                                lblMensaje.Visible = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "No se encontraron datos de la solicitud.";
+                        lblMensaje.CssClass = "mensaje-error";
+                        lblMensaje.Visible = true;
+                    }
+                }
+                else
+                {
+                    lblMensaje.Text = "No hay evidencias disponibles para el empleado seleccionado.";
+                    lblMensaje.CssClass = "mensaje-error";
+                    lblMensaje.Visible = true;
+                }
+            }
+            else
+            {
+                lblMensaje.Text = "Seleccione un colaborador válido.";
+                lblMensaje.CssClass = "mensaje-error";
+                lblMensaje.Visible = true;
+            }
+        }
+
+        private bool InsertarHorasExtras(int idEmpleado, int idEvidencia, DateTime fechaTrabajo, int horasTrabajadas, int idEntrada, string Aceptacion)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "INSERT INTO horasextras (idEmpleado, idEvidencia, FechaTrabajo, HorasTrabajadas, idEntrada, Aceptacion) " +
+                               "VALUES (@idEmpleado, @idEvidencia, @fechaTrabajo, @horasTrabajadas, @idEntrada, @Aceptacion)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                    cmd.Parameters.AddWithValue("@idEvidencia", idEvidencia);
+                    cmd.Parameters.AddWithValue("@fechaTrabajo", fechaTrabajo);
+                    cmd.Parameters.AddWithValue("@horasTrabajadas", horasTrabajadas);
+                    cmd.Parameters.AddWithValue("@idEntrada", idEntrada);
+                    cmd.Parameters.AddWithValue("@Aceptacion" , Aceptacion);
+
+                    try
+                    {
+                        conn.Open();
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Manejo de excepciones (log, mostrar mensaje, etc.)
+                        lblMensaje.Text = "Error al insertar los datos: " + ex.Message;
+                        lblMensaje.CssClass = "mensaje-error";
+                        lblMensaje.Visible = true;
+                        return false;
+                    }
+                }
+            }
+        }
     }
 }

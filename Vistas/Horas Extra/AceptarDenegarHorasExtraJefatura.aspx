@@ -170,9 +170,10 @@
             <br />
             <asp:Label ID="lblEvidencia" runat="server" CssClass="dinamic-label"></asp:Label>
             <br />
-            <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar"/>
+            <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar" OnClick="AceptarButton_Click" />
             <br />
-            <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar"/>
+            <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar" OnClick="DenegarButton_Click"/>
+            <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
         </div>
     </section>
 </main>

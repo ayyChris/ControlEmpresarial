@@ -160,11 +160,11 @@
                   <div class="entradas-horario">
                      <div>
                         <label class="fuente-morada" for="hora-inicio">Hora inicio</label>
-                        <asp:TextBox ID="horaInicio" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="horaInicio" runat="server" ></asp:TextBox>
                      </div>
                      <div>
                         <label class="fuente-morada" for="hora-final">Hora final</label>
-                        <asp:TextBox ID="horaFinal" runat="server"></asp:TextBox>
+                        <asp:TextBox ID="horaFinal" runat="server" ></asp:TextBox>
                      </div>
                   </div>
                   <br />
