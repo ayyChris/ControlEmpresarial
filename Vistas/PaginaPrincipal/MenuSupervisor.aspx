@@ -48,6 +48,23 @@
          header nav ul li.has-submenu .submenu li a:hover {
          color: #5E58F8; /*color texto*/
          }
+
+         /*css*/
+         .options-menu {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; 
+        }
+        
+        .option-menu {
+            width: calc(33.33% - 20px); 
+            margin-bottom: 20px; 
+            text-align: center; 
+        }
+        
+        .option-menu.full-width {
+            width: 100%; 
+        }
       </style>
    </head>
    <body>
@@ -74,8 +91,10 @@
                   <li class="has-submenu">
                      <a href="#">Colaborador</a>
                      <ul class="submenu">
-                        <li><a href="../Vacaciones/VisualizacionColaboradorSupervisor.aspx">Registrar Colaborador</a></li>
-                        <li><a href="#">Ver Colaboradores</a></li>
+                         <li><a href="../Colaborador/AgregarDepartamento.aspx">Añadir Departamento</a></li>
+                         <li><a href="../Colaborador/AgregarPuestoTrabajo.aspx">Añadir Puesto de trabajo</a></li>
+                         <li><a href="../Colaborador/AgregarHorario.aspx">Añadir Horario</a></li>
+                        <li><a href="../Colaborador/VisualizacionColaboradorSupervisor.aspx">Ver Colaboradores</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">
@@ -116,17 +135,22 @@
                <p>ActivitySync ofrecemos distintas opciones para la gestión de nuestros empleados con la intención de mantener un sistema autogestionable.</p>
             </div>
             <div class="options-menu">
-               <div class="option-menu">
-                  <a href="#"><img src="../../Imagenes/icono-escritura.png" alt="Permisos" /></a>
-                  <h3>Rebajos</h3>
-                  <p>Revise el historial de rebajos que se han registrado.</p>
-               </div>
-               <div class="option-menu">
-                  <a href="#"><img src="../../Imagenes/icono-vacaciones.png" alt="Control de actividades" /></a>
-                  <h3>Vacaciones Colectivas</h3>
-                  <p>Registre las vacaciones colectivas para los colaboradores y la jefatura.</p>
-               </div>
+            <div class="option-menu">
+                <a href="#"><img src="../../Imagenes/icono-escritura.png" alt="Permisos" /></a>
+                <h3>Rebajos</h3>
+                <p>Revise el historial de rebajos que se han registrado.</p>
             </div>
+            <div class="option-menu">
+                <a href="#"><img src="../../Imagenes/icono-vacaciones.png" alt="Control de actividades" /></a>
+                <h3>Vacaciones Colectivas</h3>
+                <p>Registre las vacaciones colectivas para los colaboradores y la jefatura.</p>
+            </div>
+            <div class="option-menu full-width">
+                <a href="../Colaborador/VisualizacionColaboradorSupervisor.aspx"><img src="../../Imagenes/icono-colaborador.png" alt="Colaboradores" /></a>
+                <h3>Colaboradores</h3>
+                <p>Vea los colaboradores de los departamentos.</p>
+            </div>
+        </div>
          </div>
          <footer class="footer">
             <div>

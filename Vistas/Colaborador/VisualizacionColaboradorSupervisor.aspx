@@ -58,27 +58,61 @@
                <h1>Supervisor</h1>
                <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
             </div>
-            <nav>
-               <ul>
-                  <li><a class="activo" href="#">Colaborador</a></li>
-                  <li><a href="#">Rebajos</a></li>
-                  <li><a href="#">Permisos</a></li>
-                  <li><a href="#">Incapacidades</a></li>
-                  <li><a href="#">Inconsistencias</a></li>
-                  <li><a href="#">Asignar Actividades</a></li>
-                  <li><a href="#">Reposición</a></li>
-                  <li><a href="#">Horas Extras</a></li>
-                  <li><a href="#">Vacaciones</a></li>
-                  <li><a href="#">Solicitudes</a></li>
-                  <li><a href="#">Marcas</a></li>
-               </ul>
-            </nav>
-            <div class="cabecera-derecha">
-               <button class="boton-notificacion">
-               <img src="../../Imagenes/notificacion.gif" alt="Notificación">
-               </button>
-            </div>
-         </header>
+               <nav>
+      <ul>
+         <li class="has-submenu">
+            <a href="#">Rebajos</a>
+            <ul class="submenu">
+               <li><a href="../Rebajos/VisualizacionRebajos.aspx">Historial de Rebajos</a></li>
+            </ul>
+         </li>
+         <li class="has-submenu">
+            <a href="#">Vacaciones Colectivas</a>
+            <ul class="submenu">
+               <li><a href="../Vacaciones/vacacionColectiva.aspx">Solicitar Permiso</a></li>
+            </ul>
+         </li>
+         <li class="has-submenu">
+            <a href="#">Colaborador</a>
+            <ul class="submenu">
+                <li><a href="../Colaborador/AgregarDepartamento.aspx">Añadir Departamento</a></li>
+                <li><a href="../Colaborador/AgregarPuestoTrabajo.aspx">Añadir Puesto de trabajo</a></li>
+                <li><a href="../Colaborador/AgregarHorario.aspx">Añadir Horario</a></li>
+               <li><a href="../Colaborador/VisualizacionColaboradorSupervisor.aspx">Ver Colaboradores</a></li>
+            </ul>
+         </li>
+         <li class="has-submenu">
+            <a href="#">Incapacidades</a>
+            <ul class="submenu">
+               <li><a href="../Incapacidades/VisualizacionIncapacidad.aspx">Historial de incapacidades</a></li>
+            </ul>
+         </li>
+         <li class="has-submenu">
+            <a href="#">Inconsistencias</a>
+            <ul class="submenu">
+               <li><a href="../Inconsistencias/VisualizacionInconsistencias.aspx">Historial de inconsistencias</a></li>
+            </ul>
+         </li>
+         <li class="has-submenu">
+            <a href="#">Permisos</a>
+            <ul class="submenu">
+               <li><a href="../Permisos/VisualizacionPermisos.aspx">Historial de Permisos</a></li>
+            </ul>
+         </li>
+         <li class="has-submenu">
+            <a href="#">Reposiciones</a>
+            <ul class="submenu">
+               <li><a href="../Reposicion/.aspx">Historial de Reposiciones</a></li>
+            </ul>
+         </li>
+      </ul>
+   </nav>
+   <div class="cabecera-derecha">
+      <button class="boton-notificacion">
+      <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>
+      </button>
+   </div>
+</header>
          <main>
             <section class="seccion-imagen">
                <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra">

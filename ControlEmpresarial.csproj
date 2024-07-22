@@ -140,6 +140,7 @@
     <Content Include="Imagenes\colaborador.png" />
     <Content Include="Imagenes\contactenos-imagen.png" />
     <Content Include="Imagenes\icono-actividades.png" />
+    <Content Include="Imagenes\icono-colaborador.png" />
     <Content Include="Imagenes\icono-escritura.png" />
     <Content Include="Imagenes\icono-horasExtras.png" />
     <Content Include="Imagenes\icono-inconsistencias.png" />
@@ -184,6 +185,7 @@
     <Content Include="Vistas\Vacaciones\solicitarVacacionColaborador.aspx" />
     <Content Include="Vistas\Horas Extra\solicitudHorasExtrasJefatura.aspx" />
     <Content Include="Vistas\Vacaciones\solicitudVacacionesJefatura.aspx" />
+    <Content Include="Vistas\Vacaciones\TablaPreVisualizacionVacaciones.aspx" />
     <Content Include="Vistas\Vacaciones\vacacionColectiva.aspx" />
     <Content Include="Vistas\Colaborador\VisualizacionColaboradorSupervisor.aspx" />
     <Content Include="Vistas\Incapacidades\VisualizacionIncapacidad.aspx" />
@@ -432,6 +434,13 @@
     </Compile>
     <Compile Include="Vistas\Vacaciones\solicitudVacacionesJefatura.aspx.designer.cs">
       <DependentUpon>solicitudVacacionesJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\TablaPreVisualizacionVacaciones.aspx.cs">
+      <DependentUpon>TablaPreVisualizacionVacaciones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\TablaPreVisualizacionVacaciones.aspx.designer.cs">
+      <DependentUpon>TablaPreVisualizacionVacaciones.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionColectiva.aspx.cs">
       <DependentUpon>vacacionColectiva.aspx</DependentUpon>

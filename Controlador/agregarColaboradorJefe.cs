@@ -29,13 +29,6 @@ namespace ControlEmpresarial.Vistas.Colaborador
             string contraseña = passwordUsuario.Text.Trim();
             int idPuesto = Convert.ToInt32(puesto.SelectedValue);
             int idHorario = Convert.ToInt32(horario.SelectedValue);
-            System.Diagnostics.Debug.WriteLine(nombre);
-            System.Diagnostics.Debug.WriteLine(apellidos);
-            System.Diagnostics.Debug.WriteLine(cedula);
-            System.Diagnostics.Debug.WriteLine(correo);
-            System.Diagnostics.Debug.WriteLine(contraseña);
-            System.Diagnostics.Debug.WriteLine(idPuesto);
-            System.Diagnostics.Debug.WriteLine(idHorario);
 
             if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(apellidos) || string.IsNullOrEmpty(cedula) || string.IsNullOrEmpty(correo) || string.IsNullOrEmpty(contraseña) || idPuesto == 0 || idHorario == 0)
             {
@@ -46,26 +39,53 @@ namespace ControlEmpresarial.Vistas.Colaborador
             // Valores quemados
             int diasDeVacaciones = 0;
             string estado = "Activo";
-            int idDepartamento = Session["idDepartamento"] != null ? Convert.ToInt32(Session["idDepartamento"]) : 0;
-            //int idDepartamento = 1;
-            // Guardar en la base de datos
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
-            try
-            {
-                GuardarEmpleadoEnBaseDeDatos(nombre, apellidos, cedula, correo, contraseña, diasDeVacaciones, estado, idPuesto, idHorario, idDepartamento, connectionString);
 
-                // Mostrar mensaje de éxito
-                MostrarAlerta("Empleado registrado correctamente.");
-                LimpiarCampos();
-            }
-            catch (MySqlException ex)
+            // Obtener el valor de las cookies
+            string cookiesString = Request.Cookies["UserInfo"].Value; 
+
+            string[] keyValuePairs = cookiesString.Split('&');
+
+            // Buscar el valor de idDepartamento
+            string idDepartamentoValue = null;
+            foreach (string pair in keyValuePairs)
             {
-                MostrarAlerta($"Error de MySQL: {ex.Message} - Código: {ex.Number}");
+                string[] keyValue = pair.Split('=');
+                if (keyValue.Length == 2 && keyValue[0] == "idDepartamento")
+                {
+                    idDepartamentoValue = keyValue[1];
+                    break;
+                }
             }
-            catch (Exception ex)
+
+            // idDepartamentoValue ahora contiene el valor de idDepartamento
+            if (idDepartamentoValue != null)
             {
-                MostrarAlerta($"Error al registrar empleado: {ex.Message}");
+                int idDepartamento = Convert.ToInt32(idDepartamentoValue);
+                System.Diagnostics.Debug.WriteLine(idDepartamento);
+                string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
+                try
+                {
+                    GuardarEmpleadoEnBaseDeDatos(nombre, apellidos, cedula, correo, contraseña, diasDeVacaciones, estado, idPuesto, idHorario, idDepartamento, connectionString);
+
+                    // Mostrar mensaje de éxito
+                    MostrarAlerta("Empleado registrado correctamente.");
+                    LimpiarCampos();
+                }
+                catch (MySqlException ex)
+                {
+                    MostrarAlerta($"Error de MySQL: {ex.Message} - Código: {ex.Number}");
+                }
+                catch (Exception ex)
+                {
+                    MostrarAlerta($"Error al registrar empleado: {ex.Message}");
+                }
             }
+            else
+            {
+                // Mostrar mensaje de error si no se encontró idDepartamento
+                MostrarAlerta("No se ingresó adecuadamente a la sesión, intente de nuevo.");
+            }
+            
         }
 
         private void CargarPuestos()
