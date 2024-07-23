@@ -48,6 +48,49 @@
          header nav ul li.has-submenu .submenu li a:hover {
          color: #5E58F8; /*color texto*/
          }
+
+         
+         /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #fff; /* Color blanco para el fondo del sidebar */
+            color: #000; /* Color del texto */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra del box */
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #000; /* Color de los enlaces */
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #007bff; /* Color al pasar el mouse sobre los enlaces */
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            color: #000; /* Color del botón de cerrar */
+        }
+
+        .sidebar-content {
+            padding: 15px;
+            color: #000; /* Color del texto dentro del contenido del sidebar */
+        }
       </style>
    </head>
    <body>
@@ -105,10 +148,26 @@
                   </li>
                </ul>
             </nav>
-            <div class="cabecera-derecha">
-               <button class="boton-notificacion">
+             <div class="cabecera-derecha">
+               <button type="button" id="notificacionesLink" class="boton-notificacion">
                <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>
                </button>
+            </div>
+
+             <div id="mySidebar" class="sidebar">
+                <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+                <div class="sidebar-content">
+                    <h2>Notificaciones</h2>
+                    <asp:Repeater ID="repeaterNotificaciones" runat="server">
+                        <ItemTemplate>
+                            <div>
+                                <strong><%# Eval("Titulo") %></strong><br />
+                                <em><%# Eval("Fecha", "{0:dd/MM/yyyy}") %></em><br />
+                                <%# Eval("Motivo") %>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
             </div>
          </header>
          <div class="container-menu">
@@ -185,5 +244,26 @@
             </div>
          </footer>
       </form>
+       <script>
+           document.addEventListener("DOMContentLoaded", function () {
+               var sidebar = document.getElementById("mySidebar");
+               var openBtn = document.getElementById("notificacionesLink");
+               var closeBtn = document.getElementById("closeBtn");
+
+               openBtn.onclick = function () {
+                   sidebar.style.width = "300px";
+               }
+
+               closeBtn.onclick = function () {
+                   sidebar.style.width = "0";
+               }
+
+               window.onclick = function (event) {
+                   if (event.target == sidebar) {
+                       sidebar.style.width = "0";
+                   }
+               }
+           });
+       </script>
    </body>
 </html>
