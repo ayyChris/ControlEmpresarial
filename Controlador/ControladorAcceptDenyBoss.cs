@@ -1,7 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Data;
-using System.Web;
 using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas.Horas_Extra
@@ -91,6 +90,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
             return dt;
         }
+
         private bool ActualizarEstado(int idSolicitud, int idEmpleado)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
@@ -114,15 +114,14 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                     }
                     catch (Exception ex)
                     {
-                        lblMensaje.Text = ("Error al actualizar: "+ex);
-                        lblMensaje.CssClass = "mensaje-exito";
+                        lblMensaje.Text = "Error al actualizar: " + ex.Message;
+                        lblMensaje.CssClass = "mensaje-error";
                         lblMensaje.Visible = true;
                         return false;
                     }
                 }
             }
         }
-
 
         private DataTable ObtenerEvidencias(int idEmpleado)
         {
@@ -154,7 +153,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string query = "SELECT FechaFinalSolicitud, HorasSolicitadas " +
+                string query = "SELECT FechaFinalSolicitud, HorasSolicitadas, HoraInicialExtra " +
                                "FROM solicitudhorasextras " +
                                "WHERE idSolicitud = @idSolicitud";
 
@@ -169,6 +168,95 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
             return dt;
         }
+
+        private DataTable ObtenerEntradas(int idEmpleado)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            DataTable dt = new DataTable();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT idEmpleado, DiaMarcado, HoraEntrada " +
+                               "FROM entradas " +
+                               "WHERE idEmpleado = @idEmpleado";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                    conn.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
+        private DataTable ObtenerSolicitudHorasExtras(int idEmpleado)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            DataTable dt = new DataTable();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT FechaFinalSolicitud, HoraInicialExtra " +
+                               "FROM solicitudhorasextras " +
+                               "WHERE idEmpleado = @idEmpleado";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                    conn.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
+        // Método ValidarEntrada
+        private bool ValidarEntrada(int idEmpleado, DateTime fechaSolicitud, TimeSpan horaSolicitud)
+        {
+            DataTable dtEntradas = ObtenerEntradas(idEmpleado);
+            DataTable dtSolicitudes = ObtenerSolicitudHorasExtras(idEmpleado);
+
+            // Verificar si hay datos en ambas tablas
+            if (dtEntradas.Rows.Count > 0 && dtSolicitudes.Rows.Count > 0)
+            {
+                // Obtén los datos de la primera fila de cada DataTable
+                DataRow entradaRow = dtEntradas.Rows[0];
+                DataRow solicitudRow = dtSolicitudes.Rows[0];
+
+                // Extraer los datos
+                DateTime diaMarcado = Convert.ToDateTime(entradaRow["DiaMarcado"]);
+                TimeSpan horaEntrada = TimeSpan.Parse(entradaRow["HoraEntrada"].ToString());
+                DateTime fechaFinalSolicitud = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
+                TimeSpan horaInicialSolicitud = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
+
+                lblDebugInfo.Text = $"Datos de Entrada: idEmpleado = {entradaRow["idEmpleado"]}, DiaMarcado = {diaMarcado.ToShortDateString()}, HoraEntrada = {horaEntrada}<br>" +
+                                    $"Datos de Solicitud: FechaFinalSolicitud = {fechaFinalSolicitud.ToShortDateString()}, HoraInicialSolicitud = {horaInicialSolicitud}";
+                lblDebugInfo.Visible = true;
+
+                // Verificar coincidencia de datos
+                bool coincidencia = diaMarcado.Date == fechaSolicitud.Date && horaEntrada == horaSolicitud;
+
+                // Mostrar el resultado de validación en la interfaz de usuario
+                lblValidacion.Text = $"¿Coinciden los datos? {coincidencia}";
+                lblValidacion.Visible = true;
+
+                return coincidencia;
+            }
+            else
+            {
+                lblValidacion.Text = "No se encontraron datos suficientes para validar.";
+                lblValidacion.CssClass = "mensaje-error";
+                lblValidacion.Visible = true;
+                return false;
+            }
+        }
+
+
         protected void DenegarButton_Click(object sender, EventArgs e)
         {
             int idEmpleado;
@@ -191,45 +279,56 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
                         DateTime fechaTrabajo = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
                         int horasTrabajadas = Convert.ToInt32(solicitudRow["HorasSolicitadas"]);
-                        string Aceptacion = "Denegada";
+                        TimeSpan horaInicialExtra = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
 
-                        bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
+                        bool entradaValida = ValidarEntrada(idEmpleado, fechaTrabajo, horaInicialExtra);
 
-                        if (insertado)
+                        if (entradaValida)
                         {
-                            // Actualizar el estado después de la inserción
-                            bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
-                            if (estadoActualizado)
+                            string Aceptacion = "Denegada";
+                            bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
+
+                            if (insertado)
                             {
-                                lblMensaje.Text = "Horas extras insertadas y estado actualizado correctamente.";
-                                lblMensaje.CssClass = "mensaje-exito";
-                                lblMensaje.Visible = true;
+                                bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
+                                if (estadoActualizado)
+                                {
+                                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Horas extras denegadas y estado actualizado correctamente.";
+                                    lblMensaje.CssClass = "mensaje-error";
+                                    lblMensaje.Visible = true;
+                                }
+                                else
+                                {
+                                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Horas extras denegadas, pero no se pudo actualizar el estado.";
+                                    lblMensaje.CssClass = "mensaje-error";
+                                    lblMensaje.Visible = true;
+                                }
                             }
-                            else
-                            {
-                                lblMensaje.Text = "Horas extras insertadas, pero no se pudo actualizar el estado.";
-                                lblMensaje.CssClass = "mensaje-error";
-                                lblMensaje.Visible = true;
-                            }
+                        }
+                        else
+                        {
+                            lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontró una entrada válida para la hora inicial de la solicitud.";
+                            lblMensaje.CssClass = "mensaje-error";
+                            lblMensaje.Visible = true;
                         }
                     }
                     else
                     {
-                        lblMensaje.Text = "No se encontraron datos de la solicitud.";
+                        lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontraron datos de la solicitud.";
                         lblMensaje.CssClass = "mensaje-error";
                         lblMensaje.Visible = true;
                     }
                 }
                 else
                 {
-                    lblMensaje.Text = "No hay evidencias disponibles para el empleado seleccionado.";
+                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No hay evidencias disponibles para el empleado seleccionado.";
                     lblMensaje.CssClass = "mensaje-error";
                     lblMensaje.Visible = true;
                 }
             }
             else
             {
-                lblMensaje.Text = "Seleccione un colaborador válido.";
+                lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Seleccione un colaborador válido.";
                 lblMensaje.CssClass = "mensaje-error";
                 lblMensaje.Visible = true;
             }
@@ -245,7 +344,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 if (dtEvidencias.Rows.Count > 0)
                 {
                     DataRow row = dtEvidencias.Rows[0];
-
                     int idEvidencia = Convert.ToInt32(row["idEvidencia"]);
                     int idEntrada = Convert.ToInt32(row["idEntrada"]);
                     int idSolicitud = Convert.ToInt32(row["idSolicitud"]);
@@ -254,52 +352,62 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                     if (dtSolicitud.Rows.Count > 0)
                     {
                         DataRow solicitudRow = dtSolicitud.Rows[0];
-
                         DateTime fechaTrabajo = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
                         int horasTrabajadas = Convert.ToInt32(solicitudRow["HorasSolicitadas"]);
-                        string Aceptacion = "Aceptada";
+                        TimeSpan horaInicialExtra = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
 
-                        bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
-
-                        if (insertado)
+                        bool entradaValida = ValidarEntrada(idEmpleado, fechaTrabajo, horaInicialExtra);
+                        if (entradaValida)
                         {
-                            // Actualizar el estado después de la inserción
-                            bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
-                            if (estadoActualizado)
+                            string Aceptacion = "Aceptada";
+                            bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
+
+                            if (insertado)
                             {
-                                lblMensaje.Text = "Horas extras insertadas y estado actualizado correctamente.";
-                                lblMensaje.CssClass = "mensaje-exito";
-                                lblMensaje.Visible = true;
+                                bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
+                                if (estadoActualizado)
+                                {
+                                    lblMensaje.Text = "<i class='fas fa-thumbs-up'></i> Horas extras aceptadas y estado actualizado correctamente.";
+                                    lblMensaje.CssClass = "mensaje-exito";
+                                    lblMensaje.Visible = true;
+                                }
+                                else
+                                {
+                                    lblMensaje.Text = "<i class='fas fa-thumbs-up'></i> Horas extras aceptadas, pero no se pudo actualizar el estado.";
+                                    lblMensaje.CssClass = "mensaje-error";
+                                    lblMensaje.Visible = true;
+                                }
                             }
-                            else
-                            {
-                                lblMensaje.Text = "Horas extras insertadas, pero no se pudo actualizar el estado.";
-                                lblMensaje.CssClass = "mensaje-error";
-                                lblMensaje.Visible = true;
-                            }
+                        }
+                        else
+                        {
+                            lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontró una entrada válida para la hora inicial de la solicitud.";
+                            lblMensaje.CssClass = "mensaje-error";
+                            lblMensaje.Visible = true;
                         }
                     }
                     else
                     {
-                        lblMensaje.Text = "No se encontraron datos de la solicitud.";
+                        lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontraron datos de la solicitud.";
                         lblMensaje.CssClass = "mensaje-error";
                         lblMensaje.Visible = true;
                     }
                 }
                 else
                 {
-                    lblMensaje.Text = "No hay evidencias disponibles para el empleado seleccionado.";
+                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No hay evidencias disponibles para el empleado seleccionado.";
                     lblMensaje.CssClass = "mensaje-error";
                     lblMensaje.Visible = true;
                 }
             }
             else
             {
-                lblMensaje.Text = "Seleccione un colaborador válido.";
+                lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Seleccione un colaborador válido.";
                 lblMensaje.CssClass = "mensaje-error";
                 lblMensaje.Visible = true;
             }
         }
+
 
         private bool InsertarHorasExtras(int idEmpleado, int idEvidencia, DateTime fechaTrabajo, int horasTrabajadas, int idEntrada, string Aceptacion)
         {
@@ -317,7 +425,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                     cmd.Parameters.AddWithValue("@fechaTrabajo", fechaTrabajo);
                     cmd.Parameters.AddWithValue("@horasTrabajadas", horasTrabajadas);
                     cmd.Parameters.AddWithValue("@idEntrada", idEntrada);
-                    cmd.Parameters.AddWithValue("@Aceptacion" , Aceptacion);
+                    cmd.Parameters.AddWithValue("@Aceptacion", Aceptacion);
 
                     try
                     {
@@ -327,7 +435,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                     }
                     catch (Exception ex)
                     {
-                        // Manejo de excepciones (log, mostrar mensaje, etc.)
                         lblMensaje.Text = "Error al insertar los datos: " + ex.Message;
                         lblMensaje.CssClass = "mensaje-error";
                         lblMensaje.Visible = true;

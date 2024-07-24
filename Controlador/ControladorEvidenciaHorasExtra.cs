@@ -1,4 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ControlEmpresarial.Controlador;
+using ControlEmpresarial.Services;
+using MySql.Data.MySqlClient;
 using System;
 using System.Data;
 using System.Web;
@@ -17,6 +19,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 CargarDatos();
             }
         }
+
         protected void submit_Click(object sender, EventArgs e)
         {
             HttpCookie userCookie = Request.Cookies["UserInfo"];
@@ -37,7 +40,18 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
                         if (actividadActualizada)
                         {
-                            lblMensaje.Text = "Datos insertados correctamente y actividad actualizada.";
+                            // Llamar al método para obtener el ID del empleado que asignó la hora extra
+                            int idEnviador = ObtenerIdEnviador(idSolicitud);
+
+                            if (idEnviador > 0)
+                            {
+                                // Enviar notificación al empleado que asignó la hora extra
+                                NotificacionService notificacionService = new NotificacionService();
+                                notificacionService.InsertarNotificacion(idEnviador, idEmpleado, "Evidencia de Hora Extra Enviada",
+                                    $"Se ha enviado evidencia de la hora extra para la solicitud {idSolicitud}.", DateTime.Now);
+                            }
+
+                            lblMensaje.Text = "Se hizo la evidencia.";
                             lblMensaje.CssClass = "mensaje-exito";
                             lblMensaje.Visible = true;
                         }
@@ -69,6 +83,25 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             }
         }
 
+        private int ObtenerIdEnviador(string idSolicitud)
+        {
+            int idEnviador = 0;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT idEnviador FROM solicitudhorasextras WHERE idSolicitud = @idSolicitud";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
+
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null)
+                {
+                    idEnviador = Convert.ToInt32(result);
+                }
+            }
+            return idEnviador;
+        }
 
         private bool ActualizarActividad(int idEmpleado)
         {
@@ -89,7 +122,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                     }
                     catch (Exception ex)
                     {
-                        lblMensaje.Text = ("Error: "+ ex.Message) ;
+                        lblMensaje.Text = ("Error: " + ex.Message);
                         lblMensaje.CssClass = "mensaje-error"; // Estiliza el mensaje de error
                         lblMensaje.Visible = true;
                         return false;
@@ -131,7 +164,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             }
         }
 
-
         private void CargarDatos()
         {
             HttpCookie userCookie = Request.Cookies["UserInfo"];
@@ -157,7 +189,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 lblMensaje.Visible = true;
             }
         }
-
 
         private DataTable ObtenerDatos(int idEmpleado)
         {

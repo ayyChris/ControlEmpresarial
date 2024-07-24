@@ -48,6 +48,96 @@
          header nav ul li.has-submenu .submenu li a:hover {
          color: #5E58F8; /*color texto*/
          }
+
+         /* Sidebar styles */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #333; /* Color de fondo más oscuro para el sidebar */
+    color: #fff; /* Color del texto */
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra del box */
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #fff; /* Color de los enlaces */
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #FF3EA5; /* Color al pasar el mouse sobre los enlaces */
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    color: #fff; /* Color del botón de cerrar */
+}
+
+.sidebar-content {
+    padding: 15px;
+    color: #fff; /* Color del texto dentro del contenido del sidebar */
+}
+
+.notification-card {
+    background-color: #444; /* Color de fondo de las tarjetas de notificación */
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para las tarjetas */
+    transition: transform 0.3s;
+}
+
+.notification-card:hover {
+    transform: scale(1.02); /* Efecto de hover para agrandar ligeramente las tarjetas */
+}
+
+.notification-divider {
+    height: 2px;
+    background-color: #FF3EA5; /* Color morado llamativo para la línea divisora */
+    margin: 10px 0;
+}
+
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-title {
+    margin: 0;
+    font-size: 20px;
+    color: #fff;
+}
+
+.notification-date {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.notification-motivo {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #ddd;
+}
+
+.notification-enviador {
+    font-size: 14px;
+    color: #bbb;
+}
+
       </style>
    </head>
    <body>
@@ -111,18 +201,38 @@
                         <li><a href="../Marcas/marcas.aspx">Registre su hora de marca</a></li>
                      </ul>
                   </li>
-                   <li class="has-submenu">
-                   <a href="#">Administración</a>
-                   <ul class="submenu">
-                      <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Agrega un colaborador</a></li>
-                   </ul>
-                </li>
+                  <li class="has-submenu">
+                     <a href="#">Administración</a>
+                     <ul class="submenu">
+                        <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Agrega un colaborador</a></li>
+                     </ul>
+                  </li>
                </ul>
             </nav>
             <div class="cabecera-derecha">
                <button class="boton-notificacion">
                <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>
                </button>
+            </div>
+
+            <div id="mySidebar" class="sidebar">
+                <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+                <div class="sidebar-content">
+                    <h2>Notificaciones</h2>
+                   <asp:Repeater ID="repeaterNotificaciones" runat="server">
+                        <ItemTemplate>
+                            <div class="notification-card">
+                                <div class="notification-header">
+                                    <h3 class="notification-title"><%# Eval("Titulo") %></h3>
+                                    <span class="notification-date"><%# Eval("Fecha", "{0:dd/MM/yyyy}") %></span>
+                                </div>
+                                <p class="notification-motivo"><%# Eval("Motivo") %></p>
+                                <span class="notification-enviador">Enviado por: <%# Eval("EnviadorNombre") %> <%# Eval("EnviadorApellidos") %></span>
+                            </div>
+                            <div class="notification-divider"></div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
             </div>
          </header>
          <div class="container-menu">
@@ -210,5 +320,26 @@
             </div>
          </footer>
       </form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var sidebar = document.getElementById("mySidebar");
+                var openBtn = document.querySelector(".boton-notificacion");
+                var closeBtn = document.getElementById("closeBtn");
+
+                openBtn.onclick = function () {
+                    sidebar.style.width = "300px";
+                }
+
+                closeBtn.onclick = function () {
+                    sidebar.style.width = "0";
+                }
+
+                window.onclick = function (event) {
+                    if (event.target == sidebar) {
+                        sidebar.style.width = "0";
+                    }
+                }
+            });
+       </script>
    </body>
 </html>

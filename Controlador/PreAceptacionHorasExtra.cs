@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Web;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas.Horas_Extra
@@ -74,6 +75,27 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 Response.Redirect(url + "?idSolicitud=" + idSolicitud);
             }
         }
+
+        protected void gridViewHorasExtra_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            // Asegúrate de que estamos trabajando con una fila de datos (no el encabezado o pie de página)
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // Formatear las fechas
+                DateTime fechaInicioSolicitud = Convert.ToDateTime(DataBinder.Eval(e.Row.DataItem, "FechaInicioSolicitud"));
+                DateTime fechaFinalSolicitud = Convert.ToDateTime(DataBinder.Eval(e.Row.DataItem, "FechaFinalSolicitud"));
+                e.Row.Cells[1].Text = fechaInicioSolicitud.ToString("dd/MM/yyyy");
+                e.Row.Cells[2].Text = fechaFinalSolicitud.ToString("dd/MM/yyyy");
+
+                // Formatear las horas
+                TimeSpan horaInicialExtra = TimeSpan.Parse(DataBinder.Eval(e.Row.DataItem, "HoraInicialExtra").ToString());
+                TimeSpan horaFinalExtra = TimeSpan.Parse(DataBinder.Eval(e.Row.DataItem, "HoraFinalExtra").ToString());
+                e.Row.Cells[3].Text = horaInicialExtra.ToString(@"hh\:mm");
+                e.Row.Cells[4].Text = horaFinalExtra.ToString(@"hh\:mm");
+            }
+        }
+
+
         private void CargarNombreUsuario()
         {
             // Obtener el nombre de las cookies

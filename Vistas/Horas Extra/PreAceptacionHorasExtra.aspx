@@ -152,7 +152,7 @@
             </section>
             <section class="seccion-formulario">
                 <div class="table-container">
-                    <asp:GridView ID="gridViewHorasExtra" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gridViewHorasExtra_RowCommand">
+                    <asp:GridView ID="gridViewHorasExtra" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gridViewHorasExtra_RowCommand"  OnRowDataBound="gridViewHorasExtra_RowDataBound">
                  <Columns>
                      <asp:BoundField DataField="FechaInicioSolicitud" HeaderText="Fecha de Solicitud" />
                      <asp:BoundField DataField="FechaFinalSolicitud" HeaderText="Día" />

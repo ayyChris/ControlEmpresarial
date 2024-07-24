@@ -8,6 +8,8 @@
    <title>Horas Extra</title>
      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
     <link href="../../Estilos/app.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
          .divisor-forma-personalizado {
             position: relative;
@@ -173,7 +175,12 @@
             <asp:Button ID="AceptarButton" CssClass="button" runat="server" Text="Aceptar" OnClick="AceptarButton_Click" />
             <br />
             <asp:Button ID="DenegarButton" runat="server" CssClass="button-blanco" Text="Denegar" OnClick="DenegarButton_Click"/>
-            <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
+            <asp:Label ID="lblDebugInfo" runat="server" CssClass="mensaje-info" Visible="false" />
+            <asp:Label ID="lblValidacion" runat="server" CssClass="mensaje-info" Visible="false" />
+            <asp:Label ID="lblMensaje" runat="server" CssClass="mensaje-info" Visible="false" />
+            <asp:Label ID="Label1" runat="server" CssClass="mensaje-info" />
+            <asp:Label ID="Label2" runat="server" CssClass="mensaje-info" />
+
         </div>
     </section>
 </main>

@@ -1,13 +1,18 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ControlEmpresarial.Services;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using MySql.Data.MySqlClient;
+using System.Web;
 
 namespace ControlEmpresarial.Vistas
 {
     public partial class solicitudHorasExtras : System.Web.UI.Page
     {
+        private NotificacionService notificacionService = new NotificacionService();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -26,24 +31,27 @@ namespace ControlEmpresarial.Vistas
             string motivo = this.motivo.Text;
             DateTime thisDay = DateTime.Today;
 
-            // Convertimos las horas a enteros
-            int horaInicioInt = Convert.ToInt32(horaInicio);
-            int horaFinalInt = Convert.ToInt32(horaFinal);
+            // Convertimos las horas a TimeSpan
+            TimeSpan horaInicioTS = TimeSpan.Parse(horaInicio);
+            TimeSpan horaFinalTS = TimeSpan.Parse(horaFinal);
 
             // Calculamos las horas solicitadas
-            int horasTotales = horaFinalInt - horaInicioInt;
+            double horasTotales = (horaFinalTS - horaInicioTS).TotalHours;
 
             string Activo = "Activo";
 
             // Llama al método para insertar los datos en la base de datos
-            InsertarHoraExtra(idEmpleado, colaboradorSeleccionado, thisDay, dia, horaInicioInt, horaFinalInt, horasTotales, motivo, Activo);
-
-            string mensaje = $"Colaborador: {colaboradorSeleccionado}<br />IDEmpleado: {idEmpleado}<br />Dia solicitud: {thisDay}<br />Día: {dia}<br />Hora inicio: {horaInicio}<br />Hora final: {horaFinal}<br />Motivo: {motivo}";
+            InsertarHoraExtra(idEmpleado, colaboradorSeleccionado, thisDay, dia, horaInicioTS, horaFinalTS, horasTotales, motivo, Activo);
             string mensajeEnviado = "Horas Extra enviadas correctamente!";
             // Mostrar el mensaje en el Label
-
             lblMensaje.Text = mensajeEnviado;
             lblMensaje.Visible = true;
+
+            // Insertar la notificación
+            InsertarNotificacion(Convert.ToInt32(idEmpleado), "Hora Extra Solicitada", motivo, thisDay);
+
+            // Script para mostrar el ícono
+            ClientScript.RegisterStartupScript(this.GetType(), "showLikeIcon", "<script>document.getElementById('likeIcon').style.display = 'inline-block';</script>");
         }
 
         private void CargarEmpleados()
@@ -74,17 +82,24 @@ namespace ControlEmpresarial.Vistas
             return dt;
         }
 
-        private void InsertarHoraExtra(string idEmpleado, string colaborador, DateTime FechaInicio, string dia, int horaInicio, int horaFinal, int horasTotales, string motivo, string estado)
+        private void InsertarHoraExtra(string idEmpleado, string colaborador, DateTime FechaInicio, string dia, TimeSpan horaInicio, TimeSpan horaFinal, double horasTotales, string motivo, string estado)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
+            // Obtener idEnviador de la cookie
+            HttpCookie userCookie = HttpContext.Current.Request.Cookies["UserInfo"];
+            if (userCookie == null || !int.TryParse(userCookie["idEmpleado"], out int idEnviador))
+            {
+                throw new InvalidOperationException("No se pudo obtener el idEnviador de la cookie.");
+            }
+
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string query = "INSERT INTO solicitudHorasExtras (idEmpleado, NombreEmpleado, FechaInicioSolicitud, FechaFinalSolicitud, HoraInicialExtra, HoraFinalExtra, HorasSolicitadas, Motivo, Estado) " +
-                               "VALUES (@idEmpleado, @NombreEmpleado, @FechaInicioSolicitud, @FechaFinalSolicitud, @HoraInicialExtra, @HoraFinalExtra, @HorasSolicitadas, @Motivo, @Estado)";
+                string query = @"
+            INSERT INTO solicitudHorasExtras (idEmpleado, NombreEmpleado, FechaInicioSolicitud, FechaFinalSolicitud, HoraInicialExtra, HoraFinalExtra, HorasSolicitadas, Motivo, Estado, idEnviador) 
+            VALUES (@idEmpleado, @NombreEmpleado, @FechaInicioSolicitud, @FechaFinalSolicitud, @HoraInicialExtra, @HoraFinalExtra, @HorasSolicitadas, @Motivo, @Estado, @idEnviador)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
-
                 cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
                 cmd.Parameters.AddWithValue("@NombreEmpleado", colaborador);
                 cmd.Parameters.AddWithValue("@FechaInicioSolicitud", FechaInicio);
@@ -94,10 +109,19 @@ namespace ControlEmpresarial.Vistas
                 cmd.Parameters.AddWithValue("@HorasSolicitadas", horasTotales);
                 cmd.Parameters.AddWithValue("@Motivo", motivo);
                 cmd.Parameters.AddWithValue("@Estado", estado);
+                cmd.Parameters.AddWithValue("@idEnviador", idEnviador);
 
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private void InsertarNotificacion(int idEmpleado, string titulo, string motivo, DateTime fecha)
+        {
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            int idEnviador = Convert.ToInt32(cookie["idEmpleado"]);
+
+            notificacionService.InsertarNotificacion(idEnviador, idEmpleado, titulo, motivo, fecha);
         }
     }
 }

@@ -13,5 +13,7 @@ namespace ControlEmpresarial.Controlador
         public string Titulo { get; set; }
         public string Motivo { get; set; }
         public DateTime Fecha { get; set; }
+        public string EnviadorNombre { get; set; }
+        public string EnviadorApellidos { get; set; }
     }
 }

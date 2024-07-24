@@ -5,6 +5,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Solicitud de Horas Extra</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
       <link href="~/Estilos/app.css" rel="stylesheet">
       <style>
@@ -73,6 +74,12 @@
          header nav ul li.has-submenu .submenu li a:hover {
          color: #5E58F8; /*color texto*/
          }
+         #likeIcon {
+            margin-left: 10px;
+            color: mediumpurple;
+            font-size: 24px;
+        }
+
       </style>
    </head>
    <body>
@@ -155,16 +162,16 @@
                   </asp:DropDownList>
                   <br />
                   <label class="fuente-morada" for="dia">Día</label>
-                  <asp:TextBox ID="dia" runat="server" placeholder="Ej. 30/06/2024"></asp:TextBox>
+                  <asp:TextBox TextMode="Date" ID="dia" runat="server" placeholder="Ej. 30/06/2024"></asp:TextBox>
                   <br />
                   <div class="entradas-horario">
                      <div>
                         <label class="fuente-morada" for="hora-inicio">Hora inicio</label>
-                        <asp:TextBox ID="horaInicio" runat="server" ></asp:TextBox>
+                        <asp:TextBox TextMode="Time" ID="horaInicio" runat="server" ></asp:TextBox>
                      </div>
                      <div>
                         <label class="fuente-morada" for="hora-final">Hora final</label>
-                        <asp:TextBox ID="horaFinal" runat="server" ></asp:TextBox>
+                        <asp:TextBox TextMode="Time" ID="horaFinal" runat="server" ></asp:TextBox>
                      </div>
                   </div>
                   <br />
@@ -172,6 +179,7 @@
                   <asp:TextBox ID="motivo" TextMode="MultiLine" runat="server" placeholder="Ingresa el motivo de la solicitud de horas extra."></asp:TextBox>
                   <br />
                   <asp:Button ID="submit" runat="server" Text="Enviar" OnClick="submit_Click"/>
+                   <i id="likeIcon" class="fas fa-thumbs-up" style="display:none;"></i>
                   <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
                </div>
             </section>

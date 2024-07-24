@@ -3,6 +3,7 @@ using System;
 using System.Data;
 using System.Web;
 using System.Web.UI;
+using ControlEmpresarial.Services; 
 
 namespace ControlEmpresarial.Vistas.Horas_Extra
 {
@@ -54,7 +55,17 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                             string actividad = "Activo";
                             InsertarRespuesta(idSolicitud, idEmpleado, fechaRespuesta, respuesta, actividad);
                             ActualizarEstadoSolicitud(idSolicitud, "Inactivo");
-                            AceptarButton.Text = "Aceptada"; // Cambia el texto para verificar que el método se ejecuta
+                            AceptarButton.Text = "Aceptada";
+
+                            // Obtener el id del empleado que hizo la solicitud
+                            int idSolicitante = ObtenerIdEmpleadoSolicitud(idSolicitud);
+
+                            // Enviar notificación al empleado que hizo la solicitud
+                            NotificacionService notificacionService = new NotificacionService();
+                            string titulo = "Solicitud de Hora Extra Aceptada";
+                            string motivo = $"Tu solicitud de hora extra ha sido aceptada.";
+                            EnviarNotificacion(idSolicitante, idEmpleado, titulo, motivo);
+
                         }
                         else
                         {
@@ -98,7 +109,17 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                             string actividad = "Inactivo";
                             InsertarRespuesta(idSolicitud, idEmpleado, fechaRespuesta, respuesta, actividad);
                             ActualizarEstadoSolicitud(idSolicitud, "Inactivo");
-                            DenegarButton.Text = "Denegada"; // Cambia el texto para verificar que el método se ejecuta
+                            DenegarButton.Text = "Denegada";
+
+                            // Obtener el id del empleado que hizo la solicitud
+                            int idSolicitante = ObtenerIdEmpleadoSolicitud(idSolicitud);
+
+                            // Enviar notificación al empleado que hizo la solicitud
+                            NotificacionService notificacionService = new NotificacionService();
+                            string titulo = "Solicitud de Hora Extra Denegada";
+                            string motivo = $"Tu solicitud de hora extra ha sido denegada.";
+                            EnviarNotificacion(idSolicitante, idEmpleado, titulo, motivo);
+
                         }
                         else
                         {
@@ -120,7 +141,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 DenegarButton.Text = "Error: No user cookie"; // Depuración de errores
             }
         }
-
 
         private void InsertarRespuesta(string idSolicitud, int idEmpleado, DateTime fechaRespuesta, bool respuesta, string actividad)
         {
@@ -201,6 +221,32 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 da.Fill(dt);
             }
             return dt;
+        }
+
+        private int ObtenerIdEmpleadoSolicitud(string idSolicitud)
+        {
+            int idEmpleado = 0;
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT idEnviador FROM solicitudhorasextras WHERE idSolicitud = @idSolicitud";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
+                conn.Open();
+                object result = cmd.ExecuteScalar();
+
+                if (result != null && int.TryParse(result.ToString(), out idEmpleado))
+                {
+                    return idEmpleado;
+                }
+            }
+            return idEmpleado;
+        }
+
+        private void EnviarNotificacion(int idRecibidor, int idEnviador, string titulo, string motivo)
+        {
+            NotificacionService notificacionService = new NotificacionService();
+            notificacionService.InsertarNotificacion(idEnviador, idRecibidor, titulo, motivo, DateTime.Now);
         }
     }
 }
