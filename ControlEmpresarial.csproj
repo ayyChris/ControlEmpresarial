@@ -342,7 +342,6 @@
     </Compile>
     <Compile Include="Vistas\PaginaPrincipal\MenuJefatura.aspx.cs">
       <DependentUpon>MenuJefatura.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\PaginaPrincipal\MenuJefatura.aspx.designer.cs">
       <DependentUpon>MenuJefatura.aspx</DependentUpon>
