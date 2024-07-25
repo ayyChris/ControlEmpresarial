@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PermisosColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.Permisos.PermisosColaborador" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PermisosColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.PermisosColaborador" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
    <head runat="server">
@@ -72,6 +72,95 @@
          header nav ul li.has-submenu .submenu li a:hover {
          color: #5E58F8; /*color texto*/
          }
+
+         /* Sidebar styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #333; /* Color de fondo más oscuro para el sidebar */
+            color: #fff; /* Color del texto */
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra del box */
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #fff; /* Color de los enlaces */
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #; /* Color al pasar el mouse sobre los enlaces */
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            color: #fff; /* Color del botón de cerrar */
+        }
+
+        .sidebar-content {
+            padding: 15px;
+            color: #fff; /* Color del texto dentro del contenido del sidebar */
+        }
+
+        .notification-card {
+            background-color: #444; /* Color de fondo de las tarjetas de notificación */
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave para las tarjetas */
+            transition: transform 0.3s;
+        }
+
+        .notification-card:hover {
+            transform: scale(1.02); /* Efecto de hover para agrandar ligeramente las tarjetas */
+        }
+
+        .notification-divider {
+            height: 2px;
+            background-color: #5E58F8; /* Color morado llamativo para la línea divisora */
+            margin: 10px 0;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-title {
+            margin: 0;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .notification-date {
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .notification-motivo {
+            margin: 10px 0;
+            font-size: 16px;
+            color: #ddd;
+        }
+
+        .notification-enviador {
+            font-size: 14px;
+            color: #bbb;
+        }
       </style>
    </head>
    <body>
@@ -79,18 +168,19 @@
          <header>
             <div class="cabecera-izquierda">
                <h1>Colaborador</h1>
-               <p>Christian Barquero</p>
+               <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
             </div>
             <nav>
                <ul>
                   <li class="has-submenu">
                      <a href="#">Horas Extras</a>
                      <ul class="submenu">
-                        <li><a href="#">Solicitar Horas Extras</a></li>
+                        <li><a href="../Horas Extra/PreAceptacionHorasExtra.aspx">Solicitudes Horas Extras</a></li>
+                         <li><a href="../Horas Extra/EvidenciaHorasExtra.aspx">Evidenciar Horas Extras</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">
-                     <a href="#">Permisos</a>
+                     <a class="activo" href="#">Permisos</a>
                      <ul class="submenu">
                         <li><a href="../Permisos/PermisosColaborador.aspx">Solicitar Permiso</a></li>
                      </ul>
@@ -110,7 +200,7 @@
                   <li class="has-submenu">
                      <a href="#">Vacaciones</a>
                      <ul class="submenu">
-                        <li><a href="../Vacaciones/solicitarVacacionesColaborador.aspx">Solicitar Vacaciones</a></li>
+                        <li><a href="../Vacaciones/solicitarVacacionColaborador.aspx">Solicitar Vacaciones</a></li>
                         <li><a href="../Vacaciones/calendarioVacaciones.aspx">Calendario de Vacaciones</a></li>
                      </ul>
                   </li>
@@ -128,10 +218,29 @@
                   </li>
                </ul>
             </nav>
-            <div class="cabecera-derecha">
-               <button class="boton-notificacion">
+             <div class="cabecera-derecha">
+               <button type="button" id="notificacionesLink" class="boton-notificacion">
                <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>
                </button>
+            </div>
+              <div id="mySidebar" class="sidebar">
+                <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+                <div class="sidebar-content">
+                    <h2>Notificaciones</h2>
+                        <asp:Repeater ID="repeaterNotificaciones" runat="server">
+                            <ItemTemplate>
+                                <div class="notification-card">
+                                    <div class="notification-header">
+                                        <h3 class="notification-title"><%# Eval("Titulo") %></h3>
+                                        <span class="notification-date"><%# Eval("Fecha", "{0:dd/MM/yyyy}") %></span>
+                                    </div>
+                                    <p class="notification-motivo"><%# Eval("Motivo") %></p>
+                                    <span class="notification-enviador">Enviado por: <%# Eval("EnviadorNombre") %> <%# Eval("EnviadorApellidos") %></span>
+                                </div>
+                                <div class="notification-divider"></div>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                </div>
             </div>
          </header>
          <main>
@@ -145,18 +254,20 @@
                   <div class="Division-elementos">
                      <div>
                         <label class="fuente-morada">Inicio</label>
-                        <asp:TextBox type="date" id="inicio" runat="server" >Inicio</asp:TextBox>
+                        <asp:TextBox type="date" id="txtInicio" runat="server" >Inicio</asp:TextBox>
                      </div>
                      <div>
                         <label class="fuente-morada">Final</label>
-                        <asp:TextBox type="date" id="final" runat="server" >Final</asp:TextBox>
+                        <asp:TextBox type="date" id="txtFinal" runat="server" >Final</asp:TextBox>
                      </div>
                   </div>
                   <label class="fuente-morada">Tipo</label>
-                  <asp:TextBox ID="tipo" runat="server" placeholder="Ej: Médico"></asp:TextBox>
+                  <asp:TextBox ID="txtTipo" runat="server" placeholder="Ej: Médico"></asp:TextBox>
                   <label class="fuente-morada">Motivo</label>
-                  <asp:TextBox ID="motivo" runat="server" TextMode="MultiLine" Rows="4" Columns="40" placeholder="Ingrese el motivo de la solicitud."></asp:TextBox>
-                  <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button"/>
+                  <asp:TextBox ID="txtMotivo" runat="server" TextMode="MultiLine" Rows="4" Columns="40" placeholder="Ingrese el motivo de la solicitud."></asp:TextBox>
+                  <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button" OnClick="submit_Click" />
+                     <i id="likeIcon" class="fas fa-thumbs-up" style="display:none;"></i>
+                     <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
                </div>
             </section>
             <section class="seccion-imagen">
@@ -199,5 +310,26 @@
             </div>
          </footer>
       </form>
+       <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var sidebar = document.getElementById("mySidebar");
+                var openBtn = document.getElementById("notificacionesLink");
+                var closeBtn = document.getElementById("closeBtn");
+
+                openBtn.onclick = function () {
+                    sidebar.style.width = "300px";
+                }
+
+                closeBtn.onclick = function () {
+                    sidebar.style.width = "0";
+                }
+
+                window.onclick = function (event) {
+                    if (event.target == sidebar) {
+                        sidebar.style.width = "0";
+                    }
+                }
+            });
+       </script>
    </body>
 </html>
