@@ -136,6 +136,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controlador\ControladorAgregarActividadesJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Content Include="Estilos\app.css" />
     <Content Include="Imagenes\colaborador.png" />
     <Content Include="Imagenes\contactenos-imagen.png" />
@@ -162,6 +165,7 @@
     <Content Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx" />
     <Content Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx" />
     <Content Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx" />
+    <Content Include="Vistas\Control de Actividades\RegistroActividadesJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx" />
@@ -286,6 +290,12 @@
     </Compile>
     <Compile Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx.designer.cs">
       <DependentUpon>NegacionAceptacionActividadJefe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Control de Actividades\RegistroActividadesJefe.aspx.cs">
+      <DependentUpon>RegistroActividadesJefe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Control de Actividades\RegistroActividadesJefe.aspx.designer.cs">
+      <DependentUpon>RegistroActividadesJefe.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Control de Actividades\TablePreAceptacionJefatura.aspx.cs">
       <DependentUpon>TablePreAceptacionJefatura.aspx</DependentUpon>
