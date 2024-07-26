@@ -75,7 +75,7 @@
         }
 
         .sidebar a:hover {
-            color: #; /* Color al pasar el mouse sobre los enlaces */
+            color: #FF3EA5; /* Color al pasar el mouse sobre los enlaces */
         }
 
         .sidebar .closebtn {
@@ -185,6 +185,7 @@
                      <a href="#">Actividades</a>
                      <ul class="submenu">
                         <li><a href="../Control de Actividades/ControlActividadesColaborador.aspx">Registrar Actividades</a></li>
+                         <li><a href="../Control de Actividades/TablePreAceptacionActividadColaborador.aspx">Ver Actividades</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">
