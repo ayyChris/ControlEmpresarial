@@ -241,6 +241,9 @@
     <Compile Include="Controlador\MenuSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\vacacionColectiva.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\VisualizacionColaboradorSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -448,7 +451,6 @@
     </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionColectiva.aspx.cs">
       <DependentUpon>vacacionColectiva.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionColectiva.aspx.designer.cs">
       <DependentUpon>vacacionColectiva.aspx</DependentUpon>

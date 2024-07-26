@@ -154,16 +154,16 @@
                   <div class="entradas-horario">
                      <div>
                         <label class="fuente-morada" for="hora-inicio">Fecha de inicio</label>
-                        <asp:TextBox ID="horaInicio" runat="server" placeholder="Ej. 30/06/2024"></asp:TextBox>
+                        <asp:TextBox ID="fechaInicio" runat="server" placeholder="Ej. 30/06/2024" TextMode="Date"></asp:TextBox>
                      </div>
                      <div>
                         <label class="fuente-morada" for="hora-final">Fecha final</label>
-                        <asp:TextBox ID="horaFinal" runat="server" placeholder="Ej. 30/06/2024"></asp:TextBox>
+                        <asp:TextBox ID="fechaFinal" runat="server" placeholder="Ej. 30/06/2024" TextMode="Date"></asp:TextBox>
                      </div>
                   </div>
                   <br />
                   <label class="fuente-morada" for="motivo">Motivo</label>
-                  <asp:TextBox ID="motivo" TextMode="MultiLine" runat="server" placeholder="Ingresa el motivo de la solicitud de horas extra."></asp:TextBox>
+                  <asp:TextBox ID="Txtmotivo" TextMode="MultiLine" runat="server" placeholder="Ingresa el motivo de la solicitud de horas extra."></asp:TextBox>
                   <br />
                   <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button" OnClick="submit_Click"/>
                   <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
