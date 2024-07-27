@@ -139,6 +139,15 @@
     <Compile Include="Controlador\ControladorAgregarActividadesJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\vacacionesFestivas.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\vacacionesFestivas.aspx.cs">
+      <DependentUpon>vacacionesFestivas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\vacacionesFestivas.aspx.designer.cs">
+      <DependentUpon>vacacionesFestivas.aspx</DependentUpon>
+    </Compile>
     <Content Include="Estilos\app.css" />
     <Content Include="Imagenes\colaborador.png" />
     <Content Include="Imagenes\contactenos-imagen.png" />
@@ -196,6 +205,7 @@
     <Content Include="Vistas\Inconsistencias\VisualizacionInconsistencias.aspx" />
     <Content Include="Vistas\Permisos\VisualizacionPermisos.aspx" />
     <Content Include="Vistas\Rebajos\VisualizacionRebajos.aspx" />
+    <Content Include="Vistas\Vacaciones\vacacionesFestivas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

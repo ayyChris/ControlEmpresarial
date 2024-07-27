@@ -193,6 +193,7 @@
                         <a href="#">Vacaciones</a>
                         <ul class="submenu">
                             <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Aceptar Vacaciones de Colaboradores</a></li>
+                            <li><a href="../Vacaciones/vacacionesFestivas.aspx">Insertar una vacación festiva para el departamento</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">

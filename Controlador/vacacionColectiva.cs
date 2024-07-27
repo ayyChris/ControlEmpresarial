@@ -24,18 +24,16 @@ namespace ControlEmpresarial.Vistas
                 // Validar que las fechas son válidas
                 if (!fechaInicioValida || !fechaFinalValida)
                 {
-                    lblMensaje.Text = "Por favor, ingrese fechas válidas.";
-                    lblMensaje.Visible = true;
-                    return;
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Ingrese vacaciones validas.')", true);
+                return;
                 }
 
                 // Verificar que la fecha final no sea antes de la fecha de inicio
                 if (fechaFinalTexto < fechaInicioTexto)
                 {
-                    lblMensaje.Text = "La fecha final debe ser posterior a la fecha de inicio.";
-                    lblMensaje.Visible = true;
-                    return;
-                }
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('La fecha posterior debe ser posterior a la fecha de inicio.')", true);
+                return;
+            }
 
                 // Obtener el motivo
                 string motivo = Txtmotivo.Text;
