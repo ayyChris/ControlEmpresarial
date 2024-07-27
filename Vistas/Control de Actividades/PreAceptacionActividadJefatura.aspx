@@ -1,11 +1,38 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MenuJefatura.aspx.cs" Inherits="ControlEmpresarial.Vistas.MenuJefatura" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PreAceptacionActividadJefatura.aspx.cs" Inherits="ControlEmpresarial.Vistas.Control_de_Actividades.PreAceptacionActividadJefatura" %>
+
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>ActivitySync</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
-    <link href="../../Estilos/app.css" type="text/css" rel="stylesheet"/>
-    <style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <title>Control de Actividades</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+      <link href="~/Estilos/app.css" rel="stylesheet"/>
+      <style>
+         .divisor-forma-personalizado {
+         position: relative; /* Cambiar a relative para mantener su posición, no mover*/
+         width: 100%;
+         overflow: hidden;
+         line-height: 0;
+         transform: rotate(180deg);
+         z-index: 1;
+         margin-top: -300px;
+         }
+         .divisor-forma-personalizado svg {
+         display: block;
+         width: calc(100% + 1.3px);
+         height: 405px;
+         }
+         .divisor-forma-personalizado .relleno-forma {
+         fill: #5E58F8;
+         }
+         @media (min-width: 768px) and (max-width: 1023px) {
+         .divisor-forma-personalizado svg {
+         width: calc(100% + 1.3px);
+         height: 500px;
+         }
+         }
         header nav ul {
             list-style-type: none;
             padding: 0;
@@ -29,7 +56,7 @@
             left: 0;
             background-color: white;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
+            z-index: 999;
             min-width: 200px;
         }
         header nav ul li.has-submenu:hover .submenu {
@@ -53,7 +80,7 @@
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 9999;
     top: 0;
     right: 0;
     background-color: #333; /* Color de fondo más oscuro para el sidebar */
@@ -73,10 +100,9 @@
     transition: 0.3s;
 }
 
-.sidebar a:hover {
-    color: #FF3EA5; /* Color al pasar el mouse sobre los enlaces */
-}
-
+        .sidebar a:hover {
+            color: #FF3EA5;
+        }
 .sidebar .closebtn {
     position: absolute;
     top: 0;
@@ -136,12 +162,41 @@
     font-size: 14px;
     color: #bbb;
 }
+.tipo-actividad-container {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espacio entre el TextBox y el Button */
+    }
 
-    </style>
+    .tipo-actividad-container label {
+        margin-right: 10px; /* Espacio entre la etiqueta y el TextBox */
+    }
+
+    .button1 {
+        background-color: #5E58F8;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .button1:hover {
+        background-color: #4B47C6;
+    }
+         #likeIcon {
+            margin-left: 10px;
+            color: mediumpurple;
+            font-size: 24px;
+        }
+
+      </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <header>
+          <header>
             <div class="cabecera-izquierda">
                 <h1>Jefatura</h1>
                 <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
@@ -171,7 +226,7 @@
                         <a href="#">Actividades</a>
                         <ul class="submenu">
                             <li><a href="../Control De Actividades/RegistroActividadesJefe.aspx">Registro de Actividades</a></li>
-                            <li><a href="../Control De Actividades/PreAceptacionActividadJefatura.aspx">Revisar Actividades de colaboradores</a></li>
+                            <li><a href="../Control De Actividades/TablaPreAceptacionJefatura.aspx">Revisar Actividades de colaboradores</a></li>
                             <li><a href="../Control De Actividades/HistoricoActividadesJefatura.aspx">Historial de Actividades</a></li>
                         </ul>
                     </li>
@@ -193,7 +248,6 @@
                         <a href="#">Vacaciones</a>
                         <ul class="submenu">
                             <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Aceptar Vacaciones de Colaboradores</a></li>
-                            <li><a href="../Vacaciones/vacacionesFestivas.aspx">Insertar una vacación festiva para el departamento</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
@@ -236,60 +290,43 @@
                 </div>
             </div>
         </header>
-        <div class="container-menu">
-            <div class="header-menu">
-                <h1>Revisa nuestras opciones de gestión para la jefatura</h1>
-                <p>ActivitySync ofrecemos distintas opciones para la gestión de nuestros empleados con la intención de mantener un sistema autogestionable.</p>
-            </div>
-            <div class="options-menu">
-                <div class="option-menu">
-                    <a href="../Permisos/TablaPreVisualizacionPermisosJefe.aspx"><img src="../../Imagenes/icono-permisos.png" alt="Permisos" /></a>
-                    <h3>Permisos</h3>
-                    <p>Revise los permisos que ha solicitado los empleados.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="../Incapacidades/SolicitarIncapacidadesJefatura.aspx"><img src="../../Imagenes/icono-escritura.png" alt="incapacidades" /></a>
-                    <h3>Incapacidades</h3>
-                    <p>Registre las incapacidades del empleado.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="../Inconsistencias/VisualizacionInconsistencias.aspx"><img src="../../Imagenes/icono-inconsistencias.png" alt="inconsistencias" /></a>
-                    <h3>Inconsistencias</h3>
-                    <p>Puede revisar las inconsistencias de cada empleado.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="../Control de Actividades/TablaPreAcepctacionJefatura.aspx"><img src="../../Imagenes/icono-tiempo.png" alt="Horas Extras" /></a>
-                    <h3>Actividades</h3>
-                    <p>Puede ver las actividades de su departamento.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="#"><img src="../../Imagenes/icono-reposiciones.png" alt="Reposiciones" /></a>
-                    <h3>Reposiciones</h3>
-                    <p>Puede verificar las reposiciones hechas por el empleado.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="../Horas Extra/PreAceptacionHorasExtra.aspx"><img src="../../Imagenes/icono-horasExtras.png" alt="Horas Extras" /></a>
-                    <h3>Horas Extras</h3>
-                    <p>Puede asignar horas extras para un cierto colaborador.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="../Vacaciones/solicitudVacacionesJefatura.aspx"><img src="../../Imagenes/icono-vacaciones.png" alt="Vacaciones" /></a>
-                    <h3>Vacaciones</h3>
-                    <p>Puede validar las vacaciones solicitadas por un colaborador.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="../Marcas/marcas.aspx"><img src="../../Imagenes/icono-marcas.png" alt="Marcas" /></a>
-                    <h3>Marcas</h3>
-                    <p>Registre su hora de entrada y de salida de cada día laboral respectivo bajo su horario.</p>
-                </div>
-                <div class="option-menu">
-                    <a href="../Colaborador/agregarColaboradorJefe.aspx"><img src="../../Imagenes/icono-colaborador.png" alt="Colaboradores" /></a>
-                    <h3>Colaboradores</h3>
-                    <p>Registre un colaborador para su departamento.</p>
-                </div>
-            </div>
+
+        <main>
+            <section class="seccion-formulario">
+               <div class="tarjeta-formulario">
+                  <h2>Actividades</h2>
+               </div>
+                <div class="table-container">
+                 <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" EnableViewState="true" OnRowCommand="GridView1_RowCommand" OnRowDataBound="GridView1_RowDataBound">
+                    <Columns>
+                        <asp:BoundField DataField="Evidencia" HeaderText="Evidencia" />
+                        <asp:BoundField DataField="Titulo" HeaderText="Titulo" />
+                        <asp:BoundField DataField="Descripcion" HeaderText="Actividad Realizada" />
+                        <asp:BoundField DataField="Nombre" HeaderText="Empleado" />
+                        <asp:BoundField DataField="FechaFin" HeaderText="Fecha Final" />
+                        <asp:TemplateField HeaderText="Acción">
+                            <ItemTemplate>
+                                <asp:Button ID="btnAccion" runat="server" Text="Ver más" CommandName="Accion" CommandArgument='<%# Eval("Evidencia") %>' />
+                            </ItemTemplate>
+                        </asp:TemplateField>
+                    </Columns>
+                </asp:GridView>
+                <asp:Label ID="Label1" runat="server" Visible="false" CssClass="debug-label" />
+
         </div>
-        <footer class="footer">
+            </section>
+
+             <section class="seccion-imagen">
+                <img src="../../Imagenes/jefe.png" alt="Image of office" />
+            </section>
+        </main>
+
+ <div class="divisor-forma-personalizado">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+               <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="relleno-forma"></path>
+            </svg>
+         </div>
+       <footer class="footer">
             <div>
                 <h3>About</h3>
                 <p>"ActivitySync proporciona una solución integral para la gestión eficiente de actividades dentro de tu empresa. Desde la 

@@ -136,11 +136,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controlador\ControladorAceptarDenegarActividadJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\ControladorAgregarActividadesJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorEvidenciaActividad.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorPreAceptacionActividadesJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\vacacionesFestivas.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx.cs">
+      <DependentUpon>PreAceptacionActividadJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx.designer.cs">
+      <DependentUpon>PreAceptacionActividadJefatura.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionesFestivas.aspx.cs">
       <DependentUpon>vacacionesFestivas.aspx</DependentUpon>
@@ -174,6 +189,7 @@
     <Content Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx" />
     <Content Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx" />
     <Content Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx" />
+    <Content Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx" />
     <Content Include="Vistas\Control de Actividades\RegistroActividadesJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionActividadColaborador.aspx" />
     <Content Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx" />
@@ -292,14 +308,12 @@
     </Compile>
     <Compile Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx.cs">
       <DependentUpon>ControlActividadesColaborador.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx.designer.cs">
       <DependentUpon>ControlActividadesColaborador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx.cs">
       <DependentUpon>NegacionAceptacionActividadJefe.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx.designer.cs">
       <DependentUpon>NegacionAceptacionActividadJefe.aspx</DependentUpon>

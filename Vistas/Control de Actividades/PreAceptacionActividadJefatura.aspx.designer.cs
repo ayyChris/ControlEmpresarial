@@ -11,7 +11,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
 {
 
 
-    public partial class ControlActividadesColaborador
+    public partial class PreAceptacionActividadJefatura
     {
 
         /// <summary>
@@ -42,57 +42,21 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
         protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
 
         /// <summary>
-        /// Control DropDownList1.
+        /// Control GridView1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
 
         /// <summary>
-        /// Control inicio.
+        /// Control Label1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inicio;
-
-        /// <summary>
-        /// Control final.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox final;
-
-        /// <summary>
-        /// Control actividad.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox actividad;
-
-        /// <summary>
-        /// Control submit.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button submit;
-
-        /// <summary>
-        /// Control debugLabel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label debugLabel;
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }

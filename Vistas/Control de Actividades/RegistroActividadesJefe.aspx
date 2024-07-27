@@ -315,9 +315,7 @@
 
                 </div>
             </section>
-            <section class="seccion-imagen">
-                <img src="../../Imagenes/jefe.png" alt="Image of office" />
-            </section>
+           u
         </main>
 
 

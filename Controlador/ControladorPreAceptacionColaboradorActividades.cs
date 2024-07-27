@@ -96,7 +96,9 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
         ON 
             a.idTipo = t.idTipo
         WHERE 
-            a.idDepartamento = @idDepartamento";
+            a.idDepartamento = @idDepartamento
+        AND
+            a.Estado = 'Pendiente'"; // Agrega la condición para el estado
 
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
@@ -159,7 +161,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                         ActualizarEstadoActividad(idActividad, "Completada");
 
                         // Configurar el texto del Label con HTML y el ícono
-                        Label1.Text = "Actividad Asignada <i class='fas fa-thumbs-up'></i>";
+                        Label1.Text = "Actividad evidenciada <i class='fas fa-thumbs-up'></i>";
                         Label1.Visible = true;
                     }
                     else
@@ -228,7 +230,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
-            string query = "INSERT INTO relacionactividadempleado (idActividad, idEmpleado) VALUES (@idActividad, @idEmpleado)";
+            string query = "INSERT INTO relacionactividadempleado (idActividad, idEmpleado, Estado) VALUES (@idActividad, @idEmpleado, @Estado)";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -236,6 +238,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                 {
                     command.Parameters.AddWithValue("@idActividad", idActividad);
                     command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                    command.Parameters.AddWithValue("@Estado", "Espera");
 
                     try
                     {

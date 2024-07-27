@@ -234,11 +234,12 @@
             </ul>
         </li>
         <li class="has-submenu">
-            <a href="#">Actividades</a>
-            <ul class="submenu">
-                <li><a href="../Control de Actividades/ControlActividadesColaborador.aspx">Registrar Actividades</a></li>
-            </ul>
-        </li>
+                     <a href="#">Actividades</a>
+                     <ul class="submenu">
+                        <li><a href="../Control de Actividades/ControlActividadesColaborador.aspx">Registrar Actividades</a></li>
+                         <li><a href="../Control de Actividades/TablePreAceptacionActividadColaborador.aspx">Ver Actividades</a></li>
+                     </ul>
+                  </li>
         <li class="has-submenu">
             <a href="#">Marcas</a>
             <ul class="submenu">
@@ -297,7 +298,7 @@
                         </asp:TemplateField>
                     </Columns>
                     </asp:GridView>
-                     <asp:Label ID="Label1" runat="server" Text="Label" EnableViewState="true"></asp:Label>
+                     <asp:Label ID="Label1" runat="server" EnableViewState="true"></asp:Label>
         </div>
             </section>
          </main>
@@ -338,5 +339,26 @@
 
         </footer>
       </form>
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var sidebar = document.getElementById("mySidebar");
+            var openBtn = document.getElementById("notificacionesLink");
+            var closeBtn = document.getElementById("closeBtn");
+
+            openBtn.onclick = function () {
+                sidebar.style.width = "300px";
+            }
+
+            closeBtn.onclick = function () {
+                sidebar.style.width = "0";
+            }
+
+            window.onclick = function (event) {
+                if (event.target == sidebar) {
+                    sidebar.style.width = "0";
+                }
+            }
+        });
+        </script>
    </body>
 </html>
