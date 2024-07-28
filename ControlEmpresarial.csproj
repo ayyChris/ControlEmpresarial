@@ -148,6 +148,9 @@
     <Compile Include="Controlador\ControladorPreAceptacionActividadesJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\Marcas.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\vacacionesFestivas.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
