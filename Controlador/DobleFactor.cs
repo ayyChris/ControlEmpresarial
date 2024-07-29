@@ -11,7 +11,7 @@ namespace ControlEmpresarial.Vistas
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            MostrarCodigoVerificacion();
         }
 
         protected void submit_Click(object sender, EventArgs e)
@@ -101,6 +101,54 @@ namespace ControlEmpresarial.Vistas
                     lblMensaje.Visible = true;
                     return false;
                 }
+            }
+        }
+
+        private void MostrarCodigoVerificacion()
+        {
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+            {
+                string query = "SELECT Codigo FROM Codigo WHERE idEmpleado = @idEmpleado";
+
+                using (MySqlConnection connection = new MySqlConnection(cadenaConexion))
+                {
+                    try
+                    {
+                        connection.Open();
+                        using (MySqlCommand command = new MySqlCommand(query, connection))
+                        {
+                            command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+
+                            using (MySqlDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    string codigo = reader["Codigo"].ToString();
+                                    lblMensaje.Text = $"Su código de verificación es: {codigo}";
+                                    lblMensaje.Visible = true;
+                                }
+                                else
+                                {
+                                    lblMensaje.Text = "No se encontró un código de verificación.";
+                                    lblMensaje.Visible = true;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        lblMensaje.Text = $"Error al mostrar el código: {ex.Message}";
+                        lblMensaje.ForeColor = System.Drawing.Color.Red;
+                        lblMensaje.Visible = true;
+                    }
+                }
+            }
+            else
+            {
+                lblMensaje.Text = "No se encontró la información del empleado en la cookie.";
+                lblMensaje.ForeColor = System.Drawing.Color.Red;
+                lblMensaje.Visible = true;
             }
         }
     }

@@ -65,9 +65,9 @@
             </div>
             <nav>
                <ul>
-                  <li><a href="#">Inicio</a></li>
-                  <li><a href="#">Contactenos</a></li>
-                  <li><a class="activo" href="#">Iniciar Sesion</a></li>
+                  <li><a href="Inicio.aspx">Inicio</a></li>
+                  <li><a href="Contactenos.aspx">Contactenos</a></li>
+                  <li><a class="activo" href="Login.aspx">Iniciar Sesion</a></li>
                </ul>
             </nav>
             <div class="cabecera-derecha">

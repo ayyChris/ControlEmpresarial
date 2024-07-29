@@ -15,7 +15,7 @@ namespace ControlEmpresarial.Vistas
             {
                 CargarNombreUsuario();
             }
-            CargarEstadoMarcas();
+            CargarEstadoMarcas(); // Ahora siempre habilita ambos botones
             CargarHorarioEmpleado();
         }
 
@@ -38,68 +38,10 @@ namespace ControlEmpresarial.Vistas
 
         private void CargarEstadoMarcas()
         {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado))
-            {
-                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
-                {
-                    try
-                    {
-                        conexion.Open();
-                        string query = "SELECT MarcacionEntrada, MarcacionSalida FROM entradas WHERE idEmpleado = @idEmpleado AND DiaMarcado = @DiaMarcado";
-
-                        using (MySqlCommand cmd = new MySqlCommand(query, conexion))
-                        {
-                            cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
-                            cmd.Parameters.AddWithValue("@DiaMarcado", DateTime.Today);
-
-                            using (MySqlDataReader lector = cmd.ExecuteReader())
-                            {
-                                if (lector.HasRows)
-                                {
-                                    lector.Read();
-                                    bool entradaMarcada = lector.GetBoolean("MarcacionEntrada");
-                                    bool salidaMarcada = lector.GetBoolean("MarcacionSalida");
-
-                                    // Lógica de habilitación de botones
-                                    if (entradaMarcada && salidaMarcada)
-                                    {
-                                        btnEntrada.Enabled = false;
-                                        btnSalida.Enabled = false;
-                                    }
-                                    else if (entradaMarcada)
-                                    {
-                                        btnEntrada.Enabled = false;
-                                        btnSalida.Enabled = true;
-                                    }
-                                    else
-                                    {
-                                        btnEntrada.Enabled = true;
-                                        btnSalida.Enabled = false;
-                                    }
-                                }
-                                else
-                                {
-                                    btnEntrada.Enabled = true;
-                                    btnSalida.Enabled = false;
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        lblMensaje.Text = $"Error al cargar estado de marcas: {ex.Message}";
-                        lblMensaje.Visible = true;
-                    }
-                }
-            }
-            else
-            {
-                lblMensaje.Text = "Error al obtener la información del usuario.";
-                lblMensaje.Visible = true;
-            }
+            // Siempre habilitar ambos botones
+            btnEntrada.Enabled = true;
+            btnSalida.Enabled = true;
         }
-
 
         protected void btnEntrada_Click(object sender, EventArgs e)
         {
@@ -122,37 +64,56 @@ namespace ControlEmpresarial.Vistas
                     {
                         conexion.Open();
 
-                        string query;
                         if (esEntrada)
                         {
-                            query = "INSERT INTO entradas (idEmpleado, DiaMarcado, HoraEntrada, MarcacionEntrada) VALUES (@idEmpleado, @DiaMarcado, @HoraEntrada, 1) ON DUPLICATE KEY UPDATE HoraEntrada = @HoraEntrada, MarcacionEntrada = 1";
+                            // Insertar nueva entrada
+                            string query = "INSERT INTO entradas (idEmpleado, DiaMarcado, HoraEntrada, MarcacionEntrada) VALUES (@idEmpleado, @DiaMarcado, @HoraEntrada, 1) ON DUPLICATE KEY UPDATE HoraEntrada = @HoraEntrada, MarcacionEntrada = 1";
+
+                            using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                            {
+                                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                                cmd.Parameters.AddWithValue("@DiaMarcado", DateTime.Today);
+                                cmd.Parameters.AddWithValue("@HoraEntrada", DateTime.Now.TimeOfDay);
+                                cmd.ExecuteNonQuery();
+                            }
+
+                            lblMensaje.Text = "Entrada registrada correctamente.";
                         }
                         else
                         {
-                            query = "UPDATE entradas SET HoraSalida = @HoraSalida, MarcacionSalida = 1 WHERE idEmpleado = @idEmpleado AND DiaMarcado = @DiaMarcado";
+                            // Obtener el idEntrada de la última entrada
+                            string query = "SELECT idEntrada FROM entradas WHERE idEmpleado = @idEmpleado AND DiaMarcado = @DiaMarcado AND MarcacionEntrada = 1 ORDER BY idEntrada DESC LIMIT 1";
+
+                            int idEntrada;
+                            using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                            {
+                                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                                cmd.Parameters.AddWithValue("@DiaMarcado", DateTime.Today);
+                                object result = cmd.ExecuteScalar();
+
+                                if (result != null && int.TryParse(result.ToString(), out idEntrada))
+                                {
+                                    // Actualizar la salida para la última entrada
+                                    query = "UPDATE entradas SET HoraSalida = @HoraSalida, MarcacionSalida = 1 WHERE idEntrada = @idEntrada";
+
+                                    using (MySqlCommand cmdUpdate = new MySqlCommand(query, conexion))
+                                    {
+                                        cmdUpdate.Parameters.AddWithValue("@idEntrada", idEntrada);
+                                        cmdUpdate.Parameters.AddWithValue("@HoraSalida", DateTime.Now.TimeOfDay);
+                                        cmdUpdate.ExecuteNonQuery();
+                                    }
+
+                                    lblMensaje.Text = "Salida registrada correctamente.";
+                                }
+                                else
+                                {
+                                    lblMensaje.Text = "No se encontró una entrada para registrar la salida.";
+                                }
+                            }
                         }
 
-                        using (MySqlCommand cmd = new MySqlCommand(query, conexion))
-                        {
-                            cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
-                            cmd.Parameters.AddWithValue("@DiaMarcado", DateTime.Today);
-
-                            if (esEntrada)
-                            {
-                                cmd.Parameters.AddWithValue("@HoraEntrada", DateTime.Now.TimeOfDay);
-                            }
-                            else
-                            {
-                                cmd.Parameters.AddWithValue("@HoraSalida", DateTime.Now.TimeOfDay);
-                            }
-
-                            cmd.ExecuteNonQuery();
-                        }
-
-                        lblMensaje.Text = esEntrada ? "Entrada registrada correctamente." : "Salida registrada correctamente.";
                         lblMensaje.Visible = true;
-
-                        CargarEstadoMarcas(); // Refrescar el estado de los botones
+                        CargarEstadoMarcas(); // Actualizar el estado de los botones
                     }
                     catch (Exception ex)
                     {
@@ -167,6 +128,8 @@ namespace ControlEmpresarial.Vistas
                 lblMensaje.Visible = true;
             }
         }
+
+
         private void CargarHorarioEmpleado()
         {
             HttpCookie cookie = Request.Cookies["UserInfo"];
