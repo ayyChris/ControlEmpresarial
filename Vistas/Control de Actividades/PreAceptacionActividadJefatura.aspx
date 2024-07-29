@@ -226,7 +226,7 @@
                         <a href="#">Actividades</a>
                         <ul class="submenu">
                             <li><a href="../Control De Actividades/RegistroActividadesJefe.aspx">Registro de Actividades</a></li>
-                            <li><a href="../Control De Actividades/TablaPreAceptacionJefatura.aspx">Revisar Actividades de colaboradores</a></li>
+                            <li><a href="../Control De Actividades/PreAceptacionActividadJefatura.aspx">Revisar Actividades de colaboradores</a></li>
                             <li><a href="../Control De Actividades/HistoricoActividadesJefatura.aspx">Historial de Actividades</a></li>
                         </ul>
                     </li>

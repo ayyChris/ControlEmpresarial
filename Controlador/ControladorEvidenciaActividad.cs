@@ -218,7 +218,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                         command.ExecuteNonQuery();
 
                         // Mostrar mensaje de éxito
-                        debugLabel.Text = "Actividad asignada";
+                        debugLabel.Text = "Actividad evidenciada";
                         debugLabel.Visible = true;
 
                         // Mostrar icono de like

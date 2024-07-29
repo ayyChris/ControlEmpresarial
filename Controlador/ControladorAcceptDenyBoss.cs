@@ -1,6 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿using ControlEmpresarial.Controlador;
+using ControlEmpresarial.Services;
+using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas.Horas_Extra
@@ -12,8 +16,59 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             if (!IsPostBack)
             {
                 CargarEmpleados();
+                CargarNombreUsuario();
+                CargarNotificaciones();
             }
         }
+
+        private void CargarNombreUsuario()
+        {
+            // Obtener el nombre de las cookies
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                string nombre = cookie["Nombre"];
+                string apellidos = cookie["Apellidos"];
+                lblNombre.Text = nombre + " " + apellidos;
+                lblNombre.Visible = true;
+            }
+            else
+            {
+                lblNombre.Text = "Error";
+                lblNombre.Visible = true;
+            }
+        }
+
+        private void CargarNotificaciones()
+        {
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                // Intentar extraer el idEmpleado de la cookie
+                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+                {
+                    // Obtener las notificaciones usando el idEmpleado extraído
+                    NotificacionService service = new NotificacionService();
+                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
+
+                    // Enlazar los datos al repeater
+                    repeaterNotificaciones.DataSource = notificaciones;
+                    repeaterNotificaciones.DataBind();
+                }
+                else
+                {
+                    // Manejar caso en el que idEmpleado no es válido
+                    Label1.Text = "Error al extraer ID de empleado";
+                    Label1.Visible = true;
+                }
+            }
+            else
+            {
+                Label1.Text = "Cookie no encontrada";
+                Label1.Visible = true;
+            }
+        }
+
 
         private void CargarEmpleados()
         {
@@ -236,14 +291,12 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
                 lblDebugInfo.Text = $"Datos de Entrada: idEmpleado = {entradaRow["idEmpleado"]}, DiaMarcado = {diaMarcado.ToShortDateString()}, HoraEntrada = {horaEntrada}<br>" +
                                     $"Datos de Solicitud: FechaFinalSolicitud = {fechaFinalSolicitud.ToShortDateString()}, HoraInicialSolicitud = {horaInicialSolicitud}";
-                lblDebugInfo.Visible = true;
 
                 // Verificar coincidencia de datos
                 bool coincidencia = diaMarcado.Date == fechaSolicitud.Date && horaEntrada == horaSolicitud;
 
                 // Mostrar el resultado de validación en la interfaz de usuario
                 lblValidacion.Text = $"¿Coinciden los datos? {coincidencia}";
-                lblValidacion.Visible = true;
 
                 return coincidencia;
             }
@@ -251,7 +304,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             {
                 lblValidacion.Text = "No se encontraron datos suficientes para validar.";
                 lblValidacion.CssClass = "mensaje-error";
-                lblValidacion.Visible = true;
                 return false;
             }
         }

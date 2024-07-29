@@ -161,7 +161,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                         ActualizarEstadoActividad(idActividad, "Completada");
 
                         // Configurar el texto del Label con HTML y el ícono
-                        Label1.Text = "Actividad evidenciada <i class='fas fa-thumbs-up'></i>";
+                        Label1.Text = "Actividad asignada <i class='fas fa-thumbs-up'></i>";
                         Label1.Visible = true;
                     }
                     else

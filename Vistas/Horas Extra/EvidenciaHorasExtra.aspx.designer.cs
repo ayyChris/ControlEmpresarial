@@ -33,6 +33,15 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         protected global::System.Web.UI.WebControls.Label lblNombre;
 
         /// <summary>
+        /// Control repeaterNotificaciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
+
+        /// <summary>
         /// Control colaborador.
         /// </summary>
         /// <remarks>

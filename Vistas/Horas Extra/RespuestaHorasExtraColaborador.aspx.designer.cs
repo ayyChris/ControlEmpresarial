@@ -33,6 +33,15 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         protected global::System.Web.UI.WebControls.Label lblNombre;
 
         /// <summary>
+        /// Control repeaterNotificaciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
+
+        /// <summary>
         /// Control lblSolicitudId.
         /// </summary>
         /// <remarks>
@@ -94,5 +103,14 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button DenegarButton;
+
+        /// <summary>
+        /// Control Label1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
     }
 }

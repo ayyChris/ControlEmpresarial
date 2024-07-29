@@ -197,8 +197,9 @@
                   <li class="has-submenu">
                      <a href="#">Horas Extras</a>
                      <ul class="submenu">
-                        <li><a href="#">Solicitar Horas Extras</a></li>
-                     </ul>
+                            <li><a href="../Horas Extra/PreAceptacionHorasExtra.aspx">Solicitudes Horas Extras</a></li>
+                            <li><a href="../Horas Extra/EvidenciaHorasExtra.aspx">Evidenciar Horas Extras</a></li>
+                      </ul>
                   </li>
                   <li class="has-submenu">
                      <a href="#">Permisos</a>
@@ -227,8 +228,9 @@
                   </li>
                   <li class="has-submenu">
                      <a href="#">Actividades</a>
-                     <ul class="submenu">
+                      <ul class="submenu">
                         <li><a href="../Control de Actividades/ControlActividadesColaborador.aspx">Registrar Actividades</a></li>
+                         <li><a href="../Control de Actividades/TablePreAceptacionActividadColaborador.aspx">Ver Actividades</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">

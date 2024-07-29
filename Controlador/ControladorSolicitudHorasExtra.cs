@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI;
 using MySql.Data.MySqlClient;
 using System.Web;
+using ControlEmpresarial.Controlador;
 
 namespace ControlEmpresarial.Vistas
 {
@@ -18,6 +19,52 @@ namespace ControlEmpresarial.Vistas
             if (!IsPostBack)
             {
                 CargarEmpleados();
+                CargarNombreUsuario();
+                CargarNotificaciones();
+            }
+        }
+        private void CargarNombreUsuario()
+        {
+            // Obtener el nombre de las cookies
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                string nombre = cookie["Nombre"];
+                string apellidos = cookie["Apellidos"];
+                lblNombre.Text = nombre + " " + apellidos;
+                lblNombre.Visible = true;
+            }
+            else
+            {
+                lblNombre.Text = "Error";
+                lblNombre.Visible = true;
+            }
+        }
+
+        private void CargarNotificaciones()
+        {
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                // Intentar extraer el idEmpleado de la cookie
+                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+                {
+                    // Obtener las notificaciones usando el idEmpleado extraído
+                    NotificacionService service = new NotificacionService();
+                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
+
+                    // Enlazar los datos al repeater
+                    repeaterNotificaciones.DataSource = notificaciones;
+                    repeaterNotificaciones.DataBind();
+                }
+                else
+                {
+          
+                }
+            }
+            else
+            {
+               
             }
         }
 

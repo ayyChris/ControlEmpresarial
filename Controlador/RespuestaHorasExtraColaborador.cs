@@ -1,14 +1,19 @@
 ﻿using MySql.Data.MySqlClient;
+using ControlEmpresarial.Services;
 using System;
 using System.Data;
 using System.Web;
 using System.Web.UI;
-using ControlEmpresarial.Services; 
+using ControlEmpresarial.Controlador;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas.Horas_Extra
 {
     public partial class RespuestaHorasExtra : Page
     {
+        private NotificacionService notificacionService = new NotificacionService();
         private string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
         private string idSolicitud;
 
@@ -16,6 +21,8 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         {
             if (!IsPostBack)
             {
+                CargarNotificaciones();
+                CargarNombreUsuario();
                 idSolicitud = Request.QueryString["idSolicitud"];
                 if (!string.IsNullOrEmpty(idSolicitud))
                 {
@@ -31,6 +38,53 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             else
             {
                 idSolicitud = Session["idSolicitud"] as string; // Recuperar de sesión
+            }
+        }
+        private void CargarNombreUsuario()
+        {
+            // Obtener el nombre de las cookies
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                string nombre = cookie["Nombre"];
+                string apellidos = cookie["Apellidos"];
+                lblNombre.Text = nombre + " " + apellidos;
+                lblNombre.Visible = true;
+            }
+            else
+            {
+                lblNombre.Text = "Error";
+                lblNombre.Visible = true;
+            }
+        }
+
+        private void CargarNotificaciones()
+        {
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null)
+            {
+                // Intentar extraer el idEmpleado de la cookie
+                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+                {
+                    // Obtener las notificaciones usando el idEmpleado extraído
+                    NotificacionService service = new NotificacionService();
+                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
+
+                    // Enlazar los datos al repeater
+                    repeaterNotificaciones.DataSource = notificaciones;
+                    repeaterNotificaciones.DataBind();
+                }
+                else
+                {
+                    // Manejar caso en el que idEmpleado no es válido
+                    Label1.Text = "Error al extraer ID de empleado";
+                    Label1.Visible = true;
+                }
+            }
+            else
+            {
+                Label1.Text = "Cookie no encontrada";
+                Label1.Visible = true;
             }
         }
 
@@ -198,10 +252,10 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             if (dt.Rows.Count > 0)
             {
                 DataRow row = dt.Rows[0];
-                lblHorasSolicitadas.Text = "Horas Solicitadas: " + row["HorasSolicitadas"].ToString();
-                lblMotivo.Text = "Motivo: " + row["Motivo"].ToString();
-                lblHoraInicialExtra.Text = "Hora Inicial Extra: " + row["HoraInicialExtra"].ToString();
-                lblHoraFinalExtra.Text = "Hora Final Extra: " + row["HoraFinalExtra"].ToString();
+                lblHorasSolicitadas.Text = row["HorasSolicitadas"].ToString();
+                lblMotivo.Text =  row["Motivo"].ToString();
+                lblHoraInicialExtra.Text = row["HoraInicialExtra"].ToString();
+                lblHoraFinalExtra.Text = row["HoraFinalExtra"].ToString();
             }
         }
 

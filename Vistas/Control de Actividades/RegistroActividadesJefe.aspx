@@ -221,7 +221,7 @@
                         <a href="#">Actividades</a>
                         <ul class="submenu">
                             <li><a href="../Control De Actividades/RegistroActividadesJefe.aspx">Registro de Actividades</a></li>
-                            <li><a href="../Control De Actividades/TablaPreAceptacionJefatura.aspx">Revisar Actividades de colaboradores</a></li>
+                            <li><a href="../Control De Actividades/PreAceptacionActividadJefatura.aspx">Revisar Actividades de colaboradores</a></li>
                             <li><a href="../Control De Actividades/HistoricoActividadesJefatura.aspx">Historial de Actividades</a></li>
                         </ul>
                     </li>
@@ -233,7 +233,7 @@
                     </li>
                     <li class="has-submenu">
                         <a href="#">Horas Extras</a>
-                        <ul class="submenu">
+                         <ul class="submenu">
                             <li><a href="../Horas Extra/solicitudHorasExtrasJefatura.aspx">Asignar Horas Extras</a></li>
                             <li><a href="../Horas Extra/AceptarDenegarHorasExtraJefatura.aspx">Aceptar Horas Extras</a></li>
                             <li><a href="../Horas Extra/HistoricoHorasExtrasJefatura.aspx">Historial Horas Extras</a></li>
