@@ -279,33 +279,35 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             // Verificar si hay datos en ambas tablas
             if (dtEntradas.Rows.Count > 0 && dtSolicitudes.Rows.Count > 0)
             {
-                // Obtén los datos de la primera fila de cada DataTable
-                DataRow entradaRow = dtEntradas.Rows[0];
-                DataRow solicitudRow = dtSolicitudes.Rows[0];
+                foreach (DataRow entradaRow in dtEntradas.Rows)
+                {
+                    DateTime diaMarcado = Convert.ToDateTime(entradaRow["DiaMarcado"]);
+                    TimeSpan horaEntrada = TimeSpan.Parse(entradaRow["HoraEntrada"].ToString());
 
-                // Extraer los datos
-                DateTime diaMarcado = Convert.ToDateTime(entradaRow["DiaMarcado"]);
-                TimeSpan horaEntrada = TimeSpan.Parse(entradaRow["HoraEntrada"].ToString());
-                DateTime fechaFinalSolicitud = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
-                TimeSpan horaInicialSolicitud = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
+                    foreach (DataRow solicitudRow in dtSolicitudes.Rows)
+                    {
+                        DateTime fechaFinalSolicitud = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
+                        TimeSpan horaInicialSolicitud = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
 
-                lblDebugInfo.Text = $"Datos de Entrada: idEmpleado = {entradaRow["idEmpleado"]}, DiaMarcado = {diaMarcado.ToShortDateString()}, HoraEntrada = {horaEntrada}<br>" +
-                                    $"Datos de Solicitud: FechaFinalSolicitud = {fechaFinalSolicitud.ToShortDateString()}, HoraInicialSolicitud = {horaInicialSolicitud}";
+                        lblDebugInfo.Text = $"Datos de Entrada: idEmpleado = {entradaRow["idEmpleado"]}, DiaMarcado = {diaMarcado.ToShortDateString()}, HoraEntrada = {horaEntrada}<br>" +
+                                            $"Datos de Solicitud: FechaFinalSolicitud = {fechaFinalSolicitud.ToShortDateString()}, HoraInicialSolicitud = {horaInicialSolicitud}";
 
-                // Verificar coincidencia de datos
-                bool coincidencia = diaMarcado.Date == fechaSolicitud.Date && horaEntrada == horaSolicitud;
+                        // Verificar coincidencia de datos
+                        bool coincidencia = diaMarcado.Date == fechaSolicitud.Date && horaEntrada == horaSolicitud;
 
-                // Mostrar el resultado de validación en la interfaz de usuario
-                lblValidacion.Text = $"¿Coinciden los datos? {coincidencia}";
-
-                return coincidencia;
+                        if (coincidencia)
+                        {
+                            // Mostrar el resultado de validación en la interfaz de usuario
+                            lblValidacion.Text = $"¿Coinciden los datos? {coincidencia}";
+                            return true;
+                        }
+                    }
+                }
             }
-            else
-            {
-                lblValidacion.Text = "No se encontraron datos suficientes para validar.";
-                lblValidacion.CssClass = "mensaje-error";
-                return false;
-            }
+
+            lblValidacion.Text = "No se encontraron datos suficientes para validar.";
+            lblValidacion.CssClass = "mensaje-error";
+            return false;
         }
 
 
