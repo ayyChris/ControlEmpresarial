@@ -78,6 +78,8 @@ namespace ControlEmpresarial.Vistas
                                 InsertarCodigo(idEmpleado, codigoVerificacion);
 
 
+                                EnviarCodigoVerificacion(correo, codigoVerificacion);                             
+                                
                                 // Redirigir al usuario a la página de verificación
                                 Response.Redirect("../PaginaPrincipal/DobleFactor.aspx");
                             }
@@ -98,13 +100,47 @@ namespace ControlEmpresarial.Vistas
                 }
             }
         }
-
+        
         private string GenerarCodigoVerificacion()
         {
             Random rnd = new Random();
             return rnd.Next(100000, 999999).ToString();
         }
+        public void EnviarCodigoVerificacion(string correo, string codigoVerificacion)
+        {
+            string fromEmail = "apsw.activity.sync@gmail.com";
+            string fromPassword = "hpehyzvcvdfcatgn";
+            string subject = "Código de Verificación";
+            string body = $"Tu código de verificación es: {codigoVerificacion}";
 
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress(fromEmail);
+                mail.To.Add(correo);
+                mail.Subject = subject;
+                mail.Body = body;
+
+                smtpServer.Port = 587;
+                smtpServer.Credentials = new NetworkCredential(fromEmail, fromPassword);
+                smtpServer.EnableSsl = true;
+
+                smtpServer.Send(mail);
+                Console.WriteLine("Correo enviado correctamente.");
+            }
+            catch (SmtpException smtpEx)
+            {
+                lblMensaje.Text = $"Error SMTP: {smtpEx.Message}";
+                // O puedes usar otra forma de notificar el error, como escribir en un log
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = $"Error al enviar el correo: {ex.Message}";
+                // Manejo de excepciones genéricas
+            }
+        }
         public void InsertarCodigo(string idEmpleado, string codigo)
         {
             //eliminar token previos

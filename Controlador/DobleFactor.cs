@@ -15,13 +15,7 @@ namespace ControlEmpresarial.Vistas
         {
             if (!IsPostBack)
             {
-                HttpCookie cookie = Request.Cookies["UserInfo"];
-                if (cookie != null && !string.IsNullOrEmpty(cookie["Correo"]))
-                {
-                    string correo = cookie["Correo"];
-                    string codigo = ObtenerCodigoVerificacion();
-                    EnviarCodigoVerificacion(correo, codigo);
-                }
+                
             }
 
 
@@ -114,83 +108,6 @@ namespace ControlEmpresarial.Vistas
                     lblMensaje.Visible = true;
                     return false;
                 }
-            }
-        }
-
-        private string ObtenerCodigoVerificacion()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado))
-            {
-                string query = "SELECT Codigo FROM Codigo WHERE idEmpleado = @idEmpleado";
-
-                using (MySqlConnection connection = new MySqlConnection(cadenaConexion))
-                {
-                    try
-                    {
-                        connection.Open();
-                        using (MySqlCommand command = new MySqlCommand(query, connection))
-                        {
-                            command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
-
-                            using (MySqlDataReader reader = command.ExecuteReader())
-                            {
-                                if (reader.Read())
-                                {
-                                    string codigo = reader["Codigo"].ToString();
-                                    return codigo;
-                                }
-                                else
-                                {
-                                    return "No se encontró un código de verificación.";
-                                }
-                            }
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        return $"Error al obtener el código: {ex.Message}";
-                    }
-                }
-            }
-            else
-            {
-                return "No se encontró la información del empleado en la cookie.";
-            }
-        }
-        public void EnviarCodigoVerificacion(string correo, string codigoVerificacion)
-        {
-            string fromEmail = "apsw.activity.sync@gmail.com";
-            string fromPassword = "hpehyzvcvdfcatgn";
-            string subject = "Código de Verificación";
-            string body = $"Tu código de verificación es: {codigoVerificacion}";
-
-            try
-            {
-                MailMessage mail = new MailMessage();
-                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
-
-                mail.From = new MailAddress(fromEmail);
-                mail.To.Add(correo);
-                mail.Subject = subject;
-                mail.Body = body;
-
-                smtpServer.Port = 587;
-                smtpServer.Credentials = new NetworkCredential(fromEmail, fromPassword);
-                smtpServer.EnableSsl = true;
-
-                smtpServer.Send(mail);
-                Console.WriteLine("Correo enviado correctamente.");
-            }
-            catch (SmtpException smtpEx)
-            {
-                lblMensaje.Text = $"Error SMTP: {smtpEx.Message}";
-                // O puedes usar otra forma de notificar el error, como escribir en un log
-            }
-            catch (Exception ex)
-            {
-                lblMensaje.Text = $"Error al enviar el correo: {ex.Message}";
-                // Manejo de excepciones genéricas
             }
         }
     }
