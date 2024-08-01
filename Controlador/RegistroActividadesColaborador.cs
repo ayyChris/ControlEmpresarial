@@ -3,67 +3,19 @@ using System.Collections.Generic;
 using System.Configuration;
 using MySql.Data.MySqlClient;
 using System.Web.UI;
-using ControlEmpresarial.Services;
 using System.Web;
-using ControlEmpresarial.Controlador;
 
 namespace ControlEmpresarial.Vistas.Control_de_Actividades
 {
-    public partial class RegistroActividadesJefe : Page
+    public partial class RegistroActividadesColaborador : Page
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+        private string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 CargarTiposDeActividad();
-                CargarNombreUsuario();
-                CargarNotificaciones();
-            }
-        }
-
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
-
-        private void CargarNotificaciones()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
-                {
-                    NotificacionService service = new NotificacionService();
-                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
-
-                    repeaterNotificaciones.DataSource = notificaciones;
-                    repeaterNotificaciones.DataBind();
-                }
-                else
-                {
-                    lblNombre.Text = "Error al extraer ID de empleado";
-                    lblNombre.Visible = true;
-                }
-            }
-            else
-            {
-                lblNombre.Text = "Cookie no encontrada";
-                lblNombre.Visible = true;
             }
         }
 
@@ -92,91 +44,74 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                         tiposDeActividad.Add(reader["Tipo"].ToString());
                     }
                 }
+                catch (MySqlException mysqlEx)
+                {
+                    debugLabel.Text = $"Error al cargar tipos de actividad: {mysqlEx.Message}\n{mysqlEx.StackTrace}";
+                }
                 catch (Exception ex)
                 {
-                    debugLabel.Text = "Error al cargar tipos de actividad: " + ex.Message;
+                    debugLabel.Text = $"Error general: {ex.Message}\n{ex.StackTrace}";
                 }
             }
 
             return tiposDeActividad;
         }
 
-        protected void AgregarTipoActividad_Click(object sender, EventArgs e)
-        {
-            agregarTipoActividad.Enabled = false;
-
-            string nuevoTipoActividad = tipoActividad.Text;
-
-            if (!string.IsNullOrWhiteSpace(nuevoTipoActividad))
-            {
-                InsertarTipoActividadEnBaseDeDatos(nuevoTipoActividad);
-                CargarTiposDeActividad();
-                tipoActividad.Text = string.Empty;
-            }
-
-            agregarTipoActividad.Enabled = true;
-        }
-
-        protected void InsertarTipoActividadEnBaseDeDatos(string tipoActividad)
-        {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                string query = "INSERT INTO tipoactividad (Tipo) VALUES (@Tipo)";
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Tipo", tipoActividad);
-
-                try
-                {
-                    conn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    debugLabel.Text = rowsAffected > 0 ? "Tipo de actividad agregado exitosamente." : "No se agregó ningún tipo de actividad.";
-                }
-                catch (Exception ex)
-                {
-                    debugLabel.Text = "Error al agregar tipo de actividad: " + ex.Message;
-                }
-            }
-        }
-
         protected void Submit_Click(object sender, EventArgs e)
         {
+            // Obtener los valores de los controles TextBox
             string tituloActividad = titulo.Text;
             string descripcionActividad = actividad.Text;
-            string tipoActividad = dropdownTipoActividad.SelectedItem.Text; // Obtiene el texto del tipo de actividad seleccionado
+            string tipoActividad = dropdownTipoActividad.SelectedItem.Text;
+            string horaInicioInput = horaInicio.Text;
+            string horaFinalInput = horaFinal.Text;
 
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEnviador))
+            try
             {
-                int idDepartamento = ObtenerIdDepartamento(idEnviador);
+                TimeSpan horaInicio = TimeSpan.Parse(horaInicioInput);
+                TimeSpan horaFinal = TimeSpan.Parse(horaFinalInput);
 
-                int idTipo = ObtenerIdTipoPorTipo(tipoActividad);
-
-                debugLabel.Text = $"Datos para insertar: idEnviador={idEnviador}, idDepartamento={idDepartamento}, descripcion={descripcionActividad}, titulo={tituloActividad}, idTipo={idTipo}";
-
-                bool exito = InsertarActividadEnBaseDeDatos(idEnviador, idDepartamento, descripcionActividad, tituloActividad, idTipo.ToString());
-
-                if (exito)
+                HttpCookie cookie = Request.Cookies["UserInfo"];
+                if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEnviador))
                 {
-                    debugLabel.Text = "<i class='fas fa-thumbs-up'></i> Actividad guardada exitosamente.";
+                    int idDepartamento = ObtenerIdDepartamento(idEnviador);
+                    int idTipo = ObtenerIdTipoPorTipo(tipoActividad);
+
+                    debugLabel.Text = $"Datos para insertar: idEnviador={idEnviador}, idDepartamento={idDepartamento}, descripcion={descripcionActividad}, titulo={tituloActividad}, idTipo={idTipo}, horaInicio={horaInicio}, horaFinal={horaFinal}";
+
+                    // Llamada al método de inserción con los nuevos parámetros
+                    bool exito = InsertarActividadEnBaseDeDatos(idEnviador, idDepartamento, descripcionActividad, tituloActividad, idTipo.ToString(), horaInicio, horaFinal);
+
+                    if (exito)
+                    {
+                        debugLabel.Text = "<i class='fas fa-thumbs-up'></i> Actividad guardada exitosamente.";
+                    }
+                    else
+                    {
+                        debugLabel.Text = "<i class='fas fa-thumbs-down'></i> No se guardó ninguna actividad.";
+                    }
                 }
                 else
                 {
-                    debugLabel.Text = "<i class='fas fa-thumbs-down'></i> No se guardó ninguna actividad.";
+                    debugLabel.Text = "Error al obtener el ID del empleado.";
                 }
             }
-            else
+            catch (FormatException ex)
             {
-                debugLabel.Text = "Error al obtener el ID del empleado.";
+                Label1.Text = "Formato de hora inválido: " + ex.Message;
+            }
+            catch (Exception ex)
+            {
+                Label1.Text = "Error general: " + ex.Message;
             }
         }
 
-
-        private bool InsertarActividadEnBaseDeDatos(int idEnviador, int idDepartamento, string descripcion, string titulo, string idTipo)
+        private bool InsertarActividadEnBaseDeDatos(int idEnviador, int idDepartamento, string descripcion, string titulo, string idTipo, TimeSpan horaInicio, TimeSpan horaFin)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
-                string query = "INSERT INTO actividadesregistradas (idEnviador, idDepartamento, descripcion, fecha, estado, Titulo, idTipo) " +
-                               "VALUES (@idEnviador, @idDepartamento, @descripcion, @fecha, @estado, @Titulo, @idTipo)";
+                string query = "INSERT INTO actividadesregistradas (idEnviador, idDepartamento, descripcion, fecha, estado, Titulo, idTipo, horaInicio, horaFin) " +
+                               "VALUES (@idEnviador, @idDepartamento, @descripcion, @fecha, @estado, @Titulo, @idTipo, @horaInicio, @horaFin)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@idEnviador", idEnviador);
@@ -186,6 +121,8 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                 cmd.Parameters.AddWithValue("@estado", "Pendiente"); // Valor predeterminado
                 cmd.Parameters.AddWithValue("@Titulo", titulo);
                 cmd.Parameters.AddWithValue("@idTipo", idTipo);
+                cmd.Parameters.AddWithValue("@horaInicio", horaInicio.ToString(@"hh\:mm\:ss"));
+                cmd.Parameters.AddWithValue("@horaFin", horaFin.ToString(@"hh\:mm\:ss"));
 
                 try
                 {
@@ -205,17 +142,14 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                 }
                 catch (MySqlException mysqlEx)
                 {
-                    // Error específico de MySQL
-                    debugLabel.Text = $"Error MySQL: {mysqlEx.Message}";
+                    debugLabel.Text = $"Error MySQL: {mysqlEx.Message}\n{mysqlEx.StackTrace}";
                 }
                 catch (Exception ex)
                 {
-                    // Error general
-                    debugLabel.Text = $"Error general: {ex.Message}";
+                    debugLabel.Text = $"Error general: {ex.Message}\n{ex.StackTrace}";
                 }
                 finally
                 {
-                    // Asegúrate de cerrar la conexión
                     if (conn.State == System.Data.ConnectionState.Open)
                     {
                         conn.Close();
@@ -224,7 +158,6 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                 return false;
             }
         }
-
 
         private int ObtenerIdDepartamento(int idEmpleado)
         {
@@ -243,16 +176,20 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                     if (result != null)
                     {
                         idDepartamento = Convert.ToInt32(result);
-                        debugLabel.Text = $"ID Departamento: {idDepartamento}"; // Mensaje de depuración
+                        Label1.Text = $"ID Departamento: {idDepartamento}"; // Mensaje de depuración
                     }
                     else
                     {
-                        debugLabel.Text = "No se encontró el departamento para el empleado.";
+                        Label1.Text = "No se encontró el departamento para el empleado.";
                     }
+                }
+                catch (MySqlException mysqlEx)
+                {
+                    Label1.Text = $"Error MySQL al obtener el ID del departamento: {mysqlEx.Message}\n{mysqlEx.StackTrace}";
                 }
                 catch (Exception ex)
                 {
-                    debugLabel.Text = "Error al obtener el ID del departamento: " + ex.Message;
+                    Label1.Text = $"Error general al obtener el ID del departamento: {ex.Message}\n{ex.StackTrace}";
                 }
             }
 
@@ -282,14 +219,17 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                         debugLabel.Text = "No se encontró el tipo de actividad.";
                     }
                 }
+                catch (MySqlException mysqlEx)
+                {
+                    Label1.Text = $"Error MySQL al obtener el ID del tipo de actividad: {mysqlEx.Message}\n{mysqlEx.StackTrace}";
+                }
                 catch (Exception ex)
                 {
-                    debugLabel.Text = "Error al obtener el ID del tipo de actividad: " + ex.Message;
+                    Label1.Text = $"Error general al obtener el ID del tipo de actividad: {ex.Message}\n{ex.StackTrace}";
                 }
             }
 
             return idTipo;
         }
-
     }
 }

@@ -177,7 +177,7 @@
     <Compile Include="Controlador\ControladorAceptarDenegarActividadJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controlador\ControladorAgregarActividadesJefe.cs">
+    <Compile Include="Controlador\RegistroActividadesColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\ControladorEvidenciaActividad.cs">
@@ -197,6 +197,13 @@
     </Compile>
     <Compile Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx.designer.cs">
       <DependentUpon>PreAceptacionActividadJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Site1.Master.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Site1.Master.designer.cs">
+      <DependentUpon>Site1.Master</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionesFestivas.aspx.cs">
       <DependentUpon>vacacionesFestivas.aspx</DependentUpon>
@@ -231,7 +238,7 @@
     <Content Include="Vistas\Control de Actividades\ControlActividadesColaborador.aspx" />
     <Content Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx" />
     <Content Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx" />
-    <Content Include="Vistas\Control de Actividades\RegistroActividadesJefe.aspx" />
+    <Content Include="Vistas\Control de Actividades\RegistroActividadesColaborador.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionActividadColaborador.aspx" />
     <Content Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx" />
     <Content Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx" />
@@ -359,11 +366,11 @@
     <Compile Include="Vistas\Control de Actividades\NegacionAceptacionActividadJefe.aspx.designer.cs">
       <DependentUpon>NegacionAceptacionActividadJefe.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Control de Actividades\RegistroActividadesJefe.aspx.cs">
-      <DependentUpon>RegistroActividadesJefe.aspx</DependentUpon>
+    <Compile Include="Vistas\Control de Actividades\RegistroActividadesColaborador.aspx.cs">
+      <DependentUpon>RegistroActividadesColaborador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Control de Actividades\RegistroActividadesJefe.aspx.designer.cs">
-      <DependentUpon>RegistroActividadesJefe.aspx</DependentUpon>
+    <Compile Include="Vistas\Control de Actividades\RegistroActividadesColaborador.aspx.designer.cs">
+      <DependentUpon>RegistroActividadesColaborador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Control de Actividades\TablePreAceptacionActividadColaborador.aspx.cs">
       <DependentUpon>TablePreAceptacionActividadColaborador.aspx</DependentUpon>
@@ -569,6 +576,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Vistas\Site1.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
