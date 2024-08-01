@@ -1,5 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Net.Mail;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 
@@ -11,7 +13,12 @@ namespace ControlEmpresarial.Vistas
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            MostrarCodigoVerificacion();
+            if (!IsPostBack)
+            {
+                string codigo = ObtenerCodigoVerificacion();
+                EnviarCodigoVerificacion("chrisbf11@gmail.com", codigo);
+            }
+            
         }
 
         protected void submit_Click(object sender, EventArgs e)
@@ -104,7 +111,7 @@ namespace ControlEmpresarial.Vistas
             }
         }
 
-        private void MostrarCodigoVerificacion()
+        private string ObtenerCodigoVerificacion()
         {
             HttpCookie cookie = Request.Cookies["UserInfo"];
             if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado))
@@ -125,30 +132,59 @@ namespace ControlEmpresarial.Vistas
                                 if (reader.Read())
                                 {
                                     string codigo = reader["Codigo"].ToString();
-                                    lblMensaje.Text = $"Su código de verificación es: {codigo}";
-                                    lblMensaje.Visible = true;
+                                    return codigo;
                                 }
                                 else
                                 {
-                                    lblMensaje.Text = "No se encontró un código de verificación.";
-                                    lblMensaje.Visible = true;
+                                    return "No se encontró un código de verificación.";
                                 }
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        lblMensaje.Text = $"Error al mostrar el código: {ex.Message}";
-                        lblMensaje.ForeColor = System.Drawing.Color.Red;
-                        lblMensaje.Visible = true;
+                        return $"Error al obtener el código: {ex.Message}";
                     }
                 }
             }
             else
             {
-                lblMensaje.Text = "No se encontró la información del empleado en la cookie.";
-                lblMensaje.ForeColor = System.Drawing.Color.Red;
-                lblMensaje.Visible = true;
+                return "No se encontró la información del empleado en la cookie.";
+            }
+        }
+        public void EnviarCodigoVerificacion(string correo, string codigoVerificacion)
+        {
+            string fromEmail = "apsw.activity.sync@gmail.com";
+            string fromPassword = "hpehyzvcvdfcatgn";
+            string subject = "Código de Verificación";
+            string body = $"Tu código de verificación es: {codigoVerificacion}";
+
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress(fromEmail);
+                mail.To.Add(correo);
+                mail.Subject = subject;
+                mail.Body = body;
+
+                smtpServer.Port = 587;
+                smtpServer.Credentials = new NetworkCredential(fromEmail, fromPassword);
+                smtpServer.EnableSsl = true;
+
+                smtpServer.Send(mail);
+                Console.WriteLine("Correo enviado correctamente.");
+            }
+            catch (SmtpException smtpEx)
+            {
+                lblMensaje.Text = $"Error SMTP: {smtpEx.Message}";
+                // O puedes usar otra forma de notificar el error, como escribir en un log
+            }
+            catch (Exception ex)
+            {
+                lblMensaje.Text = $"Error al enviar el correo: {ex.Message}";
+                // Manejo de excepciones genéricas
             }
         }
     }

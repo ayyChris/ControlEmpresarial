@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
@@ -76,8 +77,6 @@ namespace ControlEmpresarial.Vistas
                                 // Insertar el código en la base de datos
                                 InsertarCodigo(idEmpleado, codigoVerificacion);
 
-                                // Enviar el código al correo del usuario
-                                //EnviarCodigoVerificacion(correo, codigoVerificacion);
 
                                 // Redirigir al usuario a la página de verificación
                                 Response.Redirect("../PaginaPrincipal/DobleFactor.aspx");
@@ -104,28 +103,6 @@ namespace ControlEmpresarial.Vistas
         {
             Random rnd = new Random();
             return rnd.Next(100000, 999999).ToString();
-        }
-
-        private void EnviarCodigoVerificacion(string correo, string codigoVerificacion)
-        {
-            MailMessage correoMensaje = new MailMessage("activitysync.apsw@gmail.com", correo);
-            correoMensaje.Subject = "Código de Verificación";
-            correoMensaje.Body = $"Tu código de verificación es: {codigoVerificacion}";
-
-            SmtpClient clienteSmtp = new SmtpClient("smtp.gmail.com"); // Configura tu servidor SMTP
-            clienteSmtp.Port = 587; // Puerto SMTP
-            clienteSmtp.Credentials = new System.Net.NetworkCredential("activitysync.apsw@gmail.com", "ASPW2024");
-            clienteSmtp.EnableSsl = true;
-
-            try
-            {
-                clienteSmtp.Send(correoMensaje);
-            }
-            catch (Exception ex)
-            {
-                // Manejar errores al enviar el correo
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Error al enviar el código de verificación: {ex.Message}');", true);
-            }
         }
 
         public void InsertarCodigo(string idEmpleado, string codigo)

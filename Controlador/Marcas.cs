@@ -13,28 +13,12 @@ namespace ControlEmpresarial.Vistas
         {
             if (!IsPostBack)
             {
-                CargarNombreUsuario();
+
             }
             CargarEstadoMarcas(); // Ahora siempre habilita ambos botones
             CargarHorarioEmpleado();
         }
 
-        private void CargarNombreUsuario()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
 
         private void CargarEstadoMarcas()
         {
@@ -77,7 +61,7 @@ namespace ControlEmpresarial.Vistas
                                 cmd.ExecuteNonQuery();
                             }
 
-                            lblMensaje.Text = "Entrada registrada correctamente.";
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: '¡Entrada registrada!', text: 'Tu entrada se ha registrado correctamente.', icon: 'success', timer: 1500, showConfirmButton: false });", true);
                         }
                         else
                         {
@@ -103,31 +87,31 @@ namespace ControlEmpresarial.Vistas
                                         cmdUpdate.ExecuteNonQuery();
                                     }
 
-                                    lblMensaje.Text = "Salida registrada correctamente.";
+                                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: '¡Salida registrada!', text: 'Tu salida se ha registrado correctamente.', icon: 'success', timer: 1500, showConfirmButton: false });", true);
                                 }
                                 else
                                 {
-                                    lblMensaje.Text = "No se encontró una entrada para registrar la salida.";
+                                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Error', text: 'No se encontró una entrada para registrar la salida.', icon: 'error', timer: 1500, showConfirmButton: false });", true);
                                 }
                             }
                         }
 
-                        lblMensaje.Visible = true;
                         CargarEstadoMarcas(); // Actualizar el estado de los botones
                     }
                     catch (Exception ex)
                     {
-                        lblMensaje.Text = $"Error: {ex.Message}";
-                        lblMensaje.Visible = true;
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: '{ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
                     }
                 }
             }
             else
             {
-                lblMensaje.Text = "Error al registrar la marca.";
-                lblMensaje.Visible = true;
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Error', text: 'Error al registrar la marca.', icon: 'error', timer: 1500, showConfirmButton: false });", true);
             }
         }
+
+
+
 
 
         private void CargarHorarioEmpleado()

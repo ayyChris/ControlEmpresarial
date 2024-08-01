@@ -166,6 +166,8 @@
 
       </style>
 </head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <body>
     <form id="form1" runat="server">
         <header>
@@ -303,5 +305,8 @@
                }
            });
        </script>
+
+       
+
 </body>
 </html>
