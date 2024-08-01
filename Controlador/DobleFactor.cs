@@ -15,10 +15,16 @@ namespace ControlEmpresarial.Vistas
         {
             if (!IsPostBack)
             {
-                string codigo = ObtenerCodigoVerificacion();
-                EnviarCodigoVerificacion("chrisbf11@gmail.com", codigo);
+                HttpCookie cookie = Request.Cookies["UserInfo"];
+                if (cookie != null && !string.IsNullOrEmpty(cookie["Correo"]))
+                {
+                    string correo = cookie["Correo"];
+                    string codigo = ObtenerCodigoVerificacion();
+                    EnviarCodigoVerificacion(correo, codigo);
+                }
             }
-            
+
+
         }
 
         protected void submit_Click(object sender, EventArgs e)
