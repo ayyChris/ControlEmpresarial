@@ -4,10 +4,15 @@
    <main>
             <section class="seccion-formulario">
                 <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
-                    <h2><span class="fuente-delgada">Control de</span><br /><span class="fuente-gruesa">Actividades</span></h2>
-                    <p>Ingrese las actividades. </p>
-                    <br />
-                    <br />
+                    <div class="contenido-horas">
+                        <div>
+                            <h2><span class="fuente-delgada">Control de</span><br /><span class="fuente-gruesa">Actividades</span></h2>
+                            <p>Ingrese las actividades. </p>
+                                            </div>
+                    <div>
+                                                <asp:Label ID="LabelHorasRestantes" runat="server" CssClass="label-horas-restantes" ></asp:Label>
+                    </div>
+                    </div>
                     <label class="fuente-morada">Título</label>
                     <asp:TextBox ID="titulo" runat="server" placeholder="Ingrese la actividad realizada."></asp:TextBox>
                     <br />

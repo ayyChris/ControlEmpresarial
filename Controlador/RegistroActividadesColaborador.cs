@@ -16,6 +16,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
             if (!IsPostBack)
             {
                 CargarTiposDeActividad();
+                CargarHorasRestantes();
             }
         }
 
@@ -85,6 +86,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
                     if (exito)
                     {
                         debugLabel.Text = "<i class='fas fa-thumbs-up'></i> Actividad guardada exitosamente.";
+                        CargarHorasRestantes(); // Actualizar las horas restantes después de insertar la actividad
                     }
                     else
                     {
@@ -230,6 +232,52 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
             }
 
             return idTipo;
+        }
+
+        private void CargarHorasRestantes()
+        {
+            HttpCookie cookie = Request.Cookies["UserInfo"];
+            if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+            {
+                TimeSpan horasRestantes = CalcularHorasRestantes(idEmpleado);
+                LabelHorasRestantes.Text = $"Horas restantes: {horasRestantes.ToString(@"hh\:mm\:ss")}";
+            }
+        }
+
+        private TimeSpan CalcularHorasRestantes(int idEmpleado)
+        {
+            TimeSpan horasTotalesRegistradas = TimeSpan.Zero;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT SUM(TIMESTAMPDIFF(SECOND, horaInicio, horaFin)) as segundos FROM actividadesregistradas WHERE idEnviador = @idEnviador AND DATE(fecha) = CURDATE()";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idEnviador", idEmpleado);
+
+                try
+                {
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                    {
+                        int totalSegundos = Convert.ToInt32(result);
+                        horasTotalesRegistradas = TimeSpan.FromSeconds(totalSegundos);
+                    }
+                }
+                catch (MySqlException mysqlEx)
+                {
+                    Label1.Text = $"Error MySQL al calcular horas restantes: {mysqlEx.Message}\n{mysqlEx.StackTrace}";
+                }
+                catch (Exception ex)
+                {
+                    Label1.Text = $"Error general al calcular horas restantes: {ex.Message}\n{ex.StackTrace}";
+                }
+            }
+
+            TimeSpan horasRequeridas = TimeSpan.FromHours(7);
+            TimeSpan horasRestantes = horasRequeridas - horasTotalesRegistradas;
+
+            return horasRestantes;
         }
     }
 }

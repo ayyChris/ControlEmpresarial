@@ -487,3 +487,20 @@ input, select, textarea {
     .button1:hover {
         background-color: #4B47C6;
     }
+
+.contenido-horas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+    .contenido-horas div {
+        display: flex;
+        flex-direction: column;
+    }
+.label-horas-restantes {
+    font-size: 2em;
+    color: #7033ff;
+    font-weight: bold;
+    text-align: right;
+}

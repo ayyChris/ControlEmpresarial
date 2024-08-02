@@ -213,7 +213,6 @@
                      <a href="#">Actividades</a>
                      <ul class="submenu">
                         <li><a href="../Control de Actividades/RegistroActividadesColaborador.aspx">Registrar Actividades</a></li>
-                         <li><a href="../Control de Actividades/TablePreAceptacionActividadColaborador.aspx">Ver Actividades</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">
