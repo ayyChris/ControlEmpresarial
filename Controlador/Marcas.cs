@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
 
@@ -13,9 +14,9 @@ namespace ControlEmpresarial.Vistas
         {
             if (!IsPostBack)
             {
-
+                CargarEstadoMarcas(); // Ahora siempre habilita ambos botones
+                
             }
-            CargarEstadoMarcas(); // Ahora siempre habilita ambos botones
             CargarHorarioEmpleado();
         }
 
@@ -40,13 +41,29 @@ namespace ControlEmpresarial.Vistas
         private void RegistrarMarca(bool esEntrada)
         {
             HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+            if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado) && int.TryParse(cookie["idDepartamento"], out int idDepartamento))
             {
                 using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
                 {
                     try
                     {
                         conexion.Open();
+
+                        // Verificar si es un día laboral
+                        if (!EsDiaLaboral(idEmpleado))
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Día No Laboral', text: 'Hoy no es un día laboral para ti.', icon: 'info', timer: 1500, showConfirmButton: false });", true);
+                            return;
+                        }
+
+                        // Verificar si es un día festivo
+                        if (EsDiaFestivo(idDepartamento))
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Día Festivo', text: 'Hoy es un día festivo, no se requiere marcar entrada.', icon: 'info', timer: 1500, showConfirmButton: false });", true);
+                            return;
+                        }
+
+                        
 
                         if (esEntrada)
                         {
@@ -98,9 +115,15 @@ namespace ControlEmpresarial.Vistas
 
                         CargarEstadoMarcas(); // Actualizar el estado de los botones
                     }
+                    catch (MySqlException ex)
+                    {
+                        // Manejo específico para errores de MySQL
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                    }
                     catch (Exception ex)
                     {
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: '{ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                        // Manejo general para otros tipos de excepciones
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
                     }
                 }
             }
@@ -112,10 +135,106 @@ namespace ControlEmpresarial.Vistas
 
 
 
+        private bool EsDiaFestivo(int idDepartamento)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = "SELECT COUNT(*) FROM DiaFestivo WHERE FechaDeseadaVacacion = @FechaHoy AND idDepartamento = @idDepartamento";
 
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        // Pasar la fecha como DateTime directamente
+                        cmd.Parameters.AddWithValue("@FechaHoy", DateTime.Today);
+                        cmd.Parameters.AddWithValue("@idDepartamento", idDepartamento);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    // Manejo específico para errores de MySQL
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    // Manejo general para otros tipos de excepciones
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                    return false;
+                }
+            }
+        }
+
+
+
+
+        private bool EsDiaLaboral(int idEmpleado)
+        {
+            // Diccionario para convertir el nombre del día de la semana de inglés a español
+            var diasSemana = new Dictionary<DayOfWeek, string>
+            {
+                { DayOfWeek.Monday, "Lunes" },
+                { DayOfWeek.Tuesday, "Martes" },
+                { DayOfWeek.Wednesday, "Miercoles" },
+                { DayOfWeek.Thursday, "Jueves" },
+                { DayOfWeek.Friday, "Viernes" },
+                { DayOfWeek.Saturday, "Sabado" },
+                { DayOfWeek.Sunday, "Domingo" }
+            };
+
+            // Obtén el nombre del día de la semana en español
+            string diaActual = diasSemana[DateTime.Today.DayOfWeek];
+
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = @"
+            SELECT COUNT(*) 
+            FROM Horario H
+            INNER JOIN Empleado E ON E.idHorario = H.idHorario
+            WHERE E.idEmpleado = @idEmpleado
+            AND FIND_IN_SET(@diaActual, H.diaSemana) > 0";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                        cmd.Parameters.AddWithValue("@diaActual", diaActual);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error al verificar días laborales: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                    return false;
+                }
+            }
+        }
 
         private void CargarHorarioEmpleado()
         {
+            // Diccionario para mapear DayOfWeek a nombres en español
+            var diasSemana = new Dictionary<DayOfWeek, string>
+            {
+                { DayOfWeek.Monday, "Lunes" },
+                { DayOfWeek.Tuesday, "Martes" },
+                { DayOfWeek.Wednesday, "Miércoles" },
+                { DayOfWeek.Thursday, "Jueves" },
+                { DayOfWeek.Friday, "Viernes" },
+                { DayOfWeek.Saturday, "Sábado" },
+                { DayOfWeek.Sunday, "Domingo" }
+            };
+
+            // Obtener el nombre del día de la semana en español
+            string diaActual = diasSemana[DateTime.Today.DayOfWeek];
+
             HttpCookie cookie = Request.Cookies["UserInfo"];
             if (cookie != null && int.TryParse(cookie["idEmpleado"], out int idEmpleado))
             {
@@ -124,15 +243,18 @@ namespace ControlEmpresarial.Vistas
                     try
                     {
                         conexion.Open();
+
                         string query = @"
-                    SELECT H.diaSemana, H.horaEntrada, H.horaSalida 
-                    FROM Horario H 
-                    INNER JOIN Empleado E ON E.idHorario = H.idHorario 
-                    WHERE E.idEmpleado = @idEmpleado";
+                SELECT H.diaSemana, H.horaEntrada, H.horaSalida 
+                FROM Horario H 
+                INNER JOIN Empleado E ON E.idHorario = H.idHorario 
+                WHERE E.idEmpleado = @idEmpleado
+                AND FIND_IN_SET(@diaActual, H.diaSemana) > 0";
 
                         using (MySqlCommand cmd = new MySqlCommand(query, conexion))
                         {
                             cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                            cmd.Parameters.AddWithValue("@diaActual", diaActual);
 
                             using (MySqlDataReader lector = cmd.ExecuteReader())
                             {
@@ -143,20 +265,25 @@ namespace ControlEmpresarial.Vistas
                                     TimeSpan horaSalida = (TimeSpan)lector["horaSalida"];
 
                                     // Asignar valores a los labels
-                                    lblDiaSemana.Text = diaSemana;
+                                    lblDiaSemana.Text = $"{diaActual}";
                                     lblHorario.Text = $"{horaEntrada.ToString(@"hh\:mm")} am - {horaSalida.ToString(@"hh\:mm")} pm";
                                 }
                                 else
                                 {
-                                    lblDiaSemana.Text = "Horario no encontrado";
+                                    lblDiaSemana.Text = "Hoy no es un día laboral";
                                     lblHorario.Text = string.Empty;
                                 }
                             }
                         }
                     }
+                    catch (MySqlException ex)
+                    {
+                        lblDiaSemana.Text = $"Error en la base de datos: {ex.Message}";
+                        lblHorario.Text = string.Empty;
+                    }
                     catch (Exception ex)
                     {
-                        lblDiaSemana.Text = $"Error: {ex.Message}";
+                        lblDiaSemana.Text = $"Error inesperado: {ex.Message}";
                         lblHorario.Text = string.Empty;
                     }
                 }
