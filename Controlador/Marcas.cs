@@ -133,8 +133,6 @@ namespace ControlEmpresarial.Vistas
             }
         }
 
-
-
         private bool EsDiaFestivo(int idDepartamento)
         {
             using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
@@ -168,9 +166,6 @@ namespace ControlEmpresarial.Vistas
                 }
             }
         }
-
-
-
 
         private bool EsDiaLaboral(int idEmpleado)
         {
