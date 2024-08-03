@@ -89,7 +89,7 @@
                   <br />
                   <div>
                      <label class="fuente-delgada" for="contrasena">Contraseña</label>
-                     <asp:TextBox CssClass="inicioSesion" ID="txtContrasena" runat="server"></asp:TextBox>
+                     <asp:TextBox CssClass="inicioSesion" ID="txtContrasena" runat="server" TextMode="Password"></asp:TextBox>
                   </div>
                   <br />
                   <label class="fuente-morada" for="contrasena">Olvidé mi contraseña</label>

@@ -9,9 +9,6 @@ namespace ControlEmpresarial.Vistas.Permisos
 {
     public partial class AceptacionNegacionPermisoJefe : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
 
-        }
     }
 }

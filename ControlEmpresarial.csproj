@@ -180,6 +180,9 @@
     <Compile Include="Controlador\ControladorAceptarDenegarActividadJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\Permisos_AceptacionNegacionPermisoJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\RegistroActividadesColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -190,6 +193,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\Marcas.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\Permisos_TablaPreVisualizacionPermisosJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\vacacionesFestivas.cs">
@@ -319,7 +325,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\Notificacion.cs" />
-    <Compile Include="Controlador\PermisosColaborador.cs">
+    <Compile Include="Controlador\Permisos_PermisosColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\PreAceptacionHorasExtra.cs">

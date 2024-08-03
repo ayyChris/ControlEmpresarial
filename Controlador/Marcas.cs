@@ -52,18 +52,23 @@ namespace ControlEmpresarial.Vistas
                         // Verificar si es un día laboral
                         if (!EsDiaLaboral(idEmpleado))
                         {
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Día No Laboral', text: 'Hoy no es un día laboral para ti.', icon: 'info', timer: 1500, showConfirmButton: false });", true);
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Día No Laboral', text: 'Hoy no es un día laboral para ti.', icon: 'info', timer: 2500, showConfirmButton: false });", true);
                             return;
                         }
 
                         // Verificar si es un día festivo
                         if (EsDiaFestivo(idDepartamento))
                         {
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Día Festivo', text: 'Hoy es un día festivo, no se requiere marcar entrada.', icon: 'info', timer: 1500, showConfirmButton: false });", true);
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Día Festivo', text: 'Hoy es un día festivo, no se requiere marcar entrada.', icon: 'info', timer: 2500, showConfirmButton: false });", true);
                             return;
                         }
 
-                        
+                        // Verificar si hay vacaciones colectivas
+                        if (EsVacacionColectiva())
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Vacaciones Colectivas', text: 'Hoy hay vacaciones colectivas, no se requiere marcar entrada.', icon: 'info', timer: 2500, showConfirmButton: false });", true);
+                            return;
+                        }
 
                         if (esEntrada)
                         {
@@ -78,7 +83,7 @@ namespace ControlEmpresarial.Vistas
                                 cmd.ExecuteNonQuery();
                             }
 
-                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: '¡Entrada registrada!', text: 'Tu entrada se ha registrado correctamente.', icon: 'success', timer: 1500, showConfirmButton: false });", true);
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: '¡Entrada registrada!', text: 'Tu entrada se ha registrado correctamente.', icon: 'success', timer: 2500, showConfirmButton: false });", true);
                         }
                         else
                         {
@@ -104,11 +109,11 @@ namespace ControlEmpresarial.Vistas
                                         cmdUpdate.ExecuteNonQuery();
                                     }
 
-                                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: '¡Salida registrada!', text: 'Tu salida se ha registrado correctamente.', icon: 'success', timer: 1500, showConfirmButton: false });", true);
+                                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: '¡Salida registrada!', text: 'Tu salida se ha registrado correctamente.', icon: 'success', timer: 2500, showConfirmButton: false });", true);
                                 }
                                 else
                                 {
-                                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Error', text: 'No se encontró una entrada para registrar la salida.', icon: 'error', timer: 1500, showConfirmButton: false });", true);
+                                    ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Error', text: 'No se encontró una entrada para registrar la salida.', icon: 'error', timer: 2500, showConfirmButton: false });", true);
                                 }
                             }
                         }
@@ -118,18 +123,18 @@ namespace ControlEmpresarial.Vistas
                     catch (MySqlException ex)
                     {
                         // Manejo específico para errores de MySQL
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
                     }
                     catch (Exception ex)
                     {
                         // Manejo general para otros tipos de excepciones
-                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
                     }
                 }
             }
             else
             {
-                ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Error', text: 'Error al registrar la marca.', icon: 'error', timer: 1500, showConfirmButton: false });", true);
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Error', text: 'Error al registrar la marca.', icon: 'error', timer: 2500, showConfirmButton: false });", true);
             }
         }
 
@@ -140,7 +145,7 @@ namespace ControlEmpresarial.Vistas
                 try
                 {
                     conexion.Open();
-                    string query = "SELECT COUNT(*) FROM DiaFestivo WHERE FechaDeseadaVacacion = @FechaHoy AND idDepartamento = @idDepartamento";
+                    string query = "SELECT COUNT(*) FROM diasfestivos WHERE FechaDeseadaVacacion = @FechaHoy AND idDepartamento = @idDepartamento";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conexion))
                     {
@@ -155,13 +160,13 @@ namespace ControlEmpresarial.Vistas
                 catch (MySqlException ex)
                 {
                     // Manejo específico para errores de MySQL
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
                     return false;
                 }
                 catch (Exception ex)
                 {
                     // Manejo general para otros tipos de excepciones
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
                     return false;
                 }
             }
@@ -207,7 +212,41 @@ namespace ControlEmpresarial.Vistas
                 }
                 catch (Exception ex)
                 {
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error al verificar días laborales: {ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error al verificar días laborales: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+            }
+        }
+
+
+        private bool EsVacacionColectiva()
+        {
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = "SELECT COUNT(*) FROM vacacionescolectivas WHERE FechaVacaciom = @FechaHoy";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        // Pasar la fecha como DateTime directamente
+                        cmd.Parameters.AddWithValue("@FechaHoy", DateTime.Today);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    // Manejo específico para errores de MySQL
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    // Manejo general para otros tipos de excepciones
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
                     return false;
                 }
             }
@@ -265,8 +304,8 @@ namespace ControlEmpresarial.Vistas
                                 }
                                 else
                                 {
-                                    lblDiaSemana.Text = "Hoy no es un día laboral";
-                                    lblHorario.Text = string.Empty;
+                                    lblDiaSemana.Text = diaActual;
+                                    lblHorario.Text = "Hoy no es un día laboral";
                                 }
                             }
                         }
