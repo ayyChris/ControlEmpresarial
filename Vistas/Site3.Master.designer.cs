@@ -11,8 +11,17 @@ namespace ControlEmpresarial.Vistas
 {
 
 
-    public partial class VisualizacionColaboradorSupervisor
+    public partial class Site3
     {
+
+        /// <summary>
+        /// Control form1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
         /// Control lblNombre.
@@ -24,21 +33,21 @@ namespace ControlEmpresarial.Vistas
         protected global::System.Web.UI.WebControls.Label lblNombre;
 
         /// <summary>
-        /// Control ddlDepartamento.
+        /// Control repeaterNotificaciones.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDepartamento;
+        protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
 
         /// <summary>
-        /// Control gridEmpleados.
+        /// Control ContentPlaceHolder1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridEmpleados;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
     }
 }

@@ -22,6 +22,8 @@ header {
     padding: 20px;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 
 .cabecera-izquierda h1 {
@@ -77,6 +79,7 @@ main {
 .seccion-formulario {
     flex: 1;
     position: relative;
+    padding-top: 50px;
 }
 
 
@@ -87,6 +90,7 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 2;
     position: relative;
+    margin-top: 50px;
 }
 
 .tarjeta-formulario-login {

@@ -107,5 +107,5 @@ namespace ControlEmpresarial.Vistas
                 lblNombre.Visible = true;
             }
         }
-    }
+ }   
 }

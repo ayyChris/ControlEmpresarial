@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 using System.Web;
 using System.Web.UI;
 
@@ -11,7 +12,8 @@ namespace ControlEmpresarial.Vistas.Colaborador
         {
             if (!IsPostBack)
             {
-                CargarNombreUsuario();
+                //CargarNombreUsuario();
+                CargarDepartamentos();
             }
         }
 
@@ -40,6 +42,35 @@ namespace ControlEmpresarial.Vistas.Colaborador
 
             // Insertar el departamento en la base de datos
             InsertarDepartamento(nombreDepartamento, connectionString);
+        }
+
+        private void CargarDepartamentos()
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
+            DataTable dt = ObtenerDepartamentosDesdeBaseDeDatos(connectionString);
+
+            // Asigna el DataTable como fuente de datos del GridView
+            gridEmpleados.DataSource = dt;
+            gridEmpleados.DataBind();
+        }
+        private DataTable ObtenerDepartamentosDesdeBaseDeDatos(string connectionString)
+        {
+            DataTable dt = new DataTable();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT nombreDepartamento FROM Departamento ORDER BY nombreDepartamento";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+
+            foreach (DataRow row in dt.Rows)
+            {
+                System.Diagnostics.Debug.WriteLine("Nombre: " + row["nombreDepartamento"]);
+            }
+
+            return dt;
         }
 
         private bool DepartamentoExiste(string nombreDepartamento, string connectionString)
@@ -98,7 +129,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
                 }
             }
         }
-        private void CargarNombreUsuario()
+        /*private void CargarNombreUsuario()
         {
             // Obtener el nombre de las cookies
             HttpCookie cookie = Request.Cookies["UserInfo"];
@@ -114,6 +145,6 @@ namespace ControlEmpresarial.Vistas.Colaborador
                 lblNombre.Text = "Error";
                 lblNombre.Visible = true;
             }
-        }
+        }*/
     }
 }

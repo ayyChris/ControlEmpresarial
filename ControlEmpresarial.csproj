@@ -174,6 +174,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controlador\agregarColaboradorSupervisor.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\ControladorAceptarDenegarActividadJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -191,6 +194,12 @@
     </Compile>
     <Compile Include="Controlador\vacacionesFestivas.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\agregarColaboradorSupervisor.aspx.cs">
+      <DependentUpon>agregarColaboradorSupervisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Colaborador\agregarColaboradorSupervisor.aspx.designer.cs">
+      <DependentUpon>agregarColaboradorSupervisor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx.cs">
       <DependentUpon>PreAceptacionActividadJefatura.aspx</DependentUpon>
@@ -211,6 +220,13 @@
     </Compile>
     <Compile Include="Vistas\Site2.Master.designer.cs">
       <DependentUpon>Site2.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Site3.Master.cs">
+      <DependentUpon>Site3.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Site3.Master.designer.cs">
+      <DependentUpon>Site3.Master</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionesFestivas.aspx.cs">
       <DependentUpon>vacacionesFestivas.aspx</DependentUpon>
@@ -239,6 +255,7 @@
     <Content Include="Imagenes\PulgaresArriba.png" />
     <Content Include="Imagenes\reloj.png" />
     <Content Include="Vistas\Colaborador\agregarColaboradorJefe.aspx" />
+    <Content Include="Vistas\Colaborador\agregarColaboradorSupervisor.aspx" />
     <Content Include="Vistas\Colaborador\AgregarDepartamento.aspx" />
     <Content Include="Vistas\Colaborador\AgregarHorario.aspx" />
     <Content Include="Vistas\Colaborador\AgregarPuestoTrabajo.aspx" />
@@ -445,7 +462,6 @@
     </Compile>
     <Compile Include="Vistas\PaginaPrincipal\MenuSupervisor.aspx.cs">
       <DependentUpon>MenuSupervisor.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\PaginaPrincipal\MenuSupervisor.aspx.designer.cs">
       <DependentUpon>MenuSupervisor.aspx</DependentUpon>
@@ -585,6 +601,7 @@
     <None Include="packages.config" />
     <Content Include="Vistas\Site1.Master" />
     <Content Include="Vistas\Site2.Master" />
+    <Content Include="Vistas\Site3.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
