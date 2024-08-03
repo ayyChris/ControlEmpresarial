@@ -15,49 +15,31 @@ namespace ControlEmpresarial.Vistas.Vacaciones
     {
 
         /// <summary>
-        /// Control form1.
+        /// Control fechaInicio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox fechaInicio;
 
         /// <summary>
-        /// Control fechaOriginalInicial.
+        /// Control fechaFinal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox fechaOriginalInicial;
+        protected global::System.Web.UI.WebControls.TextBox fechaFinal;
 
         /// <summary>
-        /// Control fechaOriginalFinal.
+        /// Control departamento.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox fechaOriginalFinal;
-
-        /// <summary>
-        /// Control fechaDeseadaInicial.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox fechaDeseadaInicial;
-
-        /// <summary>
-        /// Control fechaDeseadaFinal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox fechaDeseadaFinal;
+        protected global::System.Web.UI.WebControls.DropDownList departamento;
 
         /// <summary>
         /// Control Txtmotivo.

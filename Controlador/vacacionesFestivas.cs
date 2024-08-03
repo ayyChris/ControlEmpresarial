@@ -1,7 +1,8 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Web;
+using System.Data;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas.Vacaciones
 {
@@ -9,71 +10,46 @@ namespace ControlEmpresarial.Vistas.Vacaciones
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack) // Asegúrate de cargar los departamentos solo en la primera carga de la página
+            {
+                CargarDepartamento();
+            }
         }
 
         protected void submit_Click(object sender, EventArgs e)
         {
-            DateTime fechaOriginalInicialTexto;
-            DateTime fechaOriginalFinalTexto;
-            DateTime fechaDeseadaInicialTexto;
-            DateTime fechaDeseadaFinalTexto;
+            DateTime fechaInicioTexto;
+            DateTime fechaFinalTexto;
 
-            // Inicializar las fechas a valores por defecto
-            fechaOriginalInicialTexto = DateTime.MinValue;
-            fechaOriginalFinalTexto = DateTime.MinValue;
-            fechaDeseadaInicialTexto = DateTime.MinValue;
-            fechaDeseadaFinalTexto = DateTime.MinValue;
+            fechaInicioTexto = DateTime.MinValue;
+            fechaFinalTexto = DateTime.MinValue;
 
-            // Obtener y convertir el texto de los TextBox a DateTime
-            bool fechaOriginalInicioValida = DateTime.TryParseExact(fechaOriginalInicial.Text, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out fechaOriginalInicialTexto);
-            bool fechaOriginalFinalValida = DateTime.TryParseExact(fechaOriginalFinal.Text, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out fechaOriginalFinalTexto);
-            bool fechaDeseadaInicioValida = DateTime.TryParseExact(fechaDeseadaInicial.Text, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out fechaDeseadaInicialTexto);
-            bool fechaDeseadaFinalValida = DateTime.TryParseExact(fechaDeseadaFinal.Text, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out fechaDeseadaFinalTexto);
+            // Obtener el texto de los TextBox y convertir a DateTime
+            bool fechaInicioValida = DateTime.TryParse(fechaInicio.Text, out fechaInicioTexto);
+            bool fechaFinalValida = DateTime.TryParse(fechaFinal.Text, out fechaFinalTexto);
 
-            // Validar que todas las fechas son válidas
-            if (!fechaOriginalInicioValida || !fechaOriginalFinalValida || !fechaDeseadaInicioValida || !fechaDeseadaFinalValida)
+            // Validar que las fechas son válidas
+            if (!fechaInicioValida || !fechaFinalValida)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Ingrese fechas válidas en el formato yyyy-MM-dd.')", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Ingrese fechas válidas.')", true);
                 return;
             }
 
-            // Verificar que la fecha final original es posterior a la fecha inicial original
-            if (fechaOriginalFinalTexto < fechaOriginalInicialTexto)
+            // Verificar que la fecha final no sea antes de la fecha de inicio
+            if (fechaFinalTexto < fechaInicioTexto)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('La fecha final original debe ser posterior a la fecha inicial original.')", true);
-                return;
-            }
-
-            // Verificar que la fecha final deseada es posterior a la fecha inicial deseada
-            if (fechaDeseadaFinalTexto < fechaDeseadaInicialTexto)
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('La fecha final deseada debe ser posterior a la fecha inicial deseada.')", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('La fecha final debe ser posterior a la fecha de inicio.')", true);
                 return;
             }
 
             // Obtener el motivo
             string motivo = Txtmotivo.Text;
 
-            // Obtener el valor de las cookies para idDepartamento
-            string cookiesString = Request.Cookies["UserInfo"].Value;
-            string[] keyValuePairs = cookiesString.Split('&');
-            string idDepartamentoValue = null;
-
-            foreach (string pair in keyValuePairs)
+            // Obtener el idDepartamento seleccionado
+            string idDepartamento = departamento.SelectedValue;
+            if (string.IsNullOrEmpty(idDepartamento))
             {
-                string[] keyValue = pair.Split('=');
-                if (keyValue.Length == 2 && keyValue[0] == "idDepartamento")
-                {
-                    idDepartamentoValue = keyValue[1];
-                    break;
-                }
-            }
-
-            //  idDepartamento no sea nulo y sea un entero válido
-            if (idDepartamentoValue == null || !int.TryParse(idDepartamentoValue, out int idDepartamento))
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('No se pudo obtener el departamento.')", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Seleccione un departamento.')", true);
                 return;
             }
 
@@ -83,66 +59,82 @@ namespace ControlEmpresarial.Vistas.Vacaciones
             {
                 connection.Open();
 
-                // Verificar si las fechas deseadas están en VacacionesColectivas
-                string checkQuery = @"
-                SELECT COUNT(*) 
-                FROM VacacionesColectivas 
-                WHERE 
-                    FechaVacacion BETWEEN @FechaDeseadaInicial AND @FechaDeseadaFinal";
-
-                using (MySqlCommand checkCommand = new MySqlCommand(checkQuery, connection))
+                // Validar cada fecha en el rango
+                DateTime fechaActual = fechaInicioTexto;
+                while (fechaActual <= fechaFinalTexto)
                 {
-                    checkCommand.Parameters.AddWithValue("@FechaDeseadaInicial", fechaDeseadaInicialTexto.ToString("yyyy-MM-dd"));
-                    checkCommand.Parameters.AddWithValue("@FechaDeseadaFinal", fechaDeseadaFinalTexto.ToString("yyyy-MM-dd"));
+                    string checkQuery = @"
+                        SELECT COUNT(*) 
+                        FROM VacacionesColectivas 
+                        WHERE FechaVacacion = @FechaVacacion";
 
-                    int count = Convert.ToInt32(checkCommand.ExecuteScalar());
-
-                    // Si el conteo es mayor que 0, significa que ya existen fechas en VacacionesColectivas
-                    if (count > 0)
+                    using (MySqlCommand checkCommand = new MySqlCommand(checkQuery, connection))
                     {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Las fechas deseadas ya están registradas como vacaciones colectivas. No se puede solicitar en este rango.')", true);
-                        return;
+                        checkCommand.Parameters.AddWithValue("@FechaVacacion", fechaActual.ToString("yyyy-MM-dd"));
+
+                        int count = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+                        // Si el conteo es mayor que 0, significa que la fecha ya está en VacacionesColectivas
+                        if (count > 0)
+                        {
+                            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('La fecha " + fechaActual.ToString("dd/MM/yyyy") + " ya está registrada como vacaciones colectivas. No se puede solicitar en este rango.')", true);
+                            return;
+                        }
                     }
+
+                    fechaActual = fechaActual.AddDays(1);
                 }
 
-                // Insertar las fechas en VacacionesColectivas
-                DateTime fechaActual = fechaDeseadaInicialTexto;
-                string insertQuery = @"
-                INSERT INTO VacacionesColectivas (FechaVacacion, Motivo) 
-                VALUES (@FechaVacacion, @Motivo)";
-
-                using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
+                // Insertar cada fecha individual en la base de datos
+                fechaActual = fechaInicioTexto;
+                while (fechaActual <= fechaFinalTexto)
                 {
-                    command.Parameters.AddWithValue("@Motivo", motivo);
+                    string insertQuery = @"
+                        INSERT INTO DiasFestivos (idDepartamento, FechaVacacion, Motivo) 
+                        VALUES (@idDepartamento, @FechaVacacion, @Motivo)";
 
-                    while (fechaActual <= fechaDeseadaFinalTexto)
+                    using (MySqlCommand command = new MySqlCommand(insertQuery, connection))
                     {
-                        command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@idDepartamento", idDepartamento);
                         command.Parameters.AddWithValue("@FechaVacacion", fechaActual.ToString("yyyy-MM-dd"));
                         command.Parameters.AddWithValue("@Motivo", motivo);
 
                         command.ExecuteNonQuery();
-                        fechaActual = fechaActual.AddDays(1);
                     }
+
+                    fechaActual = fechaActual.AddDays(1);
                 }
 
-                // Insertar los rangos de fechas en DiasFestivos
-                string insertDiasFestivosQuery = @"
-                INSERT INTO DiasFestivos (FechaOriginalVacacion, FechaDeseadaVacacion, Motivo, idDepartamento) 
-                VALUES (@FechaOriginalVacacion, @FechaDeseadaVacacion, @Motivo, @idDepartamento)";
-
-                using (MySqlCommand command = new MySqlCommand(insertDiasFestivosQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@FechaOriginalVacacion", fechaOriginalInicialTexto.ToString("yyyy-MM-dd"));
-                    command.Parameters.AddWithValue("@FechaDeseadaVacacion", fechaDeseadaFinalTexto.ToString("yyyy-MM-dd"));
-                    command.Parameters.AddWithValue("@Motivo", motivo);
-                    command.Parameters.AddWithValue("@idDepartamento", idDepartamento);
-
-                    command.ExecuteNonQuery();
-                }
-
-                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Días festivos registrados adecuadamente.')", true);
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Vacaciones registradas adecuadamente.')", true);
             }
+        }
+
+        private void CargarDepartamento()
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
+            DataTable dtPuestos = ObtenerDepartamentoDesdeBaseDeDatos(connectionString);
+
+            departamento.DataTextField = "nombreDepartamento";
+            departamento.DataValueField = "idDepartamento";
+            departamento.DataSource = dtPuestos;
+            departamento.DataBind();
+
+            // Agregar elemento por defecto al inicio
+            departamento.Items.Insert(0, new ListItem("Seleccione", ""));
+        }
+
+        private DataTable ObtenerDepartamentoDesdeBaseDeDatos(string connectionString)
+        {
+            DataTable dt = new DataTable();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT idDepartamento, nombreDepartamento FROM Departamento ORDER BY nombreDepartamento";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+            return dt;
         }
     }
 }

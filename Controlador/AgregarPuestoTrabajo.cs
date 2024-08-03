@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 using System.Web;
 using System.Web.UI;
 
@@ -11,12 +12,43 @@ namespace ControlEmpresarial.Vistas.Colaborador
         {
             if (!IsPostBack)
             {
-                CargarNombreUsuario();
+                //CargarNombreUsuario();
+                CargarPuestoTrabajo();
+
             }
         }
         protected void volverMenu_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void CargarPuestoTrabajo()
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
+            DataTable dt = ObtenerPuestoTrabajoDesdeBaseDeDatos(connectionString);
+
+            // Asigna el DataTable como fuente de datos del GridView
+            gridPuestos.DataSource = dt;
+            gridPuestos.DataBind();
+        }
+        private DataTable ObtenerPuestoTrabajoDesdeBaseDeDatos(string connectionString)
+        {
+            DataTable dt = new DataTable();
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT nombrePuesto FROM PuestoTrabajo ORDER BY nombrePuesto";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                conn.Open();
+                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+
+            foreach (DataRow row in dt.Rows)
+            {
+                System.Diagnostics.Debug.WriteLine("Nombre: " + row["nombrePuesto"]);
+            }
+
+            return dt;
         }
         protected void ingresar_Click(object sender, EventArgs e)
         {
@@ -97,7 +129,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
                 }
             }
         }
-        private void CargarNombreUsuario()
+        /*private void CargarNombreUsuario()
         {
             // Obtener el nombre de las cookies
             HttpCookie cookie = Request.Cookies["UserInfo"];
@@ -113,6 +145,6 @@ namespace ControlEmpresarial.Vistas.Colaborador
                 lblNombre.Text = "Error";
                 lblNombre.Visible = true;
             }
-        }
+        }*/
     }
 }

@@ -22,8 +22,7 @@ header {
     padding: 20px;
     background-color: #fff;
     border-bottom: 1px solid #ccc;
-    margin-bottom: 10px;
-    overflow: hidden;
+    z-index: 3;
 }
 
 .cabecera-izquierda h1 {

@@ -12,7 +12,6 @@ namespace ControlEmpresarial.Vistas.Colaborador
         {
             if (!IsPostBack)
             {
-                CargarNombreUsuario();
             }
         }
         protected void volverMenu_Click(object sender, EventArgs e)
@@ -222,22 +221,6 @@ namespace ControlEmpresarial.Vistas.Colaborador
                     throw new ArgumentException($"El día '{nombreDia}' no es válido.");
             }
         }
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
+        
     }
 }
