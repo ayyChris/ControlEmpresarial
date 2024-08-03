@@ -205,6 +205,13 @@
     <Compile Include="Vistas\Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Site2.Master.cs">
+      <DependentUpon>Site2.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Site2.Master.designer.cs">
+      <DependentUpon>Site2.Master</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionesFestivas.aspx.cs">
       <DependentUpon>vacacionesFestivas.aspx</DependentUpon>
     </Compile>
@@ -577,6 +584,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Vistas\Site1.Master" />
+    <Content Include="Vistas\Site2.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -16,117 +16,105 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
         {
             if (!IsPostBack)
             {
-                CargarNombreUsuario();
-                CargarNotificaciones();
-                CargarActividad(); // Asegúrate de que también llames a este método
-            }
-        }
-
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
-
-        private void CargarNotificaciones()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                // Intentar extraer el idEmpleado de la cookie
-                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+                string idActividadStr = Request.QueryString["id"];
+                if (int.TryParse(idActividadStr, out int idActividad))
                 {
-                    // Obtener las notificaciones usando el idEmpleado extraído
-                    NotificacionService service = new NotificacionService();
-                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
-
-                    // Enlazar los datos al repeater
-                    repeaterNotificaciones.DataSource = notificaciones;
-                    repeaterNotificaciones.DataBind();
+                    CargarActividad(idActividad);
                 }
                 else
                 {
-                    // Manejar caso en el que idEmpleado no es válido
-                    Label1.Text = "Error al extraer ID de empleado";
+                    Label1.Text = "ID de actividad no válida.";
                     Label1.Visible = true;
                 }
             }
-            else
-            {
-                Label1.Text = "Cookie no encontrada";
-                Label1.Visible = true;
-            }
         }
 
-        private void CargarActividad()
+        private void CargarActividad(int idActividad)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
-            // Obtener el idActividad de la query string
-            string idActividadString = Request.QueryString["evidencia"];
-            if (int.TryParse(idActividadString, out int idActividad))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
+                // Consulta SQL ajustada para seleccionar los datos requeridos
                 string query = @"
-                    SELECT a.idActividad AS Evidencia, ar.Titulo, a.Descripcion, a.FechaInicio, a.FechaFin, e.Nombre
-                    FROM actividades a
-                    INNER JOIN empleado e ON a.idEmpleado = e.idEmpleado
-                    INNER JOIN actividadesregistradas ar ON a.idActividadRegistrada = ar.id
-                    WHERE a.idActividad = @idActividad";
+            SELECT a.fecha, a.descripcion, a.Titulo, a.horaInicio, a.horaFin, e.Nombre
+            FROM actividadesregistradas a
+            JOIN empleado e ON a.idEnviador = e.idEmpleado
+            WHERE a.id = @idActividad";
 
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    using (MySqlCommand command = new MySqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@idActividad", idActividad);
+                    command.Parameters.AddWithValue("@idActividad", idActividad);
 
-                        try
+                    try
+                    {
+                        connection.Open();
+                        using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            connection.Open();
-                            using (MySqlDataReader reader = command.ExecuteReader())
+                            if (reader.Read())
                             {
-                                if (reader.Read())
-                                {
-                                    // Asignar los datos a los controles
-                                    lblNombreEmpleado.Text = reader["Nombre"].ToString();
-                                    LblTitulo.Text = reader["Titulo"].ToString();
-                                    lblFechaInicio.Text = Convert.ToDateTime(reader["FechaInicio"]).ToString("dd/MM/yyyy");
-                                    lblFechaFin.Text = Convert.ToDateTime(reader["FechaFin"]).ToString("dd/MM/yyyy");
-                                    lblDescripcion.Text = reader["Descripcion"].ToString();
-                                }
-                                else
-                                {
-                                    // Manejar el caso en el que no se encuentra la actividad
-                                    Label1.Text = "Actividad no encontrada";
-                                    Label1.Visible = true;
-                                }
+                                // Mostrar los datos en los controles
+                                lblNombreEmpleado.Text = reader["Nombre"].ToString(); // Nombre del empleado
+                                LblTitulo.Text = reader["Titulo"].ToString();
+                                lblFecha.Text = Convert.ToDateTime(reader["fecha"]).ToString("dd/MM/yyyy"); // Solo la fecha
+
+                                // Manejo del TimeSpan para horaInicio y horaFin
+                                TimeSpan horaInicio = (TimeSpan)reader["horaInicio"];
+                                TimeSpan horaFin = (TimeSpan)reader["horaFin"];
+
+                                lblHoraInicio.Text = horaInicio.ToString(@"hh\:mm"); // Hora de inicio
+                                lblHoraFin.Text = horaFin.ToString(@"hh\:mm"); // Hora final
+
+                                lblDescripcion.Text = reader["descripcion"].ToString();
+                            }
+                            else
+                            {
+                                Label1.Text = "Actividad no encontrada.";
+                                Label1.Visible = true;
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            // Manejo de errores
-                            Label1.Text = "Error al cargar los datos: " + ex.Message;
-                            Label1.Visible = true;
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Label1.Text = "Error al cargar la actividad: " + ex.Message;
+                        Label1.Visible = true;
                     }
                 }
             }
-            else
+        }
+
+        private void ActualizarEstadoActividad(int idActividad, string nuevoEstado)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            string query = "UPDATE actividadesregistradas SET estado = @nuevoEstado WHERE id = @idActividad AND estado = 'Pendiente'";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                // Manejar el caso en el que el idActividad no es válido
-                Label1.Text = "ID de actividad no válido";
-                Label1.Visible = true;
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@nuevoEstado", nuevoEstado);
+                    command.Parameters.AddWithValue("@idActividad", idActividad);
+
+                    try
+                    {
+                        connection.Open();
+                        int filasAfectadas = command.ExecuteNonQuery();
+
+                        // Verifica si se actualizó alguna fila
+                        if (filasAfectadas == 0)
+                        {
+                            // No se actualizó ninguna fila, lo que significa que el estado no era "Pendiente"
+                            Label1.Text = $"La actividad (ID: {idActividad}) no estaba en estado 'Pendiente'.";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Manejo de errores
+                        Label1.Text = "Error al actualizar el estado de la actividad: " + ex.Message;
+                        Label1.Visible = true;
+                    }
+                }
             }
         }
 
@@ -156,9 +144,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
             // Insertar el registro de actividad
             InsertarRegistroActividad(idJefe, idEmpleado, fecha, estado, idActividad);
 
-            // Actualizar el estado de la actividad
-            ActualizarEstadoActividad(idActividad);
-
+            ActualizarEstadoActividad(idActividad, "Aceptada");
             // Obtener el título de la actividad para la notificación
             string tituloActividad = ObtenerTituloActividad(idActividad);
 
@@ -199,12 +185,10 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
 
             DateTime fecha = DateTime.Now;
             string estado = "Denegado";
-
+            ActualizarEstadoActividad(idActividad, "Denegada");
             // Insertar el registro de actividad
             InsertarRegistroActividad(idJefe, idEmpleado, fecha, estado, idActividad);
 
-            // Actualizar el estado de la actividad
-            ActualizarEstadoActividad(idActividad);
 
             // Obtener el título de la actividad para la notificación
             string tituloActividad = ObtenerTituloActividad(idActividad);
@@ -268,73 +252,49 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
         }
 
 
-        private void ActualizarEstadoActividad(int idActividad)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
-
-            string query = "UPDATE actividades SET Estado = @estado WHERE idActividad = @idActividad";
-
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@estado", "Revisada");
-                    command.Parameters.AddWithValue("@idActividad", idActividad);
-
-                    try
-                    {
-                        connection.Open();
-                        int rowsAffected = command.ExecuteNonQuery();
-                        if (rowsAffected == 0)
-                        {
-                            // Manejo de caso en el que no se encontró ninguna fila afectada
-                            Label1.Text = "No se encontró ninguna actividad con el ID especificado.";
-                            Label1.Visible = true;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Manejo de errores
-                        Label1.Text = "Error al actualizar el estado: " + ex.Message;
-                        Label1.Visible = true;
-                    }
-                }
-            }
-        }
-
         private int ObtenerIdEmpleadoPorActividad(int idActividad)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
-            int idEmpleado = -1;
+            int idEnviador = -1; // Valor predeterminado para cuando no se encuentra el ID
 
-            string query = "SELECT idEmpleado FROM actividades WHERE idActividad = @idActividad";
+            // Definir la consulta SQL
+            string query = "SELECT idEnviador FROM actividadesregistradas WHERE id = @idActividad";
 
+            // Crear y abrir la conexión a la base de datos
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                try
                 {
-                    command.Parameters.AddWithValue("@idActividad", idActividad);
+                    connection.Open();
 
-                    try
+                    // Crear el comando SQL
+                    using (MySqlCommand command = new MySqlCommand(query, connection))
                     {
-                        connection.Open();
-                        object result = command.ExecuteScalar();
-                        if (result != null && int.TryParse(result.ToString(), out idEmpleado))
+                        // Añadir el parámetro para evitar SQL Injection
+                        command.Parameters.AddWithValue("@idActividad", idActividad);
+
+                        // Ejecutar el comando y leer el resultado
+                        using (MySqlDataReader reader = command.ExecuteReader())
                         {
-                            return idEmpleado;
+                            if (reader.Read())
+                            {
+                                // Obtener el valor del idEnviador
+                                idEnviador = reader.GetInt32("idEnviador");
+                            }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        // Manejo de errores
-                        Label1.Text = "Error al obtener idEmpleado: " + ex.Message;
-                        Label1.Visible = true;
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Label1.Text = "Error al conseguir la idEnviador: " + ex.Message;
+                    Label1.Visible = true;
                 }
             }
 
-            return -1;
+            // Devolver el idEnviador encontrado o -1 si no se encontró
+            return idEnviador;
         }
+
 
         private int ObtenerIdJefe()
         {

@@ -9,6 +9,27 @@
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
       <link href="~/Estilos/app.css" rel="stylesheet"/>
       <style>
+          .table-container {
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table-container th, .table-container td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .table-container th {
+        background-color: #f2f2f2;
+    }
           .divisor-forma-personalizado {
          position: relative;
          width: 100%;
