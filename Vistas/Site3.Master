@@ -260,32 +260,32 @@
                </li>
             </ul>
          </nav>
-         <div class="cabecera-derecha">
-            <button class="boton-notificacion">
-            <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>
+          <div class="cabecera-derecha">
+            <button type="button" class="boton-notificacion" id="notificacionesLink">
+               <img src="../../Imagenes/notificacion.gif" alt="Notificación"/>
             </button>
          </div>
 
-             <div id="mySidebar" class="sidebar">
-                <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
-                <div class="sidebar-content">
-                    <h2>Notificaciones</h2>
-                   <asp:Repeater ID="repeaterNotificaciones" runat="server">
-                        <ItemTemplate>
-                            <div class="notification-card">
-                                <div class="notification-header">
-                                    <h3 class="notification-title"><%# Eval("Titulo") %></h3>
-                                    <span class="notification-date"><%# Eval("Fecha", "{0:dd/MM/yyyy}") %></span>
-                                </div>
-                                <p class="notification-motivo"><%# Eval("Motivo") %></p>
-                                <span class="notification-enviador">Enviado por: <%# Eval("EnviadorNombre") %> <%# Eval("EnviadorApellidos") %></span>
+         <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" id="closeBtn">&times;</a>
+            <div class="sidebar-content">
+                <h2>Notificaciones</h2>
+                <asp:Repeater ID="repeaterNotificaciones" runat="server">
+                    <ItemTemplate>
+                        <div class="notification-card">
+                            <div class="notification-header">
+                                <h3 class="notification-title"><%# Eval("Titulo") %></h3>
+                                <span class="notification-date"><%# Eval("Fecha", "{0:dd/MM/yyyy}") %></span>
                             </div>
-                            <div class="notification-divider"></div>
-                        </ItemTemplate>
-                    </asp:Repeater>
-                </div>
+                            <p class="notification-motivo"><%# Eval("Motivo") %></p>
+                            <span class="notification-enviador">Enviado por: <%# Eval("EnviadorNombre") %> <%# Eval("EnviadorApellidos") %></span>
+                        </div>
+                        <div class="notification-divider"></div>
+                    </ItemTemplate>
+                </asp:Repeater>
             </div>
-        </header>
+         </div>
+      </header>
 
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
@@ -316,28 +316,27 @@
     </div>
  </footer>
     </form>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var sidebar = document.getElementById("mySidebar");
-            var openBtn = document.getElementById("notificacionesLink");
-            var closeBtn = document.getElementById("closeBtn");
+     
+   <script>
+       document.addEventListener("DOMContentLoaded", function () {
+           var sidebar = document.getElementById("mySidebar");
+           var openBtn = document.getElementById("notificacionesLink");
+           var closeBtn = document.getElementById("closeBtn");
 
-            openBtn.onclick = function () {
-                sidebar.style.width = "300px";
-            }
+           openBtn.onclick = function () {
+               sidebar.style.width = "300px";
+           }
 
-            closeBtn.onclick = function () {
-                sidebar.style.width = "0";
-            }
+           closeBtn.onclick = function () {
+               sidebar.style.width = "0";
+           }
 
-            window.onclick = function (event) {
-                if (event.target == sidebar) {
-                    sidebar.style.width = "0";
-                }
-            }
-        });
-    </script>
+           window.onclick = function (event) {
+               if (event.target == sidebar) {
+                   sidebar.style.width = "0";
+               }
+           }
+       });
+   </script>
 </body>
 </html>
-
-
