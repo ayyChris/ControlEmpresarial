@@ -17,17 +17,29 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
             if (!IsPostBack)
             {
                 string idActividadStr = Request.QueryString["id"];
-                if (int.TryParse(idActividadStr, out int idActividad))
+                if (idActividadStr != null)
                 {
-                    CargarActividad(idActividad);
+                    Label1.Text = "ID de actividad recibido: " + idActividadStr;
+                    Label1.Visible = true;
+
+                    if (int.TryParse(idActividadStr, out int idActividad))
+                    {
+                        CargarActividad(idActividad);
+                    }
+                    else
+                    {
+                        Label1.Text = "ID de actividad no válida.";
+                        Label1.Visible = true;
+                    }
                 }
                 else
                 {
-                    Label1.Text = "ID de actividad no válida.";
+                    Label1.Text = "No se proporcionó el parámetro ID.";
                     Label1.Visible = true;
                 }
             }
         }
+
 
         private void CargarActividad(int idActividad)
         {
@@ -120,7 +132,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
 
         protected void AceptarButton_Click(object sender, EventArgs e)
         {
-            string idActividadString = Request.QueryString["evidencia"];
+            string idActividadString = Request.QueryString["id"]; 
             int idJefe = ObtenerIdJefe();
 
             if (!int.TryParse(idActividadString, out int idActividad))
@@ -154,7 +166,7 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
             CrearNotificacion(idJefe, idEmpleado, tituloNotificacion, motivo, fecha);
 
             Label1.Text = "<i class='fas fa-thumbs-up'></i> Actividad Aceptada";
-            Label1.CssClass = "like-icon"; 
+            Label1.CssClass = "like-icon";
             Label1.Visible = true;
 
             // Opcionalmente ocultar el botón después de hacer clic
@@ -163,9 +175,10 @@ namespace ControlEmpresarial.Vistas.Control_de_Actividades
 
 
 
+
         protected void DenegarButton_Click(object sender, EventArgs e)
         {
-            string idActividadString = Request.QueryString["evidencia"];
+            string idActividadString = Request.QueryString["id"];
             int idJefe = ObtenerIdJefe();
 
             if (!int.TryParse(idActividadString, out int idActividad))
