@@ -607,4 +607,15 @@ h3 {
     font-size: 0.9em;
     color: #666;
 }
+.button-delete {
+    background-color: #ff3333; /* Rojo */
+    color: #fff; /* Texto blanco */
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+    .button-delete:hover {
+        background-color: #cc0000; /* Rojo oscuro */
+    }

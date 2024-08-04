@@ -240,6 +240,13 @@
                      <li><a href="../Incapacidades/VisualizacionIncapacidad.aspx">Historial de incapacidades</a></li>
                   </ul>
                </li>
+                 <li class="has-submenu">
+                  <a href="#">Actividades</a>
+                  <ul class="submenu">
+                     <li><a href="../Control de Actividades/AgregarTipoActividadesSupervisor.aspx">Registro Actividades</a></li>
+                      <li><a href="../Control de Actividades/ControlActividadesSupervisor.aspx">Control de Actividades</a></li>
+                  </ul>
+               </li>
                <li class="has-submenu">
                   <a href="#">Inconsistencias</a>
                   <ul class="submenu">
