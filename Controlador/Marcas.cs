@@ -145,7 +145,7 @@ namespace ControlEmpresarial.Vistas
                 try
                 {
                     conexion.Open();
-                    string query = "SELECT COUNT(*) FROM diasfestivos WHERE FechaDeseadaVacacion = @FechaHoy AND idDepartamento = @idDepartamento";
+                    string query = "SELECT COUNT(*) FROM diasfestivos WHERE FechaVacacion = @FechaHoy AND idDepartamento = @idDepartamento";
 
                     using (MySqlCommand cmd = new MySqlCommand(query, conexion))
                     {

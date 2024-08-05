@@ -4,7 +4,7 @@
    <head runat="server">
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Solicitar Vacaciones</title>
+      <title>Doble Factor</title>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
       <link href="~/Estilos/app.css" type="text/css" rel="stylesheet">
       <style>

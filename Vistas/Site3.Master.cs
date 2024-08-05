@@ -1,5 +1,6 @@
 ﻿using ControlEmpresarial.Controlador;
 using ControlEmpresarial.Services;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,74 @@ namespace ControlEmpresarial.Vistas
 {
     public partial class Site3 : System.Web.UI.MasterPage
     {
+        private string cadenaConexion = "Server=138.59.135.33;Port=3306;Database=tiusr38pl_gestion;Uid=gestion;Pwd=Ihnu00&34;";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                CargarNombreUsuario();
+                CargarDatosDeUsuario();
                 CargarNotificaciones();
             }
         }
 
-        private void CargarNombreUsuario()
+        private void CargarDatosDeUsuario()
         {
+            // Obtener la cookie de usuario
             HttpCookie cookie = Request.Cookies["UserInfo"];
             if (cookie != null)
             {
                 string nombre = cookie["Nombre"];
                 string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
+                string idDepartamento = cookie["idDepartamento"];
+
+                // Mostrar nombre completo
+                lblNombre.Text = $"{nombre} {apellidos}";
                 lblNombre.Visible = true;
+
+                // Obtener el nombre del departamento
+                if (!string.IsNullOrEmpty(idDepartamento))
+                {
+                    using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                    {
+                        try
+                        {
+                            conexion.Open();
+                            string query = "SELECT nombreDepartamento FROM departamento WHERE idDepartamento = @idDepartamento";
+
+                            using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                            {
+                                cmd.Parameters.AddWithValue("@idDepartamento", idDepartamento);
+                                object result = cmd.ExecuteScalar();
+
+                                if (result != null)
+                                {
+                                    string nombreDepartamento = result.ToString();
+                                    lblNombre.Text = $"{nombreDepartamento} | {nombre} {apellidos}";
+                                }
+                                else
+                                {
+                                    lblNombre.Text = $"Error al obtener el departamento | {nombre} {apellidos}";
+                                }
+                            }
+                        }
+                        catch (MySqlException ex)
+                        {
+                            lblNombre.Text = $"Error en la base de datos: {ex.Message}";
+                        }
+                        catch (Exception ex)
+                        {
+                            lblNombre.Text = $"Error inesperado: {ex.Message}";
+                        }
+                    }
+                }
+                else
+                {
+                    lblNombre.Text = $"Error al obtener el departamento | {nombre} {apellidos}";
+                }
             }
             else
             {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
+                lblNombre.Text = "Información de usuario no disponible.";
             }
         }
 
