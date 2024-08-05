@@ -288,6 +288,7 @@
     <Content Include="Imagenes\icono-vacaciones.png" />
     <Content Include="Imagenes\jefe.png" />
     <Content Include="Imagenes\like.svg" />
+    <Content Include="Imagenes\logo-peq.png" />
     <Content Include="Imagenes\logo.png" />
     <Content Include="Imagenes\notificacion.gif" />
     <Content Include="Imagenes\planta.png" />

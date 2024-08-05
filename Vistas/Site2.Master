@@ -166,18 +166,51 @@
          font-size: 14px;
          color: #bbb;
          }
+               .cabecera-izquierda {
+    display: flex;
+    align-items: center;
+}
+
+.texto-derecha {
+    margin-left: 10px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #3c31dd;
+}
+
+.imagen-pequena {
+    width: 40px; 
+    height: 40px; 
+}
+
+#logOutLink {
+            color: purple; 
+            text-decoration: none; 
+        }
+
+        #logOutLink:hover {
+            text-decoration: underline; 
+        }
+
       </style>
    </head>
-   <body>
-      <form id="form1" runat="server">
-         <header>
+<body>
+    <form id="form1" runat="server">
+        <header>
             <div class="cabecera-izquierda">
-               <a href="../PaginaPrincipal/MenuJefatura.aspx">
-                  <h1>Jefatura</h1>
-               </a>
-               <p>
-                  <asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label>
-               </p>
+                <img src="../../Imagenes/logo-peq.png" alt="logo pequeño" class="imagen-pequena"/>
+                <div class="texto-derecha">
+                    <a href="../PaginaPrincipal/MenuSupervisor.aspx">
+                        <h1>Jefatura</h1>
+                    </a>
+                    <p>
+                        <asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label>
+                        </p>
+                        <p>
+                        <a href="#" id="logOutLink">Salir de la sesión</a>
+                    </p>
+                </div>
             </div>
             <nav>
                <ul>
@@ -319,6 +352,18 @@
                   }
               }
           });
+
+          document.getElementById("logOutLink").addEventListener("click", function (event) {
+              event.preventDefault();
+              logOut();
+          });
+
+          function logOut() {
+              document.cookie.split(";").forEach(function (c) {
+                  document.cookie = c.trim().split("=")[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+              });
+              window.location.href = "../PaginaPrincipal/Inicio.aspx";
+          }
       </script>
    </body>
 </html>
