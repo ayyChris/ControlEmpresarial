@@ -1,71 +1,119 @@
 ﻿using ControlEmpresarial.Services;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Web.UI.WebControls;
 using System.Web.UI;
 using MySql.Data.MySqlClient;
 using System.Web;
 using ControlEmpresarial.Controlador;
+using System.Web.UI.WebControls;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ControlEmpresarial.Vistas
 {
     public partial class solicitudHorasExtras : System.Web.UI.Page
     {
         private NotificacionService notificacionService = new NotificacionService();
+        private string horarioTrabajador = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 CargarEmpleados();
-                CargarNombreUsuario();
-                CargarNotificaciones();
-            }
-        }
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
             }
         }
 
-        private void CargarNotificaciones()
+        protected void dia_TextChanged(object sender, EventArgs e)
         {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
+            string diaSeleccionado = dia.Text; // Obtener el día seleccionado en formato "yyyy-MM-dd"
+            if (DateTime.TryParse(diaSeleccionado, out DateTime fecha))
             {
-                // Intentar extraer el idEmpleado de la cookie
-                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
+                if (colaborador.SelectedItem != null && colaborador.SelectedItem.Value != "0")
                 {
-                    // Obtener las notificaciones usando el idEmpleado extraído
-                    NotificacionService service = new NotificacionService();
-                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
+                    int idEmpleado = int.Parse(colaborador.SelectedItem.Value);
 
-                    // Enlazar los datos al repeater
-                    repeaterNotificaciones.DataSource = notificaciones;
-                    repeaterNotificaciones.DataBind();
+                    // Diccionario para la conversión de días de la semana
+                    Dictionary<string, string> diasSemanaEsp = new Dictionary<string, string>()
+                    {
+                        { "Sunday", "Domingo" },
+                        { "Monday", "Lunes" },
+                        { "Tuesday", "Martes" },
+                        { "Wednesday", "Miércoles" },
+                        { "Thursday", "Jueves" },
+                        { "Friday", "Viernes" },
+                        { "Saturday", "Sábado" }
+                    };
+
+                    string diaSemanaEn = fecha.DayOfWeek.ToString(); // Día de la semana en inglés
+                    string diaSemanaEs = diasSemanaEsp[diaSemanaEn]; // Día de la semana en español
+
+                    horarioLabel.Text = "Buscando horario para: " + diaSemanaEs; // Mensaje de depuración
+
+                    string horario = ObtenerHorarioPorDia(idEmpleado, diaSemanaEs);
+                    if (!string.IsNullOrEmpty(horario))
+                    {
+                        horarioLabel.Text = horario;
+                        horarioTrabajador = horario;
+                    }
+                    else
+                    {
+                        horarioLabel.Text = "No se encontró horario para " + diaSemanaEs;
+                    }
                 }
                 else
                 {
-          
+                    horarioLabel.Text = "Seleccione un colaborador.";
                 }
             }
             else
             {
-               
+                horarioLabel.Text = "Fecha no válida";
             }
+        }
+
+        private string ObtenerHorarioPorDia(int idEmpleado, string diaSemana)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            string horario = "";
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = @"
+                SELECT h.horaEntrada, h.horaSalida, h.diaSemana
+                FROM horario h
+                JOIN empleado e ON e.idHorario = h.idHorario
+                WHERE e.idEmpleado = @idEmpleado";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+
+                try
+                {
+                    conn.Open();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string dias = reader.GetString("diaSemana");
+                            if (dias.Split(',').Contains(diaSemana))
+                            {
+                                TimeSpan horaEntrada = reader.GetTimeSpan("horaEntrada");
+                                TimeSpan horaSalida = reader.GetTimeSpan("horaSalida");
+                                horario = $"{diaSemana}: {horaEntrada:hh\\:mm} - {horaSalida:hh\\:mm}";
+                                break;
+                            }
+                        }
+                        if (string.IsNullOrEmpty(horario))
+                        {
+                            horarioLabel.Text = "No se encontró horario en la base de datos."; // Mensaje de depuración
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    horarioLabel.Text = "Error al obtener horario: " + ex.Message;
+                }
+            }
+            return horario;
         }
 
         protected void submit_Click(object sender, EventArgs e)
@@ -85,13 +133,27 @@ namespace ControlEmpresarial.Vistas
             // Calculamos las horas solicitadas
             double horasTotales = (horaFinalTS - horaInicioTS).TotalHours;
 
+            // Validar que las horas solicitadas no superen las horas permitidas diarias
+            if (!ValidarHorasExtraDiarias(idEmpleado, dia, horaInicioTS, horaFinalTS))
+            {
+                lblMensaje.Text = "La solicitud de horas extra supera el límite permitido para el día.";
+                lblMensaje.Visible = true;
+                return;
+            }
+
+            // Validar que las horas solicitadas no superen las horas permitidas semanalmente
+            if (!ValidarHorasExtraSemanales(idEmpleado, dia, horaInicioTS, horaFinalTS))
+            {
+                lblMensaje.Text = "La solicitud de horas extra supera el límite permitido para la semana.";
+                lblMensaje.Visible = true;
+                return;
+            }
+
             string Activo = "Activo";
 
             // Llama al método para insertar los datos en la base de datos
             InsertarHoraExtra(idEmpleado, colaboradorSeleccionado, thisDay, dia, horaInicioTS, horaFinalTS, horasTotales, motivo, Activo);
-            string mensajeEnviado = "Horas Extra enviadas correctamente!";
-            // Mostrar el mensaje en el Label
-            lblMensaje.Text = mensajeEnviado;
+            lblMensaje.Text = "Horas Extra enviadas correctamente!";
             lblMensaje.Visible = true;
 
             // Insertar la notificación
@@ -100,6 +162,92 @@ namespace ControlEmpresarial.Vistas
             // Script para mostrar el ícono
             ClientScript.RegisterStartupScript(this.GetType(), "showLikeIcon", "<script>document.getElementById('likeIcon').style.display = 'inline-block';</script>");
         }
+
+        private bool ValidarHorasExtraDiarias(string idEmpleado, string dia, TimeSpan horaInicio, TimeSpan horaFinal)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            double horasPermitidasDiarias = 8; // Ajusta este valor según la legislación local
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = @"
+        SELECT h.horaEntrada, h.horaSalida
+        FROM horario h
+        JOIN empleado e ON e.idHorario = h.idHorario
+        WHERE e.idEmpleado = @idEmpleado";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+
+                try
+                {
+                    conn.Open();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            TimeSpan horaEntrada = reader.GetTimeSpan("horaEntrada");
+                            TimeSpan horaSalida = reader.GetTimeSpan("horaSalida");
+                            TimeSpan jornadaDiaria = horaSalida - horaEntrada;
+
+                            if (horaInicio < horaEntrada || horaFinal > horaSalida || (horaFinal - horaInicio).TotalHours > horasPermitidasDiarias)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = "Error al validar horario diario: " + ex.Message;
+                    lblMensaje.Visible = true;
+                }
+            }
+
+            return true;
+        }
+
+        private bool ValidarHorasExtraSemanales(string idEmpleado, string dia, TimeSpan horaInicio, TimeSpan horaFinal)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            double horasPermitidasSemanales = 48; // Ajusta este valor según la legislación local
+
+            DateTime fechaInicioSemana = DateTime.Parse(dia).AddDays(-(int)DateTime.Parse(dia).DayOfWeek);
+            DateTime fechaFinalSemana = fechaInicioSemana.AddDays(6);
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = @"
+        SELECT SUM(HorasSolicitadas) AS TotalHoras
+        FROM solicitudHorasExtras
+        WHERE idEmpleado = @idEmpleado
+        AND FechaInicioSolicitud BETWEEN @fechaInicioSemana AND @fechaFinalSemana
+        AND Estado = 'Aceptada'";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@fechaInicioSemana", fechaInicioSemana);
+                cmd.Parameters.AddWithValue("@fechaFinalSemana", fechaFinalSemana);
+
+                try
+                {
+                    conn.Open();
+                    object result = cmd.ExecuteScalar();
+                    double horasTotalesSemanales = result != DBNull.Value ? Convert.ToDouble(result) : 0;
+
+                    if ((horasTotalesSemanales + (horaFinal - horaInicio).TotalHours) > horasPermitidasSemanales)
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = "Error al validar horario semanal: " + ex.Message;
+                    lblMensaje.Visible = true;
+                }
+            }
+
+            return true;
+        }
+
 
         private void CargarEmpleados()
         {
@@ -143,8 +291,8 @@ namespace ControlEmpresarial.Vistas
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 string query = @"
-            INSERT INTO solicitudHorasExtras (idEmpleado, NombreEmpleado, FechaInicioSolicitud, FechaFinalSolicitud, HoraInicialExtra, HoraFinalExtra, HorasSolicitadas, Motivo, Estado, idEnviador) 
-            VALUES (@idEmpleado, @NombreEmpleado, @FechaInicioSolicitud, @FechaFinalSolicitud, @HoraInicialExtra, @HoraFinalExtra, @HorasSolicitadas, @Motivo, @Estado, @idEnviador)";
+                INSERT INTO solicitudHorasExtras (idEmpleado, NombreEmpleado, FechaInicioSolicitud, FechaFinalSolicitud, HoraInicialExtra, HoraFinalExtra, HorasSolicitadas, Motivo, Estado, idEnviador) 
+                VALUES (@idEmpleado, @NombreEmpleado, @FechaInicioSolicitud, @FechaFinalSolicitud, @HoraInicialExtra, @HoraFinalExtra, @HorasSolicitadas, @Motivo, @Estado, @idEnviador)";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);

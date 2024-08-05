@@ -16,15 +16,10 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         {
             if (!IsPostBack)
             {
-                CargarNombreUsuario();
-                CargarNotificaciones();
                 HttpCookie userCookie = Request.Cookies["UserInfo"];
                 if (userCookie != null)
                 {
-                    // Obtener idEmpleado de la cookie
                     int idEmpleado = int.Parse(userCookie["idEmpleado"]);
-
-                    // Usar idEmpleado para cargar datos
                     CargarDatosTabla(idEmpleado);
                 }
                 else
@@ -34,34 +29,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                     lblMensaje.ForeColor = System.Drawing.Color.Red;
                     lblMensaje.Visible = true;
                 }
-            }
-        }
-
-        private void CargarNotificaciones()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                // Intentar extraer el idEmpleado de la cookie
-                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
-                {
-                    // Obtener las notificaciones usando el idEmpleado extraído
-                    NotificacionService service = new NotificacionService();
-                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
-
-                    // Enlazar los datos al repeater
-                    repeaterNotificaciones.DataSource = notificaciones;
-                    repeaterNotificaciones.DataBind();
-                }
-                else
-                {
-                   
-                   
-                }
-            }
-            else
-            {
-                
             }
         }
 
@@ -126,25 +93,5 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 e.Row.Cells[4].Text = horaFinalExtra.ToString(@"hh\:mm");
             }
         }
-
-
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
-
     }
 }
