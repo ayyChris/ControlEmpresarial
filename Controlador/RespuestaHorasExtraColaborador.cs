@@ -21,8 +21,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
         {
             if (!IsPostBack)
             {
-                CargarNotificaciones();
-                CargarNombreUsuario();
                 idSolicitud = Request.QueryString["idSolicitud"];
                 if (!string.IsNullOrEmpty(idSolicitud))
                 {
@@ -38,53 +36,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             else
             {
                 idSolicitud = Session["idSolicitud"] as string; // Recuperar de sesión
-            }
-        }
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
-
-        private void CargarNotificaciones()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                // Intentar extraer el idEmpleado de la cookie
-                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
-                {
-                    // Obtener las notificaciones usando el idEmpleado extraído
-                    NotificacionService service = new NotificacionService();
-                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
-
-                    // Enlazar los datos al repeater
-                    repeaterNotificaciones.DataSource = notificaciones;
-                    repeaterNotificaciones.DataBind();
-                }
-                else
-                {
-                    // Manejar caso en el que idEmpleado no es válido
-                    Label1.Text = "Error al extraer ID de empleado";
-                    Label1.Visible = true;
-                }
-            }
-            else
-            {
-                Label1.Text = "Cookie no encontrada";
-                Label1.Visible = true;
             }
         }
 

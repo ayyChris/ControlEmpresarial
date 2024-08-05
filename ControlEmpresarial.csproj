@@ -189,6 +189,12 @@
     <Compile Include="Controlador\ControladorActividadesJefatura.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\ControladorHistoricoActividades.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControladorHistoricoHorasExtra.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\Permisos_AceptacionNegacionPermisoJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -314,8 +320,8 @@
     <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
     <Content Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
-    <Content Include="Vistas\Control de Actividades\HistoricoActividadesJefatura.aspx" />
-    <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasJefatura.aspx" />
+    <Content Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx" />
+    <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx" />
     <Content Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Login.aspx" />
     <Content Include="Vistas\Marcas\marcas.aspx" />
@@ -530,19 +536,17 @@
     <Compile Include="Vistas\Vacaciones\calendarioVacaciones.aspx.designer.cs">
       <DependentUpon>calendarioVacaciones.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Control de Actividades\HistoricoActividadesJefatura.aspx.cs">
-      <DependentUpon>HistoricoActividadesJefatura.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
+    <Compile Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx.cs">
+      <DependentUpon>HistoricoActividadesSupervisor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Control de Actividades\HistoricoActividadesJefatura.aspx.designer.cs">
-      <DependentUpon>HistoricoActividadesJefatura.aspx</DependentUpon>
+    <Compile Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx.designer.cs">
+      <DependentUpon>HistoricoActividadesSupervisor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Horas Extra\HistoricoHorasExtrasJefatura.aspx.cs">
-      <DependentUpon>HistoricoHorasExtrasJefatura.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
+    <Compile Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx.cs">
+      <DependentUpon>HistoricoHorasExtrasSupervisor.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Horas Extra\HistoricoHorasExtrasJefatura.aspx.designer.cs">
-      <DependentUpon>HistoricoHorasExtrasJefatura.aspx</DependentUpon>
+    <Compile Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx.designer.cs">
+      <DependentUpon>HistoricoHorasExtrasSupervisor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx.cs">
       <DependentUpon>SolicitarIncapacidadesJefatura.aspx</DependentUpon>

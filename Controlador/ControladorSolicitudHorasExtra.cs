@@ -119,88 +119,178 @@ namespace ControlEmpresarial.Vistas
         protected void submit_Click(object sender, EventArgs e)
         {
             string idEmpleado = colaborador.SelectedItem.Value;
-            string colaboradorSeleccionado = colaborador.SelectedItem.Text;
-            string dia = this.dia.Text;
-            string horaInicio = this.horaInicio.Text;
-            string horaFinal = this.horaFinal.Text;
+            DateTime fecha = DateTime.Parse(this.dia.Text);
+            TimeSpan horaInicio = TimeSpan.Parse(this.horaInicio.Text);
+            TimeSpan horaFinal = TimeSpan.Parse(this.horaFinal.Text);
             string motivo = this.motivo.Text;
-            DateTime thisDay = DateTime.Today;
 
-            // Convertimos las horas a TimeSpan
-            TimeSpan horaInicioTS = TimeSpan.Parse(horaInicio);
-            TimeSpan horaFinalTS = TimeSpan.Parse(horaFinal);
-
-            // Calculamos las horas solicitadas
-            double horasTotales = (horaFinalTS - horaInicioTS).TotalHours;
-
-            // Validar que las horas solicitadas no superen las horas permitidas diarias
-            if (!ValidarHorasExtraDiarias(idEmpleado, dia, horaInicioTS, horaFinalTS))
+            // Validar horas extra diarias
+            if (!ValidarHorasExtraDiarias(idEmpleado, fecha.ToString("yyyy-MM-dd"), horaInicio, horaFinal))
             {
-                lblMensaje.Text = "La solicitud de horas extra supera el límite permitido para el día.";
-                lblMensaje.Visible = true;
                 return;
             }
 
-            // Validar que las horas solicitadas no superen las horas permitidas semanalmente
-            if (!ValidarHorasExtraSemanales(idEmpleado, dia, horaInicioTS, horaFinalTS))
+            // Validar horas extra semanales
+            if (!ValidarHorasExtraSemanales(idEmpleado, fecha.ToString("yyyy-MM-dd"), horaInicio, horaFinal))
             {
-                lblMensaje.Text = "La solicitud de horas extra supera el límite permitido para la semana.";
-                lblMensaje.Visible = true;
                 return;
             }
 
-            string Activo = "Activo";
+            // Validar horas extra acumuladas
+            if (!ValidarHorasExtrasAcumuladas(idEmpleado, fecha, horaInicio, horaFinal))
+            {
+                return;
+            }
 
             // Llama al método para insertar los datos en la base de datos
-            InsertarHoraExtra(idEmpleado, colaboradorSeleccionado, thisDay, dia, horaInicioTS, horaFinalTS, horasTotales, motivo, Activo);
+            InsertarHoraExtra(idEmpleado, colaborador.SelectedItem.Text, DateTime.Today, fecha.ToString("yyyy-MM-dd"), horaInicio, horaFinal, (horaFinal - horaInicio).TotalHours, motivo, "Activo");
             lblMensaje.Text = "Horas Extra enviadas correctamente!";
             lblMensaje.Visible = true;
 
             // Insertar la notificación
-            InsertarNotificacion(Convert.ToInt32(idEmpleado), "Hora Extra Solicitada", motivo, thisDay);
+            InsertarNotificacion(Convert.ToInt32(idEmpleado), "Hora Extra Solicitada", motivo, DateTime.Today);
 
             // Script para mostrar el ícono
             ClientScript.RegisterStartupScript(this.GetType(), "showLikeIcon", "<script>document.getElementById('likeIcon').style.display = 'inline-block';</script>");
         }
 
-        private bool ValidarHorasExtraDiarias(string idEmpleado, string dia, TimeSpan horaInicio, TimeSpan horaFinal)
+        private bool ValidarHorasExtraDiarias(string idEmpleado, string fecha, TimeSpan horaInicio, TimeSpan horaFinal)
+        {
+            double horasPermitidasDiarias = 8; // Ajusta este valor según la legislación local
+            double horasSolicitadas = (horaFinal - horaInicio).TotalHours;
+
+            // Obtener todas las solicitudes de horas extra para el empleado en la fecha dada
+            List<SolicitudHorasExtras> solicitudes = ObtenerSolicitudesHorasExtras(idEmpleado, DateTime.Parse(fecha));
+            double horasAcumuladas = 0;
+
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                // Sumar las horas solicitadas que ya han sido aceptadas
+                foreach (var solicitud in solicitudes)
+                {
+                    string query = @"
+            SELECT Respuesta
+            FROM respuestahorasextras
+            WHERE idSolicitud = @idSolicitud";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@idSolicitud", solicitud.IdSolicitud);
+
+                    conn.Open();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read() && reader.GetBoolean("Respuesta"))
+                        {
+                            horasAcumuladas += solicitud.HorasSolicitadas;
+                        }
+                    }
+                    conn.Close();
+                }
+            }
+
+            // Sumar las horas solicitadas en la solicitud actual
+            horasAcumuladas += horasSolicitadas;
+
+            // Validar si las horas acumuladas superan el límite permitido
+            if (horasAcumuladas > horasPermitidasDiarias)
+            {
+                lblMensaje.Text = $"La solicitud de horas extra supera el límite permitido para el día.\n" +
+                                  $"Hora Inicio: {horaInicio}\n" +
+                                  $"Hora Final: {horaFinal}\n" +
+                                  $"Horas Solicitadas: {horasSolicitadas}\n" +
+                                  $"Horas Permitidas Diarias: {horasPermitidasDiarias}\n" +
+                                  $"Horas Acumuladas Totales: {horasAcumuladas}";
+                lblMensaje.Visible = true;
+                return false;
+            }
+
+            return true;
+        }
+
+        private List<SolicitudHorasExtras> ObtenerSolicitudesHorasExtras(string idEmpleado, DateTime fecha)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
-            double horasPermitidasDiarias = 8; // Ajusta este valor según la legislación local
+            List<SolicitudHorasExtras> solicitudes = new List<SolicitudHorasExtras>();
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 string query = @"
-        SELECT h.horaEntrada, h.horaSalida
-        FROM horario h
-        JOIN empleado e ON e.idHorario = h.idHorario
-        WHERE e.idEmpleado = @idEmpleado";
+        SELECT idSolicitud, HorasSolicitadas
+        FROM solicitudHorasExtras
+        WHERE idEmpleado = @idEmpleado
+        AND FechaFinalSolicitud = @fecha";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                cmd.Parameters.AddWithValue("@fecha", fecha.ToString("yyyy-MM-dd"));
 
-                try
+                conn.Open();
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
+                    while (reader.Read())
+                    {
+                        solicitudes.Add(new SolicitudHorasExtras
+                        {
+                            IdSolicitud = reader.GetInt32("idSolicitud"),
+                            HorasSolicitadas = reader.GetInt32("HorasSolicitadas")
+                        });
+                    }
+                }
+            }
+
+            return solicitudes;
+        }
+
+        public class SolicitudHorasExtras
+        {
+            public int IdSolicitud { get; set; }
+            public int HorasSolicitadas { get; set; }
+        }
+        private bool ValidarHorasExtrasAcumuladas(string idEmpleado, DateTime fecha, TimeSpan horaInicio, TimeSpan horaFinal)
+        {
+            double horasPermitidasDiarias = 8; // Ajusta este valor según la legislación local
+            double horasSolicitadas = (horaFinal - horaInicio).TotalHours;
+
+            List<SolicitudHorasExtras> solicitudes = ObtenerSolicitudesHorasExtras(idEmpleado, fecha);
+            double horasAcumuladas = 0;
+
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                foreach (var solicitud in solicitudes)
+                {
+                    string query = @"
+            SELECT Respuesta
+            FROM respuestahorasextras
+            WHERE idSolicitud = @idSolicitud";
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@idSolicitud", solicitud.IdSolicitud);
+
                     conn.Open();
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (reader.Read())
+                        if (reader.Read() && reader.GetBoolean("Respuesta"))
                         {
-                            TimeSpan horaEntrada = reader.GetTimeSpan("horaEntrada");
-                            TimeSpan horaSalida = reader.GetTimeSpan("horaSalida");
-                            TimeSpan jornadaDiaria = horaSalida - horaEntrada;
-
-                            if (horaInicio < horaEntrada || horaFinal > horaSalida || (horaFinal - horaInicio).TotalHours > horasPermitidasDiarias)
-                            {
-                                return false;
-                            }
+                            horasAcumuladas += solicitud.HorasSolicitadas;
                         }
                     }
+                    conn.Close();
                 }
-                catch (Exception ex)
-                {
-                    lblMensaje.Text = "Error al validar horario diario: " + ex.Message;
-                    lblMensaje.Visible = true;
-                }
+            }
+
+            horasAcumuladas += horasSolicitadas;
+
+            if (horasAcumuladas > horasPermitidasDiarias)
+            {
+                lblMensaje.Text = $"La solicitud de horas extra supera el límite permitido para el día.\n" +
+                                  $"Hora Inicio: {horaInicio}\n" +
+                                  $"Hora Final: {horaFinal}\n" +
+                                  $"Horas Solicitadas: {horasSolicitadas}\n" +
+                                  $"Horas Permitidas Diarias: {horasPermitidasDiarias}\n" +
+                                  $"Horas Acumuladas Totales: {horasAcumuladas}";
+                lblMensaje.Visible = true;
+                return false;
             }
 
             return true;
@@ -208,11 +298,14 @@ namespace ControlEmpresarial.Vistas
 
         private bool ValidarHorasExtraSemanales(string idEmpleado, string dia, TimeSpan horaInicio, TimeSpan horaFinal)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
             double horasPermitidasSemanales = 48; // Ajusta este valor según la legislación local
+            double horasSolicitadas = (horaFinal - horaInicio).TotalHours;
 
-            DateTime fechaInicioSemana = DateTime.Parse(dia).AddDays(-(int)DateTime.Parse(dia).DayOfWeek);
+            DateTime fechaSolicitud = DateTime.Parse(dia);
+            DateTime fechaInicioSemana = fechaSolicitud.AddDays(-(int)fechaSolicitud.DayOfWeek);
             DateTime fechaFinalSemana = fechaInicioSemana.AddDays(6);
+
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -224,8 +317,8 @@ namespace ControlEmpresarial.Vistas
         AND Estado = 'Aceptada'";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
-                cmd.Parameters.AddWithValue("@fechaInicioSemana", fechaInicioSemana);
-                cmd.Parameters.AddWithValue("@fechaFinalSemana", fechaFinalSemana);
+                cmd.Parameters.AddWithValue("@fechaInicioSemana", fechaInicioSemana.ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@fechaFinalSemana", fechaFinalSemana.ToString("yyyy-MM-dd"));
 
                 try
                 {
@@ -233,8 +326,15 @@ namespace ControlEmpresarial.Vistas
                     object result = cmd.ExecuteScalar();
                     double horasTotalesSemanales = result != DBNull.Value ? Convert.ToDouble(result) : 0;
 
-                    if ((horasTotalesSemanales + (horaFinal - horaInicio).TotalHours) > horasPermitidasSemanales)
+                    if ((horasTotalesSemanales + horasSolicitadas) > horasPermitidasSemanales)
                     {
+                        lblMensaje.Text = $"La solicitud de horas extra supera el límite permitido para la semana.\n" +
+                                          $"Hora Inicio: {horaInicio}\n" +
+                                          $"Hora Final: {horaFinal}\n" +
+                                          $"Horas Solicitadas: {horasSolicitadas}\n" +
+                                          $"Horas Permitidas Semanales: {horasPermitidasSemanales}\n" +
+                                          $"Horas Acumuladas Totales: {horasTotalesSemanales + horasSolicitadas}";
+                        lblMensaje.Visible = true;
                         return false;
                     }
                 }
@@ -242,6 +342,7 @@ namespace ControlEmpresarial.Vistas
                 {
                     lblMensaje.Text = "Error al validar horario semanal: " + ex.Message;
                     lblMensaje.Visible = true;
+                    return false;
                 }
             }
 

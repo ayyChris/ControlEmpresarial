@@ -16,7 +16,7 @@
                      <asp:BoundField DataField="Motivo" HeaderText="Motivo" />
                      <asp:TemplateField HeaderText="Acción">
                          <ItemTemplate>
-                             <asp:Button ID="btnAccion" runat="server" Text="Acción" CommandName="Accion" CommandArgument='<%# Eval("idSolicitud") %>' />
+                             <asp:Button ID="btnAccion" runat="server" Text="Acción" CssClass="button-grid" CommandName="Accion" CommandArgument='<%# Eval("idSolicitud") %>' />
                          </ItemTemplate>
                      </asp:TemplateField>
                  </Columns>

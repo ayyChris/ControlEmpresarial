@@ -18,56 +18,22 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             if (!IsPostBack)
             {
                 CargarDatos();
-                CargarNotificaciones();
-                CargarNombreUsuario();
             }
         }
-
-        private void CargarNombreUsuario()
+        protected void colaborador_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
+            string idSolicitud = colaborador.SelectedValue;
+
+            if (!string.IsNullOrEmpty(idSolicitud))
             {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
+                string motivo = ObtenerMotivoPorId(idSolicitud);
+                DinamicDescription.Text = motivo;
             }
             else
             {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
+                DinamicDescription.Text = string.Empty;
             }
         }
-
-        private void CargarNotificaciones()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                // Intentar extraer el idEmpleado de la cookie
-                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
-                {
-                    // Obtener las notificaciones usando el idEmpleado extraído
-                    NotificacionService service = new NotificacionService();
-                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
-
-                    // Enlazar los datos al repeater
-                    repeaterNotificaciones.DataSource = notificaciones;
-                    repeaterNotificaciones.DataBind();
-                }
-                else
-                {
-                 
-                }
-            }
-            else
-            {
-               
-            }
-        }
-
 
         protected void submit_Click(object sender, EventArgs e)
         {
@@ -80,41 +46,71 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
 
                 if (!string.IsNullOrEmpty(idSolicitud) && !string.IsNullOrEmpty(evidencia))
                 {
-                    bool datosInsertados = InsertarDatos(idEmpleado, idSolicitud, evidencia);
+                    // Obtener datos de la solicitud de horas extras
+                    DataTable dtSolicitud = ObtenerSolicitudHorasExtrasPorId(idSolicitud);
 
-                    if (datosInsertados)
+                    if (dtSolicitud.Rows.Count > 0)
                     {
-                        // Llamar al método para actualizar la columna Actividad
-                        bool actividadActualizada = ActualizarActividad(idEmpleado);
+                        DataRow solicitudRow = dtSolicitud.Rows[0];
+                        DateTime fechaFinalSolicitud = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
+                        TimeSpan horaInicialExtra = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
+                        TimeSpan horaFinalExtra = TimeSpan.Parse(solicitudRow["HoraFinalExtra"].ToString());
 
-                        if (actividadActualizada)
+                        // Validar entrada antes de insertar datos
+                        bool entradaValida = ValidarEntrada(idEmpleado, fechaFinalSolicitud, horaInicialExtra, horaFinalExtra);
+
+                        if (entradaValida)
                         {
-                            // Llamar al método para obtener el ID del empleado que asignó la hora extra
-                            int idEnviador = ObtenerIdEnviador(idSolicitud);
+                            bool datosInsertados = InsertarDatos(idEmpleado, idSolicitud, evidencia);
 
-                            if (idEnviador > 0)
+                            if (datosInsertados)
                             {
-                                // Enviar notificación al empleado que asignó la hora extra
-                                NotificacionService notificacionService = new NotificacionService();
-                                notificacionService.InsertarNotificacion(idEnviador, idEmpleado, "Evidencia de Hora Extra Enviada",
-                                    $"Se ha enviado evidencia de la hora extra para la solicitud {idSolicitud}.", DateTime.Now);
-                            }
+                                // Llamar al método para actualizar la columna Actividad
+                                bool actividadActualizada = ActualizarActividad(idEmpleado);
 
-                            lblMensaje.Text = "Se hizo la evidencia.";
-                            lblMensaje.CssClass = "mensaje-exito";
-                            lblMensaje.Visible = true;
+                                if (actividadActualizada)
+                                {
+                                    // Llamar al método para obtener el ID del empleado que asignó la hora extra
+                                    int idEnviador = ObtenerIdEnviador(idSolicitud);
+
+                                    if (idEnviador > 0)
+                                    {
+                                        // Enviar notificación al empleado que asignó la hora extra
+                                        NotificacionService notificacionService = new NotificacionService();
+                                        notificacionService.InsertarNotificacion(idEnviador, idEmpleado, "Evidencia de Hora Extra Enviada",
+                                            $"Se ha enviado evidencia de la hora extra para la solicitud {idSolicitud}.", DateTime.Now);
+                                    }
+
+                                    lblMensaje.Text = "Se hizo la evidencia.";
+                                    lblMensaje.CssClass = "mensaje-exito";
+                                    lblMensaje.Visible = true;
+                                }
+                                else
+                                {
+                                    lblMensaje.Text = "Datos insertados correctamente, pero hubo un error al actualizar la actividad.";
+                                    lblMensaje.CssClass = "mensaje-error";
+                                    lblMensaje.Visible = true;
+                                }
+                            }
+                            else
+                            {
+                                lblMensaje.Text = "Error al insertar datos.";
+                                lblMensaje.CssClass = "mensaje-error";
+                                lblMensaje.Visible = true;
+                            }
                         }
                         else
                         {
-                            lblMensaje.Text = "Datos insertados correctamente, pero hubo un error al actualizar la actividad.";
+                            lblMensaje.Text = "No se encontró una entrada válida para la solicitud de horas extra.";
                             lblMensaje.CssClass = "mensaje-error";
                             lblMensaje.Visible = true;
                         }
                     }
                     else
                     {
-                        // El mensaje de error ya se establece en el método InsertarDatos
-                        // No es necesario establecerlo aquí
+                        lblMensaje.Text = "No se encontró la solicitud de horas extra.";
+                        lblMensaje.CssClass = "mensaje-error";
+                        lblMensaje.Visible = true;
                     }
                 }
                 else
@@ -131,6 +127,83 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 lblMensaje.Visible = true;
             }
         }
+
+        // Método para obtener datos de la solicitud por ID
+        private DataTable ObtenerSolicitudHorasExtrasPorId(string idSolicitud)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            DataTable dt = new DataTable();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT FechaFinalSolicitud, HoraInicialExtra, HoraFinalExtra " +
+                               "FROM solicitudhorasextras " +
+                               "WHERE idSolicitud = @idSolicitud";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
+                    conn.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
+        private bool ValidarEntrada(int idEmpleado, DateTime fechaSolicitud, TimeSpan horaSolicitudInicio, TimeSpan horaSolicitudFin)
+        {
+            DataTable dtEntradas = ObtenerEntradas(idEmpleado);
+
+            // Verificar si hay datos en la tabla de entradas
+            if (dtEntradas.Rows.Count > 0)
+            {
+                foreach (DataRow entradaRow in dtEntradas.Rows)
+                {
+                    DateTime diaMarcado = Convert.ToDateTime(entradaRow["DiaMarcado"]);
+                    TimeSpan horaEntrada = TimeSpan.Parse(entradaRow["HoraEntrada"].ToString());
+                    TimeSpan horaSalida = TimeSpan.Parse(entradaRow["HoraSalida"].ToString());
+
+                    // Verificar si la fecha de la entrada coincide con la fecha de la solicitud
+                    if (diaMarcado.Date == fechaSolicitud.Date)
+                    {
+                        // Verificar coincidencia de datos
+                        bool coincidenciaEntrada = horaEntrada <= horaSolicitudInicio && horaSalida >= horaSolicitudFin;
+                        if (coincidenciaEntrada)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        private DataTable ObtenerEntradas(int idEmpleado)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            DataTable dt = new DataTable();
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT idEmpleado, DiaMarcado, HoraEntrada, HoraSalida, MarcacionEntrada, MarcacionSalida " +
+                               "FROM entradas " +
+                               "WHERE idEmpleado = @idEmpleado";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                    conn.Open();
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
 
         private int ObtenerIdEnviador(string idSolicitud)
         {
@@ -237,6 +310,30 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 lblMensaje.Text = "No se encontró información del usuario. Por favor, inicie sesión nuevamente.";
                 lblMensaje.Visible = true;
             }
+        }
+        private string ObtenerMotivoPorId(string idSolicitud)
+        {
+            string motivo = string.Empty;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT Motivo FROM solicitudhorasextras WHERE idSolicitud = @idSolicitud";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@idSolicitud", idSolicitud);
+                    conn.Open();
+
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        motivo = result.ToString();
+                    }
+                }
+            }
+
+            return motivo;
         }
 
         private DataTable ObtenerDatos(int idEmpleado)

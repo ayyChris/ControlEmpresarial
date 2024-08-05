@@ -16,59 +16,8 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             if (!IsPostBack)
             {
                 CargarEmpleados();
-                CargarNombreUsuario();
-                CargarNotificaciones();
             }
         }
-
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
-
-        private void CargarNotificaciones()
-        {
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                // Intentar extraer el idEmpleado de la cookie
-                if (int.TryParse(cookie["idEmpleado"], out int idEmpleado))
-                {
-                    // Obtener las notificaciones usando el idEmpleado extraído
-                    NotificacionService service = new NotificacionService();
-                    List<Notificacion> notificaciones = service.ObtenerNotificaciones(idEmpleado);
-
-                    // Enlazar los datos al repeater
-                    repeaterNotificaciones.DataSource = notificaciones;
-                    repeaterNotificaciones.DataBind();
-                }
-                else
-                {
-                    // Manejar caso en el que idEmpleado no es válido
-                    Label1.Text = "Error al extraer ID de empleado";
-                    Label1.Visible = true;
-                }
-            }
-            else
-            {
-                Label1.Text = "Cookie no encontrada";
-                Label1.Visible = true;
-            }
-        }
-
 
         private void CargarEmpleados()
         {
@@ -224,92 +173,6 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
             return dt;
         }
 
-        private DataTable ObtenerEntradas(int idEmpleado)
-        {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
-            DataTable dt = new DataTable();
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                string query = "SELECT idEmpleado, DiaMarcado, HoraEntrada " +
-                               "FROM entradas " +
-                               "WHERE idEmpleado = @idEmpleado";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
-                    conn.Open();
-                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                    da.Fill(dt);
-                }
-            }
-
-            return dt;
-        }
-
-        private DataTable ObtenerSolicitudHorasExtras(int idEmpleado)
-        {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
-            DataTable dt = new DataTable();
-
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
-                string query = "SELECT FechaFinalSolicitud, HoraInicialExtra " +
-                               "FROM solicitudhorasextras " +
-                               "WHERE idEmpleado = @idEmpleado";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
-                    conn.Open();
-                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                    da.Fill(dt);
-                }
-            }
-
-            return dt;
-        }
-
-        // Método ValidarEntrada
-        private bool ValidarEntrada(int idEmpleado, DateTime fechaSolicitud, TimeSpan horaSolicitud)
-        {
-            DataTable dtEntradas = ObtenerEntradas(idEmpleado);
-            DataTable dtSolicitudes = ObtenerSolicitudHorasExtras(idEmpleado);
-
-            // Verificar si hay datos en ambas tablas
-            if (dtEntradas.Rows.Count > 0 && dtSolicitudes.Rows.Count > 0)
-            {
-                foreach (DataRow entradaRow in dtEntradas.Rows)
-                {
-                    DateTime diaMarcado = Convert.ToDateTime(entradaRow["DiaMarcado"]);
-                    TimeSpan horaEntrada = TimeSpan.Parse(entradaRow["HoraEntrada"].ToString());
-
-                    foreach (DataRow solicitudRow in dtSolicitudes.Rows)
-                    {
-                        DateTime fechaFinalSolicitud = Convert.ToDateTime(solicitudRow["FechaFinalSolicitud"]);
-                        TimeSpan horaInicialSolicitud = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
-
-                        lblDebugInfo.Text = $"Datos de Entrada: idEmpleado = {entradaRow["idEmpleado"]}, DiaMarcado = {diaMarcado.ToShortDateString()}, HoraEntrada = {horaEntrada}<br>" +
-                                            $"Datos de Solicitud: FechaFinalSolicitud = {fechaFinalSolicitud.ToShortDateString()}, HoraInicialSolicitud = {horaInicialSolicitud}";
-
-                        // Verificar coincidencia de datos
-                        bool coincidencia = diaMarcado.Date == fechaSolicitud.Date && horaEntrada == horaSolicitud;
-
-                        if (coincidencia)
-                        {
-                            // Mostrar el resultado de validación en la interfaz de usuario
-                            lblValidacion.Text = $"¿Coinciden los datos? {coincidencia}";
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            lblValidacion.Text = "No se encontraron datos suficientes para validar.";
-            lblValidacion.CssClass = "mensaje-error";
-            return false;
-        }
-
 
         protected void DenegarButton_Click(object sender, EventArgs e)
         {
@@ -335,49 +198,26 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                         int horasTrabajadas = Convert.ToInt32(solicitudRow["HorasSolicitadas"]);
                         TimeSpan horaInicialExtra = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
 
-                        bool entradaValida = ValidarEntrada(idEmpleado, fechaTrabajo, horaInicialExtra);
+                        string Aceptacion = "Denegada";
+                        bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
 
-                        if (entradaValida)
+                        if (insertado)
                         {
-                            string Aceptacion = "Denegada";
-                            bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
-
-                            if (insertado)
+                            bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
+                            if (estadoActualizado)
                             {
-                                bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
-                                if (estadoActualizado)
-                                {
-                                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Horas extras denegadas y estado actualizado correctamente.";
-                                    lblMensaje.CssClass = "mensaje-error";
-                                    lblMensaje.Visible = true;
-                                }
-                                else
-                                {
-                                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Horas extras denegadas, pero no se pudo actualizar el estado.";
-                                    lblMensaje.CssClass = "mensaje-error";
-                                    lblMensaje.Visible = true;
-                                }
+                                lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Horas extras denegadas y estado actualizado correctamente.";
+                                lblMensaje.CssClass = "mensaje-error";
+                                lblMensaje.Visible = true;
+                            }
+                            else
+                            {
+                                lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> Horas extras denegadas, pero no se pudo actualizar el estado.";
+                                lblMensaje.CssClass = "mensaje-error";
+                                lblMensaje.Visible = true;
                             }
                         }
-                        else
-                        {
-                            lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontró una entrada válida para la hora inicial de la solicitud.";
-                            lblMensaje.CssClass = "mensaje-error";
-                            lblMensaje.Visible = true;
-                        }
                     }
-                    else
-                    {
-                        lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontraron datos de la solicitud.";
-                        lblMensaje.CssClass = "mensaje-error";
-                        lblMensaje.Visible = true;
-                    }
-                }
-                else
-                {
-                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No hay evidencias disponibles para el empleado seleccionado.";
-                    lblMensaje.CssClass = "mensaje-error";
-                    lblMensaje.Visible = true;
                 }
             }
             else
@@ -387,6 +227,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 lblMensaje.Visible = true;
             }
         }
+
 
         protected void AceptarButton_Click(object sender, EventArgs e)
         {
@@ -410,48 +251,26 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                         int horasTrabajadas = Convert.ToInt32(solicitudRow["HorasSolicitadas"]);
                         TimeSpan horaInicialExtra = TimeSpan.Parse(solicitudRow["HoraInicialExtra"].ToString());
 
-                        bool entradaValida = ValidarEntrada(idEmpleado, fechaTrabajo, horaInicialExtra);
-                        if (entradaValida)
-                        {
-                            string Aceptacion = "Aceptada";
-                            bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
+                        string Aceptacion = "Aceptada";
+                        bool insertado = InsertarHorasExtras(idEmpleado, idEvidencia, fechaTrabajo, horasTrabajadas, idEntrada, Aceptacion);
 
-                            if (insertado)
+                        if (insertado)
+                        {
+                            bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
+                            if (estadoActualizado)
                             {
-                                bool estadoActualizado = ActualizarEstado(idSolicitud, idEmpleado);
-                                if (estadoActualizado)
-                                {
-                                    lblMensaje.Text = "<i class='fas fa-thumbs-up'></i> Horas extras aceptadas y estado actualizado correctamente.";
-                                    lblMensaje.CssClass = "mensaje-exito";
-                                    lblMensaje.Visible = true;
-                                }
-                                else
-                                {
-                                    lblMensaje.Text = "<i class='fas fa-thumbs-up'></i> Horas extras aceptadas, pero no se pudo actualizar el estado.";
-                                    lblMensaje.CssClass = "mensaje-error";
-                                    lblMensaje.Visible = true;
-                                }
+                                lblMensaje.Text = "<i class='fas fa-thumbs-up'></i> Horas extras aceptadas y estado actualizado correctamente.";
+                                lblMensaje.CssClass = "mensaje-exito";
+                                lblMensaje.Visible = true;
+                            }
+                            else
+                            {
+                                lblMensaje.Text = "<i class='fas fa-thumbs-up'></i> Horas extras aceptadas, pero no se pudo actualizar el estado.";
+                                lblMensaje.CssClass = "mensaje-error";
+                                lblMensaje.Visible = true;
                             }
                         }
-                        else
-                        {
-                            lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontró una entrada válida para la hora inicial de la solicitud.";
-                            lblMensaje.CssClass = "mensaje-error";
-                            lblMensaje.Visible = true;
-                        }
                     }
-                    else
-                    {
-                        lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No se encontraron datos de la solicitud.";
-                        lblMensaje.CssClass = "mensaje-error";
-                        lblMensaje.Visible = true;
-                    }
-                }
-                else
-                {
-                    lblMensaje.Text = "<i class='fas fa-thumbs-down'></i> No hay evidencias disponibles para el empleado seleccionado.";
-                    lblMensaje.CssClass = "mensaje-error";
-                    lblMensaje.Visible = true;
                 }
             }
             else
@@ -461,6 +280,7 @@ namespace ControlEmpresarial.Vistas.Horas_Extra
                 lblMensaje.Visible = true;
             }
         }
+
 
 
         private bool InsertarHorasExtras(int idEmpleado, int idEvidencia, DateTime fechaTrabajo, int horasTrabajadas, int idEntrada, string Aceptacion)

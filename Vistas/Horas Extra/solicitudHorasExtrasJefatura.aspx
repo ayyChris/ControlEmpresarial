@@ -31,7 +31,15 @@
                 <asp:Button ID="submit" runat="server" CssClass="button" Text="Enviar" OnClick="submit_Click"/>
                 <i id="likeIcon" class="fas fa-thumbs-up" style="display:none;"></i>
                 <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
+            
             </div>
+            <asp:Label ID="lblHoraInicio" runat="server" CssClass="debug-label"></asp:Label>
+<asp:Label ID="lblHoraFinal" runat="server" CssClass="debug-label"></asp:Label>
+<asp:Label ID="lblHorasSolicitadas" runat="server" CssClass="debug-label"></asp:Label>
+<asp:Label ID="lblHorasPermitidasDiarias" runat="server" CssClass="debug-label"></asp:Label>
+<asp:Label ID="lblHorasExtrasPrevias" runat="server" CssClass="debug-label"></asp:Label>
+<asp:Label ID="lblHorasPermitidasSemanales" runat="server" CssClass="debug-label"></asp:Label>
+
         </section>
         <section class="seccion-imagen">
             <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra">
