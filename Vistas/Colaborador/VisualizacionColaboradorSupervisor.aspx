@@ -1,6 +1,23 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VisualizacionColaboradorSupervisor.aspx.cs" Inherits="ControlEmpresarial.Vistas.VisualizacionColaboradorSupervisor" MasterPageFile="~/Vistas/Site3.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Label ID="lblNombre" runat="server"></asp:Label>     
+   
+     <style>
+        .seccion-imagen {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: -2;
+}
+
+.seccion-imagen img {
+    position: relative;
+    max-width: 70%; /* Reducido el tamaño máximo de la imagen */
+    height: auto; /* Ajuste automático de la altura según el ancho */
+    z-index:-3;
+}
+    </style>
     <main>
             <section class="seccion-imagen">
                <img src="../../Imagenes/jefe.png" alt="Ilustración de una persona trabajando horas extra">

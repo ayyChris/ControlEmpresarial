@@ -9,17 +9,17 @@
             <div class="options-menu">
             <div class="option-menu">
                 <a href="#"><img src="../../Imagenes/icono-escritura.png" alt="Permisos" /></a>
-                <h3>Rebajos</h3>
+                <h3 class="h3-footer">Rebajos</h3>
                 <p>Revise el historial de rebajos que se han registrado.</p>
             </div>
             <div class="option-menu">
                 <a href="#"><img src="../../Imagenes/icono-vacaciones.png" alt="Control de actividades" /></a>
-                <h3>Vacaciones Colectivas</h3>
+                <h3 class="h3-footer">Vacaciones Colectivas</h3>
                 <p>Registre las vacaciones colectivas para los colaboradores y la jefatura.</p>
             </div>
             <div class="option-menu full-width">
                 <a href="../Colaborador/VisualizacionColaboradorSupervisor.aspx"><img src="../../Imagenes/icono-colaborador.png" alt="Colaboradores" /></a>
-                <h3>Colaboradores</h3>
+                <h3 class="h3-footer">Colaboradores</h3>
                 <p>Vea los colaboradores de los departamentos.</p>
                 </div>
             </div>

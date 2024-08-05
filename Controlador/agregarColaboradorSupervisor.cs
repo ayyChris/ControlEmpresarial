@@ -4,6 +4,8 @@ using System.Data;
 using System.Web.UI.WebControls;
 using System.Web.UI;
 using System.Web;
+using System.Net.Mail;
+using System.Net;
 
 namespace ControlEmpresarial.Vistas.Colaborador
 {
@@ -45,6 +47,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
                 GuardarEmpleadoEnBaseDeDatos(nombre, apellidos, cedula, correo, contraseña, diasDeVacaciones, estado, idPuesto, idHorario, idDepartamento, connectionString);
                 // Mostrar mensaje de éxito
                 MostrarAlerta("Empleado registrado correctamente.");
+                EnviarCreacionCuenta(correo);
                 LimpiarCampos();
             }
             catch (MySqlException ex)
@@ -186,6 +189,37 @@ namespace ControlEmpresarial.Vistas.Colaborador
             puesto.SelectedIndex = 0;
             horario.SelectedIndex = 0;
             departamento.SelectedIndex = 0;
+        }
+
+        public void EnviarCreacionCuenta(string correo)
+        {
+            string fromEmail = "apsw.activity.sync@gmail.com";
+            string fromPassword = "hpehyzvcvdfcatgn";
+            string subject = "Creación de cuenta";
+            string body = $"Se ha creado una cuenta bajo este correo para ActivitySync.";
+
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress(fromEmail);
+                mail.To.Add(correo);
+                mail.Subject = subject;
+                mail.Body = body;
+
+                smtpServer.Port = 587;
+                smtpServer.Credentials = new NetworkCredential(fromEmail, fromPassword);
+                smtpServer.EnableSsl = true;
+
+                smtpServer.Send(mail);
+                Console.WriteLine("Correo enviado correctamente.");
+            }
+            catch (SmtpException smtpEx)
+            {
+                MostrarAlerta($"Error de smtp: {smtpEx.Message}");
+                // O puedes usar otra forma de notificar el error, como escribir en un log
+            }
         }
 
         private void MostrarAlerta(string mensaje)

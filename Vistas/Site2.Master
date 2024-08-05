@@ -190,7 +190,9 @@
     <form id="form1" runat="server">
          <header>
             <div class="cabecera-izquierda">
-                <h1>Jefatura</h1>
+            <a href="../PaginaPrincipal/MenuJefatura.aspx">
+                    <h1>Jefatura</h1>
+                </a>
                 <p><asp:Label ID="lblNombre" runat="server" Text="Label"></asp:Label></p>
             </div>
             <nav>
@@ -239,7 +241,6 @@
                         <a href="#">Vacaciones</a>
                         <ul class="submenu">
                             <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Aceptar Vacaciones de Colaboradores</a></li>
-                            <li><a href="../Vacaciones/vacacionesFestivas.aspx">Insertar una vacación festiva para el departamento</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
@@ -251,7 +252,7 @@
                     <li class="has-submenu">
                         <a href="#">Administración</a>
                         <ul class="submenu">
-                            <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Agrega un colaborador</a></li>
+                            <li><a href="../Colaborador/agregarColaboradorJefe.aspx">Agrega un colaborador</a></li>
                         </ul>
                     </li>
                 </ul>

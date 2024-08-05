@@ -14,7 +14,6 @@ namespace ControlEmpresarial.Vistas
             if (!IsPostBack)
             {   
                 System.Diagnostics.Debug.WriteLine("Page_Load: Page first loaded.");
-                CargarNombreUsuario();
                 CargarDepartamentos();
             }
             else
@@ -90,22 +89,6 @@ namespace ControlEmpresarial.Vistas
             }
             return dt;
         }
-        private void CargarNombreUsuario()
-        {
-            // Obtener el nombre de las cookies
-            HttpCookie cookie = Request.Cookies["UserInfo"];
-            if (cookie != null)
-            {
-                string nombre = cookie["Nombre"];
-                string apellidos = cookie["Apellidos"];
-                lblNombre.Text = nombre + " " + apellidos;
-                lblNombre.Visible = true;
-            }
-            else
-            {
-                lblNombre.Text = "Error";
-                lblNombre.Visible = true;
-            }
-        }
+       
  }   
 }

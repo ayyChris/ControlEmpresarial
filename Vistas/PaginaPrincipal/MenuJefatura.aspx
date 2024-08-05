@@ -9,17 +9,17 @@
             <div class="options-menu">
                 <div class="option-menu">
                     <a href="../Permisos/TablaPreVisualizacionPermisosJefe.aspx"><img src="../../Imagenes/icono-permisos.png" alt="Permisos" /></a>
-                    <h3>Permisos</h3>
+                    <h3 class="h3-footer">Permisos</h3>
                     <p>Revise los permisos que ha solicitado los empleados.</p>
                 </div>
                 <div class="option-menu">
                     <a href="../Incapacidades/SolicitarIncapacidadesJefatura.aspx"><img src="../../Imagenes/icono-escritura.png" alt="incapacidades" /></a>
-                    <h3>Incapacidades</h3>
+                    <h3 class="h3-footer">Incapacidades</h3>
                     <p>Registre las incapacidades del empleado.</p>
                 </div>
                 <div class="option-menu">
                     <a href="../Inconsistencias/VisualizacionInconsistencias.aspx"><img src="../../Imagenes/icono-inconsistencias.png" alt="inconsistencias" /></a>
-                    <h3>Inconsistencias</h3>
+                    <h3 class="h3-footer">Inconsistencias</h3>
                     <p>Puede revisar las inconsistencias de cada empleado.</p>
                 </div>
                 <div class="option-menu">
@@ -29,27 +29,27 @@
                 </div>
                 <div class="option-menu">
                     <a href="#"><img src="../../Imagenes/icono-reposiciones.png" alt="Reposiciones" /></a>
-                    <h3>Reposiciones</h3>
+                    <h3 class="h3-footer">Reposiciones</h3>
                     <p>Puede verificar las reposiciones hechas por el empleado.</p>
                 </div>
                 <div class="option-menu">
                     <a href="../Horas Extra/PreAceptacionHorasExtra.aspx"><img src="../../Imagenes/icono-horasExtras.png" alt="Horas Extras" /></a>
-                    <h3>Horas Extras</h3>
+                    <h3 class="h3-footer">Horas Extras</h3>
                     <p>Puede asignar horas extras para un cierto colaborador.</p>
                 </div>
                 <div class="option-menu">
                     <a href="../Vacaciones/solicitudVacacionesJefatura.aspx"><img src="../../Imagenes/icono-vacaciones.png" alt="Vacaciones" /></a>
-                    <h3>Vacaciones</h3>
+                    <h3 class="h3-footer">Vacaciones</h3>
                     <p>Puede validar las vacaciones solicitadas por un colaborador.</p>
                 </div>
                 <div class="option-menu">
                     <a href="../Marcas/marcas.aspx"><img src="../../Imagenes/icono-marcas.png" alt="Marcas" /></a>
-                    <h3>Marcas</h3>
+                    <h3 class="h3-footer">Marcas</h3>
                     <p>Registre su hora de entrada y de salida de cada día laboral respectivo bajo su horario.</p>
                 </div>
                 <div class="option-menu">
                     <a href="../Colaborador/agregarColaboradorJefe.aspx"><img src="../../Imagenes/icono-colaborador.png" alt="Colaboradores" /></a>
-                    <h3>Colaboradores</h3>
+                    <h3 class="h3-footer">Colaboradores</h3>
                     <p>Registre un colaborador para su departamento.</p>
                 </div>
             </div>

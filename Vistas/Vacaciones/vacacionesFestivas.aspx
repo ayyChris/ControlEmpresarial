@@ -18,8 +18,9 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         z-index: 2;
         position: relative;
-        flex: 1; /* Permite que el formulario tome el espacio disponible */
-        max-width: 50%; /* Ajusta el tamaño máximo del formulario */
+        flex: 1; 
+        max-width: 50%; 
+        margin-left:50px;
     }
 
     .seccion-imagen {
