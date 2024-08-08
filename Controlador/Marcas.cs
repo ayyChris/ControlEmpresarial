@@ -92,7 +92,7 @@ namespace ControlEmpresarial.Vistas
 
                             ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: '¡Entrada registrada!', text: 'Tu entrada se ha registrado correctamente.', icon: 'success', timer: 2500, showConfirmButton: false });", true);
                         }
-                        else
+                        else 
                         {
                             // Obtener el idEntrada de la última entrada
                             string query = "SELECT idEntrada FROM entradas WHERE idEmpleado = @idEmpleado AND DiaMarcado = @DiaMarcado AND MarcacionEntrada = 1 ORDER BY idEntrada DESC LIMIT 1";
