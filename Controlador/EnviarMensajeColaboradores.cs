@@ -33,10 +33,10 @@ namespace ControlEmpresarial.Vistas.Colaborador
                 using (HttpClient httpClient = new HttpClient())
                 {
                     // Replace with your OpenAI API key
-                    var apiKey = "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";
+                    var apiKey = "";
 
                     // Replace with your assistant ID
-                    var assistantId = "asst_yRb4wi2qn98WvryTsrXWaJVt";
+                    var assistantId = "";
 
                     // Add the authorization header
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(apiKey);
