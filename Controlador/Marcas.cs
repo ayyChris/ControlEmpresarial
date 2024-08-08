@@ -70,7 +70,7 @@ namespace ControlEmpresarial.Vistas
                             return;
                         }
 
-                        // Verificar si hay un permiso para el día actual
+                        // Verificar si hay un permiso para el día actual en el rango de fechas
                         if (HayPermiso(idEmpleado))
                         {
                             ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Permiso Aprobado', text: 'Hoy tienes un permiso aprobado, no se requiere marcar entrada.', icon: 'info', timer: 2500, showConfirmButton: false });", true);
