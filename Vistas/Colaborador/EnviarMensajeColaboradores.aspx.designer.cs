@@ -7,47 +7,65 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas
+namespace ControlEmpresarial.Vistas.Colaborador
 {
 
 
-    public partial class Site2
+    public partial class EnviarMensajeColaboradores
     {
 
         /// <summary>
-        /// form1 control.
+        /// ddlColaborador control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlColaborador;
 
         /// <summary>
-        /// lblNombre control.
+        /// txtPrompt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.WebControls.TextBox txtPrompt;
 
         /// <summary>
-        /// repeaterNotificaciones control.
+        /// generarPrompt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
+        protected global::System.Web.UI.WebControls.Button generarPrompt;
 
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// txtMensaje control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.TextBox txtMensaje;
+
+        /// <summary>
+        /// submit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button submit;
+
+        /// <summary>
+        /// lblMensaje control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensaje;
     }
 }

@@ -268,8 +268,10 @@
                   <li class="has-submenu">
                      <a href="#">Administración</a>
                      <ul class="submenu">
+                        <li><a href="../Colaborador/EnviarMensajeColaboradores.aspx">Enviar mensaje a colaborador</a></li>
                         <li><a href="../Colaborador/agregarColaboradorJefe.aspx">Agrega un colaborador</a></li>
-                     </ul>
+                     </ul>           
+                    </ul>
                   </li>
                </ul>
             </nav>

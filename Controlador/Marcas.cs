@@ -47,7 +47,7 @@ namespace ControlEmpresarial.Vistas
                 {
                     try
                     {
-                        conexion.Open();
+                        conexion.Open(); 
 
                         // Verificar si es un día laboral
                         if (!EsDiaLaboral(idEmpleado))
@@ -67,6 +67,13 @@ namespace ControlEmpresarial.Vistas
                         if (EsVacacionColectiva())
                         {
                             ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Vacaciones Colectivas', text: 'Hoy hay vacaciones colectivas, no se requiere marcar entrada.', icon: 'info', timer: 2500, showConfirmButton: false });", true);
+                            return;
+                        }
+
+                        // Verificar si hay un permiso para el día actual
+                        if (HayPermiso(idEmpleado))
+                        {
+                            ClientScript.RegisterStartupScript(this.GetType(), "alert", "Swal.fire({ title: 'Permiso Aprobado', text: 'Hoy tienes un permiso aprobado, no se requiere marcar entrada.', icon: 'info', timer: 2500, showConfirmButton: false });", true);
                             return;
                         }
 
@@ -213,6 +220,43 @@ namespace ControlEmpresarial.Vistas
                 catch (Exception ex)
                 {
                     ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error al verificar días laborales: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+            }
+        }
+        private bool HayPermiso(int idEmpleado)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = @"
+                SELECT COUNT(*)
+                FROM solicitudpermiso
+                WHERE idEmpleado = @idEmpleado
+                AND @FechaHoy BETWEEN FechaDeseadaInicial AND FechaDeseadaFinal
+                AND Estado = 'Aceptada'"; // Solo considerar permisos aprobados
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                        cmd.Parameters.AddWithValue("@FechaHoy", DateTime.Today);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    // Manejo específico para errores de MySQL
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    // Manejo general para otros tipos de excepciones
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
                     return false;
                 }
             }
