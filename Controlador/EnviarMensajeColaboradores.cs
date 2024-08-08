@@ -22,7 +22,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
                 // Inicializa el DropDownList aquí, si es necesario
             }
         }
-        protected async void submit_Click(object sender, EventArgs e)
+        protected async void submit_Click(object sender, EventArgs e) 
         {
             
         }
