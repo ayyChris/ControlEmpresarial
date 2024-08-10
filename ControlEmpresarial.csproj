@@ -285,6 +285,9 @@
     <Compile Include="Controlador\Permisos_TablaPreVisualizacionPermisosJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\solicitarVacacionColaborador.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\vacacionesFestivas.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
