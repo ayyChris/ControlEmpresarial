@@ -270,6 +270,9 @@
     <Compile Include="Controlador\Permisos_AceptacionNegacionPermisoJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\PrevisualizacionVacacionesJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\RegistroActividadesColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -286,6 +289,9 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\solicitarVacacionColaborador.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\solicitudVacacionesJefatura.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\vacacionesFestivas.cs">

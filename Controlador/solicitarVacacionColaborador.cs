@@ -183,10 +183,13 @@ namespace ControlEmpresarial.Controlador
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
             bool insercionExitosa = false;
+            DateTime fechaActual = DateTime.Now;
+            string fechaPublicada = fechaActual.ToString("yyyy-MM-dd");
+            string Estado = "Pediente";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                string query = "INSERT INTO SolicitudVacaciones (FechaVacacion, DiasDisfrutados, idEmpleado) VALUES (@FechaVacacion, @DiasDisfrutados, @idEmpleado)";
+                string query = "INSERT INTO SolicitudVacaciones (FechaPublicada,FechaVacacion, DiasDisfrutados, Estado, idEmpleado) VALUES (@FechaPublicada,@FechaVacacion,@DiasDisfrutados,@Estado, @idEmpleado)";
                 MySqlCommand command = new MySqlCommand(query, connection);
 
                 try
@@ -197,8 +200,10 @@ namespace ControlEmpresarial.Controlador
                     for (DateTime fecha = fechaInicio; fecha <= fechaFinal; fecha = fecha.AddDays(1))
                     {
                         command.Parameters.Clear();
+                        command.Parameters.AddWithValue("@FechaPublicada", fechaPublicada);
                         command.Parameters.AddWithValue("@FechaVacacion", fecha);
                         command.Parameters.AddWithValue("@DiasDisfrutados", 1); // Cada día cuenta como 1 día disfrutado
+                        command.Parameters.AddWithValue("@Estado", Estado);
                         command.Parameters.AddWithValue("@idEmpleado", idEmpleado);
 
                         command.ExecuteNonQuery();
