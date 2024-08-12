@@ -249,6 +249,9 @@
     <Compile Include="Controlador\AgregarTipoActividadesSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\calendarioVacacionesColaborador.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\ControlActividadesSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

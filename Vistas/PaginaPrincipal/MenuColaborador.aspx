@@ -18,7 +18,7 @@
                   <p>Registre las actividades que ha hecho alrededor de ese día y semana, para que sea guardado como evidencia de su productividad.</p>
                </div>
                <div class="option-menu">
-                  <a href="#"><img src="../../Imagenes/icono-vacaciones.png" alt="Vacaciones" /></a>
+                  <a href="../Vacaciones/solicitarVacacionColaborador.aspx"><img src="../../Imagenes/icono-vacaciones.png" alt="Vacaciones" /></a>
                   <h3 class="h3-footer">Vacaciones</h3>
                   <p>Puede solicitar vacaciones, revisar los días libres disponibles de vacaciones y las siguientes vacaciones de la empresa planeadas para usted.</p>
                </div>
@@ -38,7 +38,7 @@
                   <p>Si alguna razón externa ha presentado una inconsistencia a su horario laboral, puede justificarla aquí.</p>
                </div>
                <div class="option-menu">
-                  <a href="#"><img src="../../Imagenes/icono-permisos.png" alt="Permisos" /></a>
+                  <a href="../Permisos/PermisosColaborador.aspx"><img src="../../Imagenes/icono-permisos.png" alt="Permisos" /></a>
                   <h3 class="h3-footer">Permisos</h3>
                   <p>Si necesita solicitar un permiso ante una situación, lo puede hacer en este apartado.</p>
                </div>
