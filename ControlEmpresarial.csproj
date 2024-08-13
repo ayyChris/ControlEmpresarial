@@ -252,6 +252,9 @@
     <Compile Include="Controlador\AgregarTipoIncapacidad.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\AgregarTipoIncosistencia.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\calendarioVacacionesColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -356,6 +359,12 @@
     <Compile Include="Vistas\Incapacidades\TiposIncapacidades.aspx.designer.cs">
       <DependentUpon>TiposIncapacidades.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx.cs">
+      <DependentUpon>AgregarTipoIncosistenciasSupervisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx.designer.cs">
+      <DependentUpon>AgregarTipoIncosistenciasSupervisor.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx.cs">
       <DependentUpon>VisualizacionRebajosColaborador.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -444,6 +453,7 @@
     <Content Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
     <Content Include="Vistas\Incapacidades\TiposIncapacidades.aspx" />
+    <Content Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Contactenos.aspx" />
     <Content Include="Vistas\PaginaPrincipal\DobleFactor.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Inicio.aspx" />
@@ -628,7 +638,6 @@
     </Compile>
     <Compile Include="Vistas\PaginaPrincipal\MenuColaborador.aspx.cs">
       <DependentUpon>MenuColaborador.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\PaginaPrincipal\MenuColaborador.aspx.designer.cs">
       <DependentUpon>MenuColaborador.aspx</DependentUpon>

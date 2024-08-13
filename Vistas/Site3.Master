@@ -278,6 +278,7 @@
                      <a href="#">Inconsistencias</a>
                      <ul class="submenu">
                         <li><a href="../Inconsistencias/VisualizacionInconsistencias.aspx">Historial de inconsistencias</a></li>
+                         <li><a href="../Inconsistencias/AgregarTipoIncosistenciasSupervisor.aspx">Agregar Incosistencias</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">

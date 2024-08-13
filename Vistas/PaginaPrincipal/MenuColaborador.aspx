@@ -1,6 +1,8 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MenuColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.MenuColaborador" MasterPageFile="~/Vistas/Site1.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+     <asp:Label ID="lblInconsistencias" runat="server" Text="Inconsistencias: " Visible="false"></asp:Label>
+    <asp:Label ID="lblError" runat="server" Text="Error: " Visible="false"></asp:Label>
    <div class="container-menu">
             <div class="header-menu">
                <h1>Revisa nuestras opciones de gestión para el usuario</h1>
