@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using static Mysqlx.Expect.Open.Types.Condition.Types;
 
 namespace ControlEmpresarial.Controlador.Vacaciones
 {
@@ -35,17 +36,22 @@ namespace ControlEmpresarial.Controlador.Vacaciones
                 HttpCookie cookie = Request.Cookies["UserInfo"];
                 if (cookie != null)
                 {
+                    string cookieValue = cookie.Value;
                     // Extraer el valor de idEmpleado
-                    string idEmpleadoValue = ConseguirCookie(cookie.Value, "idEmpleado");
+                    string idEmpleadoValue = ConseguirCookie(cookieValue, "idEmpleado");
+                    // Extraer el valor de idDepartamento
+                    string idDepartamentoValue = ConseguirCookie(cookieValue, "idDepartamento");
 
-                    if (idEmpleadoValue != null && int.TryParse(idEmpleadoValue, out int idEmpleado))
+                    if (idEmpleadoValue != null && idDepartamentoValue != null &&
+                    int.TryParse(idEmpleadoValue, out int idEmpleado) &&
+                    int.TryParse(idDepartamentoValue, out int idDepartamento))
                     {
-                        System.Diagnostics.Debug.WriteLine("idEmpleado extraído de la cookie: " + idEmpleado);
-                        RenderizarCalendario(FechaActual, idEmpleado);
+                        // Renderizar el calendario con la fecha actual, idEmpleado y idDepartamento
+                        RenderizarCalendario(FechaActual, idEmpleado, idDepartamento);
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine("Error: ID de empleado no válido.");
+                        System.Diagnostics.Debug.WriteLine("Error: ID de empleado o departamento no válidos.");
                     }
                 }
                 else
@@ -55,20 +61,36 @@ namespace ControlEmpresarial.Controlador.Vacaciones
             }
         }
 
+
         protected void btnPrevMonth_Click(object sender, EventArgs e)
         {
             FechaActual = FechaActual.AddMonths(-1);
-            // Intentar extraer idEmpleado de la cookie
+
+            // extraer idEmpleado e idDepartamento de la cookie
             HttpCookie cookie = Request.Cookies["UserInfo"];
             if (cookie != null)
             {
                 string idEmpleadoValue = ConseguirCookie(cookie.Value, "idEmpleado");
-                if (idEmpleadoValue != null && int.TryParse(idEmpleadoValue, out int idEmpleado))
+                string idDepartamentoValue = ConseguirCookie(cookie.Value, "idDepartamento");
+
+                if (idEmpleadoValue != null && idDepartamentoValue != null &&
+                    int.TryParse(idEmpleadoValue, out int idEmpleado) &&
+                    int.TryParse(idDepartamentoValue, out int idDepartamento))
                 {
-                    RenderizarCalendario(FechaActual, idEmpleado);
+                    // Renderizar el calendario con la fecha actual, idEmpleado y idDepartamento
+                    RenderizarCalendario(FechaActual, idEmpleado, idDepartamento);
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Error: ID de empleado o departamento no válidos.");
                 }
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Error: Cookie no encontrada.");
+            }
         }
+
 
         protected void btnNextMonth_Click(object sender, EventArgs e)
         {
@@ -77,14 +99,27 @@ namespace ControlEmpresarial.Controlador.Vacaciones
             if (cookie != null)
             {
                 string idEmpleadoValue = ConseguirCookie(cookie.Value, "idEmpleado");
-                if (idEmpleadoValue != null && int.TryParse(idEmpleadoValue, out int idEmpleado))
+                string idDepartamentoValue = ConseguirCookie(cookie.Value, "idDepartamento");
+
+                if (idEmpleadoValue != null && idDepartamentoValue != null &&
+                    int.TryParse(idEmpleadoValue, out int idEmpleado) &&
+                    int.TryParse(idDepartamentoValue, out int idDepartamento))
                 {
-                    RenderizarCalendario(FechaActual, idEmpleado);
+                    // Renderizar el calendario con la fecha actual, idEmpleado y idDepartamento
+                    RenderizarCalendario(FechaActual, idEmpleado, idDepartamento);
                 }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Error: ID de empleado o departamento no válidos.");
+                }
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Error: Cookie no encontrada.");
             }
         }
 
-        protected void RenderizarCalendario(DateTime fecha,int idEmpleado)
+        protected void RenderizarCalendario(DateTime fecha, int idEmpleado, int idDepartamento)
         {
             monthYear.InnerText = fecha.ToString("MMMM yyyy");
 
@@ -99,14 +134,18 @@ namespace ControlEmpresarial.Controlador.Vacaciones
                 diasCalendario.Add(new DiaCalendario { Dia = "", Class = "" });
             }
 
-            // Obtener días libres del empleado
+            // Obtener días libres, festivos y vacaciones colectivas
             var diasLibres = ObtenerDiasLibres(fecha.Year, fecha.Month, idEmpleado);
+            var diasFestivos = ObtenerDiasFestivos(fecha.Year, fecha.Month, idDepartamento);
+            var vacacionesColectivas = ObtenerVacacionesColectivas(fecha.Year, fecha.Month);
 
             // Agregar días reales del mes
             int diasEnElMes = DateTime.DaysInMonth(fecha.Year, fecha.Month);
             for (int i = 1; i <= diasEnElMes; i++)
             {
-                var claseDia = diasLibres.Contains(i) ? "dia-libres" : "";
+                var claseDia = diasLibres.Contains(i) ? "dia-libres" :
+                               (diasFestivos.Contains(i) ? "diafestivo-libres" :
+                               (vacacionesColectivas.Contains(i) ? "vacacion-colectiva" : ""));
                 diasCalendario.Add(new DiaCalendario { Dia = i.ToString(), Class = claseDia });
             }
 
@@ -114,6 +153,9 @@ namespace ControlEmpresarial.Controlador.Vacaciones
             calendarRepeater.DataSource = diasCalendario;
             calendarRepeater.DataBind();
         }
+
+
+
 
         protected HashSet<int> ObtenerDiasLibres(int anio, int mes, int idEmpleado)
         {
@@ -157,6 +199,95 @@ namespace ControlEmpresarial.Controlador.Vacaciones
             return diasLibres;
         }
 
+        protected HashSet<int> ObtenerDiasFestivos(int anio, int mes, int idDepartamento)
+        {
+            var diasFestivos = new HashSet<int>();
+
+            string consulta = @"
+        SELECT DAY(FechaVacacion) AS Dia
+        FROM DiasFestivos
+        WHERE YEAR(FechaVacacion) = @Anio
+        AND MONTH(FechaVacacion) = @Mes
+        AND idDepartamento = @IdDepartamento";
+
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(consulta, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@Anio", anio);
+                        cmd.Parameters.AddWithValue("@Mes", mes);
+                        cmd.Parameters.AddWithValue("@IdDepartamento", idDepartamento);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            // Leer filas del resultado
+                            while (reader.Read())
+                            {
+                                if (reader["Dia"] != DBNull.Value)
+                                {
+                                    diasFestivos.Add(reader.GetInt32("Dia"));
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Manejo de errores
+                    System.Diagnostics.Debug.WriteLine("Error al obtener días festivos: " + ex.Message);
+                }
+            }
+
+            return diasFestivos;
+        }
+
+
+        protected HashSet<int> ObtenerVacacionesColectivas(int anio, int mes)
+        {
+            var vacacionesColectivas = new HashSet<int>();
+
+            string consulta = @"
+        SELECT DAY(FechaVacacion) AS Dia
+        FROM VacacionesColectivas
+        WHERE YEAR(FechaVacacion) = @Anio
+        AND MONTH(FechaVacacion) = @Mes";
+
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(consulta, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@Anio", anio);
+                        cmd.Parameters.AddWithValue("@Mes", mes);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                if (reader["Dia"] != DBNull.Value)
+                                {
+                                    vacacionesColectivas.Add(reader.GetInt32("Dia"));
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Manejo de errores
+                    System.Diagnostics.Debug.WriteLine("Error al obtener vacaciones colectivas: " + ex.Message);
+                }
+            }
+
+            return vacacionesColectivas;
+        }
+
+
 
 
         private string ConseguirCookie(string cookieString, string key)
@@ -172,6 +303,7 @@ namespace ControlEmpresarial.Controlador.Vacaciones
             }
             return null;
         }
+
 
         protected class DiaCalendario
         {

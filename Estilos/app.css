@@ -360,6 +360,41 @@ input, select, textarea {
         cursor: pointer; 
     }
 
+.day.diafestivo-libres {
+    background-color: #45539D !important;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #4b0082;
+    padding: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+    .day.diafestivo-libres:hover {
+        background-color: #6a0dad;
+        color: #ffffff;
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+
+.day.vacacion-colectiva {
+    background-color: #45539D !important;
+    color: #ffffff;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #4b0082;
+    padding: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+    .day.vacacion-colectiva:hover {
+        background-color: #6a0dad;
+        color: #ffffff;
+        transform: scale(1.1);
+        cursor: pointer;
+    }
 
 .calendar {
     display: grid;

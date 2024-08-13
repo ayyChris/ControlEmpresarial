@@ -13,9 +13,9 @@ namespace ControlEmpresarial.Vistas.Incapacidades
             if (!IsPostBack)
             {
                 CargarTiposIncapacidades();
-
             }
         }
+
         protected void volverMenu_Click(object sender, EventArgs e)
         {
             Response.Redirect("../PaginaPrincipal/MenuSupervisor.aspx");
@@ -26,10 +26,10 @@ namespace ControlEmpresarial.Vistas.Incapacidades
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
             DataTable dt = ObtenerTiposIncapacidadesDesdeBaseDeDatos(connectionString);
 
-            // Asigna el DataTable como fuente de datos del GridView
             gridIncapacidades.DataSource = dt;
             gridIncapacidades.DataBind();
         }
+
         private DataTable ObtenerTiposIncapacidadesDesdeBaseDeDatos(string connectionString)
         {
             DataTable dt = new DataTable();
@@ -42,14 +42,9 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                 da.Fill(dt);
             }
 
-            foreach (DataRow row in dt.Rows)
-            {
-                System.Diagnostics.Debug.WriteLine("Nombre: " + row["Nombre"]);
-                System.Diagnostics.Debug.WriteLine("Descripcion: " + row["Descripcion"]);
-            }
-
             return dt;
         }
+
         protected void ingresar_Click(object sender, EventArgs e)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
@@ -57,20 +52,18 @@ namespace ControlEmpresarial.Vistas.Incapacidades
             string tipoIncapacidad = tipoincapacidad.Text.Trim();
             string descripcionIncapacidad = descripcion.Text.Trim();
 
-            if (string.IsNullOrEmpty(tipoIncapacidad) && string.IsNullOrEmpty(descripcionIncapacidad))
+            if (string.IsNullOrEmpty(tipoIncapacidad) || string.IsNullOrEmpty(descripcionIncapacidad))
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Ingrese un tipo de incapacidad válido.')", true);
                 return;
             }
 
-            // Validación: Verificar si el puesto ya existe en la base de datos
             if (PuestoExiste(tipoIncapacidad, descripcionIncapacidad, connectionString))
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('El tipo de incapacidad ya existe.')", true);
                 return;
             }
 
-            // Insertar el puesto en la base de datos
             InsertarPuesto(tipoIncapacidad, descripcionIncapacidad, connectionString);
         }
 
@@ -102,14 +95,14 @@ namespace ControlEmpresarial.Vistas.Incapacidades
             return existe;
         }
 
-        private void InsertarPuesto(string tipoIncapacidad, string descripcionIncapacidad,string connectionString)
+        private void InsertarPuesto(string tipoIncapacidad, string descripcionIncapacidad, string connectionString)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 string query = "INSERT INTO TiposIncapacidad (Nombre,Descripcion) VALUES (@Nombre,@Descripcion)";
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Nombre", tipoIncapacidad);
-                cmd.Parameters.AddWithValue("@Descripcion", tipoIncapacidad);
+                cmd.Parameters.AddWithValue("@Descripcion", descripcionIncapacidad);
 
                 try
                 {
@@ -119,7 +112,6 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                     if (rowsAffected > 0)
                     {
                         ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('Tipo de incapacidad ingresado correctamente.')", true);
-                        // Aquí puedes limpiar el TextBox u ofrecer otra interacción al usuario
                     }
                     else
                     {
@@ -132,6 +124,5 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                 }
             }
         }
-
     }
 }
