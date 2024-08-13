@@ -309,6 +309,9 @@
     <Compile Include="Controlador\vacacionesFestivas.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\VisualizacionRebajosColaborador.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Vistas\Colaborador\EnviarMensajeColaboradores.aspx.cs">
       <DependentUpon>EnviarMensajeColaboradores.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -352,6 +355,13 @@
     </Compile>
     <Compile Include="Vistas\Incapacidades\TiposIncapacidades.aspx.designer.cs">
       <DependentUpon>TiposIncapacidades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx.cs">
+      <DependentUpon>VisualizacionRebajosColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx.designer.cs">
+      <DependentUpon>VisualizacionRebajosColaborador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
@@ -443,6 +453,7 @@
     <Content Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx" />
     <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
     <Content Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx" />
+    <Content Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx" />
     <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx" />
