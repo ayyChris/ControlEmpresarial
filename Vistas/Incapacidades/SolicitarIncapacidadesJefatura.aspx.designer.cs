@@ -11,7 +11,7 @@ namespace ControlEmpresarial.Vistas
 {
 
 
-    public partial class Incapacidades
+    public partial class IncapacidadesJefatura
     {
 
         /// <summary>

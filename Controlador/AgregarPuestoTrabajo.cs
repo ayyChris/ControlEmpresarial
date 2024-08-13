@@ -19,7 +19,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
         }
         protected void volverMenu_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("../PaginaPrincipal/MenuSupervisor.aspx");
         }
 
         private void CargarPuestoTrabajo()

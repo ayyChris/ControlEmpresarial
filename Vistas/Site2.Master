@@ -257,6 +257,7 @@
                      <a href="#">Vacaciones</a>
                      <ul class="submenu">
                         <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Aceptar Vacaciones de Colaboradores</a></li>
+                         <li><a href="../Vacaciones/calendarioVacacionesJefatura.aspx">Calendario de Vacaciones</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">

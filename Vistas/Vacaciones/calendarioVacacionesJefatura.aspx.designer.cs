@@ -7,47 +7,47 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas
+namespace ControlEmpresarial.Controlador.Vacaciones
 {
 
 
-    public partial class Site2
+    public partial class calendarioVacacionesJefatura
     {
 
         /// <summary>
-        /// Control form1.
+        /// Control btnPrevMonth.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.Button btnPrevMonth;
 
         /// <summary>
-        /// Control lblNombre.
+        /// Control monthYear.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl monthYear;
 
         /// <summary>
-        /// Control repeaterNotificaciones.
+        /// Control btnNextMonth.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
+        protected global::System.Web.UI.WebControls.Button btnNextMonth;
 
         /// <summary>
-        /// Control ContentPlaceHolder1.
+        /// Control calendarRepeater.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.Repeater calendarRepeater;
     }
 }

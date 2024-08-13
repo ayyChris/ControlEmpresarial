@@ -236,10 +236,11 @@
                      </ul>
                   </li>
                   <li class="has-submenu">
-                     <a href="#">Vacaciones Colectivas</a>
+                     <a href="#">Vacaciones</a>
                      <ul class="submenu">
                         <li><a href="../Vacaciones/vacacionColectiva.aspx">Insertar vacaciones colectivas</a></li>
                         <li><a href="../Vacaciones/vacacionesFestivas.aspx">Insertar una vacación festiva para un departamento</a></li>
+                         <li><a href="../Vacaciones/calendarioVacacionesSupervisor.aspx">Calendario de Vacaciones</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">
@@ -256,6 +257,7 @@
                      <a href="#">Incapacidades</a>
                      <ul class="submenu">
                         <li><a href="../Incapacidades/VisualizacionIncapacidad.aspx">Historial de incapacidades</a></li>
+                         <li><a href="../Incapacidades/TiposIncapacidades.aspx">Insertar tipos de incapacidades</a></li>
                      </ul>
                   </li>
                    <li class="has-submenu">

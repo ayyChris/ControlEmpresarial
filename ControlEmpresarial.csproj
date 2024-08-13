@@ -249,7 +249,16 @@
     <Compile Include="Controlador\AgregarTipoActividadesSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\AgregarTipoIncapacidad.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\calendarioVacacionesColaborador.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\calendarioVacacionesJefatura.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\calendarioVacacionesSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\ControlActividadesSupervisor.cs">
@@ -337,6 +346,13 @@
     <Compile Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx.designer.cs">
       <DependentUpon>PreAceptacionActividadJefatura.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Incapacidades\TiposIncapacidades.aspx.cs">
+      <DependentUpon>TiposIncapacidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades\TiposIncapacidades.aspx.designer.cs">
+      <DependentUpon>TiposIncapacidades.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -357,6 +373,20 @@
     </Compile>
     <Compile Include="Vistas\Site3.Master.designer.cs">
       <DependentUpon>Site3.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\calendarioVacacionesJefatura.aspx.cs">
+      <DependentUpon>calendarioVacacionesJefatura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\calendarioVacacionesJefatura.aspx.designer.cs">
+      <DependentUpon>calendarioVacacionesJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\calendarioVacacionesSupervisor.aspx.cs">
+      <DependentUpon>calendarioVacacionesSupervisor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Vacaciones\calendarioVacacionesSupervisor.aspx.designer.cs">
+      <DependentUpon>calendarioVacacionesSupervisor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Vacaciones\vacacionesFestivas.aspx.cs">
       <DependentUpon>vacacionesFestivas.aspx</DependentUpon>
@@ -403,6 +433,7 @@
     <Content Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
+    <Content Include="Vistas\Incapacidades\TiposIncapacidades.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Contactenos.aspx" />
     <Content Include="Vistas\PaginaPrincipal\DobleFactor.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Inicio.aspx" />
@@ -418,6 +449,8 @@
     <Content Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Login.aspx" />
     <Content Include="Vistas\Marcas\marcas.aspx" />
+    <Content Include="Vistas\Vacaciones\calendarioVacacionesJefatura.aspx" />
+    <Content Include="Vistas\Vacaciones\calendarioVacacionesSupervisor.aspx" />
     <Content Include="Vistas\Vacaciones\solicitarVacacionColaborador.aspx" />
     <Content Include="Vistas\Horas Extra\solicitudHorasExtrasJefatura.aspx" />
     <Content Include="Vistas\Vacaciones\solicitudVacacionesJefatura.aspx" />
@@ -643,7 +676,6 @@
     </Compile>
     <Compile Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx.cs">
       <DependentUpon>SolicitarIncapacidadesJefatura.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx.designer.cs">
       <DependentUpon>SolicitarIncapacidadesJefatura.aspx</DependentUpon>

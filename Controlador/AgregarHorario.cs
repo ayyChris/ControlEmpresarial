@@ -16,7 +16,7 @@ namespace ControlEmpresarial.Vistas.Colaborador
         }
         protected void volverMenu_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("../PaginaPrincipal/MenuSupervisor.aspx");
         }
 
         protected void ingresar_Click(object sender, EventArgs e)

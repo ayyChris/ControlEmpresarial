@@ -7,47 +7,56 @@
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas
+namespace ControlEmpresarial.Vistas.Incapacidades
 {
 
 
-    public partial class Site2
+    public partial class AgregarTipoIncapacidad
     {
 
         /// <summary>
-        /// Control form1.
+        /// Control tipoincapacidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox tipoincapacidad;
 
         /// <summary>
-        /// Control lblNombre.
+        /// Control descripcion.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.WebControls.TextBox descripcion;
 
         /// <summary>
-        /// Control repeaterNotificaciones.
+        /// Control ingresar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
+        protected global::System.Web.UI.WebControls.Button ingresar;
 
         /// <summary>
-        /// Control ContentPlaceHolder1.
+        /// Control volverMenu.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.Button volverMenu;
+
+        /// <summary>
+        /// Control gridIncapacidades.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridIncapacidades;
     }
 }
