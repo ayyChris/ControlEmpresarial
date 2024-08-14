@@ -282,7 +282,13 @@
     <Compile Include="Controlador\EnviarMensajeColaboradores.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\JustificacionIncosistencia.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\Permisos_AceptacionNegacionPermisoJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\PreVisualIncosistenciassColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\PrevisualizacionVacacionesJefe.cs">
@@ -364,6 +370,18 @@
     </Compile>
     <Compile Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx.designer.cs">
       <DependentUpon>AgregarTipoIncosistenciasSupervisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\EvidenciaIncosistenciaColaborador.aspx.cs">
+      <DependentUpon>EvidenciaIncosistenciaColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\EvidenciaIncosistenciaColaborador.aspx.designer.cs">
+      <DependentUpon>EvidenciaIncosistenciaColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\PreVisualIncosistenciasColaborador.aspx.cs">
+      <DependentUpon>PreVisualIncosistenciasColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\PreVisualIncosistenciasColaborador.aspx.designer.cs">
+      <DependentUpon>PreVisualIncosistenciasColaborador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx.cs">
       <DependentUpon>VisualizacionRebajosColaborador.aspx</DependentUpon>
@@ -454,6 +472,8 @@
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
     <Content Include="Vistas\Incapacidades\TiposIncapacidades.aspx" />
     <Content Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx" />
+    <Content Include="Vistas\Inconsistencias\EvidenciaIncosistenciaColaborador.aspx" />
+    <Content Include="Vistas\Inconsistencias\PreVisualIncosistenciasColaborador.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Contactenos.aspx" />
     <Content Include="Vistas\PaginaPrincipal\DobleFactor.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Inicio.aspx" />
