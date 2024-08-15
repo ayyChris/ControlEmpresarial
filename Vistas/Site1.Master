@@ -350,6 +350,12 @@
                         </ul>
                     </li>
                     <li class="has-submenu">
+                        <a href="#">Incapacidad</a>
+                        <ul class="submenu">
+                            <li><a href="../Incapacidades/SolicitarIncapacidad.aspx">Registre su incapacidad</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-submenu">
                         <a href="#">Rebajos</a>
                         <ul class="submenu">
                             <li><a href="../Rebajos/VisualizacionRebajosColaborador.aspx">Ver rebajos</a></li>

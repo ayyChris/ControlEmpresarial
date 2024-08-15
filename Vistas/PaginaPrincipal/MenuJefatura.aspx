@@ -13,11 +13,6 @@
                     <p>Revise los permisos que ha solicitado los empleados.</p>
                 </div>
                 <div class="option-menu">
-                    <a href="../Incapacidades/SolicitarIncapacidadesJefatura.aspx"><img src="../../Imagenes/icono-escritura.png" alt="incapacidades" /></a>
-                    <h3 class="h3-footer">Incapacidades</h3>
-                    <p>Registre las incapacidades del empleado.</p>
-                </div>
-                <div class="option-menu">
                     <a href="../Inconsistencias/VisualizacionInconsistencias.aspx"><img src="../../Imagenes/icono-inconsistencias.png" alt="inconsistencias" /></a>
                     <h3 class="h3-footer">Inconsistencias</h3>
                     <p>Puede revisar las inconsistencias de cada empleado.</p>

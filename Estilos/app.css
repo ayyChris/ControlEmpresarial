@@ -730,3 +730,11 @@ a {
     margin-bottom: 20px;
 }
 
+.form-group {
+    margin-bottom: 15px; /* Espacio entre las líneas de los labels */
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px; /* Espacio debajo del label */
+    }

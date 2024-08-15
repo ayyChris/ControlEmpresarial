@@ -258,6 +258,7 @@
                      <ul class="submenu">
                         <li><a href="../Incapacidades/VisualizacionIncapacidad.aspx">Historial de incapacidades</a></li>
                          <li><a href="../Incapacidades/TiposIncapacidades.aspx">Insertar tipos de incapacidades</a></li>
+                         <li><a href="../Incapacidades/TablaPreviaIncapacidades.aspx">Ver solicitudes de incapacidades </a></li>
                      </ul>
                   </li>
                    <li class="has-submenu">

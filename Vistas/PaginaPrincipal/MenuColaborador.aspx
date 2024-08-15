@@ -44,6 +44,11 @@
                   <h3 class="h3-footer">Permisos</h3>
                   <p>Si necesita solicitar un permiso ante una situación, lo puede hacer en este apartado.</p>
                </div>
+              <div class="option-menu">
+                    <a href="../Incapacidades/SolicitarIncapacidad.aspx"><img src="../../Imagenes/icono-escritura.png" alt="incapacidades" /></a>
+                    <h3 class="h3-footer">Incapacidades</h3>
+                    <p>Solicite una incapacidad hacia el supervisor.</p>
+                </div>
             </div>
          </div>
 </asp:Content>

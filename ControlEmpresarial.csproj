@@ -291,6 +291,9 @@
     <Compile Include="Controlador\PreVisualIncosistenciassColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\PreVisualizacionIncapacidades.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\PrevisualizacionVacacionesJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -307,6 +310,12 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\Permisos_TablaPreVisualizacionPermisosJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\RespuestaIncapacidad.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\solicitarIncapacidad.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\solicitarVacacionColaborador.cs">
@@ -360,6 +369,24 @@
     </Compile>
     <Compile Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx.designer.cs">
       <DependentUpon>PreAceptacionActividadJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades\RespuestaIncapacidad.aspx.cs">
+      <DependentUpon>RespuestaIncapacidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades\RespuestaIncapacidad.aspx.designer.cs">
+      <DependentUpon>RespuestaIncapacidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades\SolicitarIncapacidad.aspx.cs">
+      <DependentUpon>SolicitarIncapacidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades\SolicitarIncapacidad.aspx.designer.cs">
+      <DependentUpon>SolicitarIncapacidad.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades\TablaPreviaIncapacidades.aspx.cs">
+      <DependentUpon>TablaPreviaIncapacidades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Incapacidades\TablaPreviaIncapacidades.aspx.designer.cs">
+      <DependentUpon>TablaPreviaIncapacidades.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Incapacidades\TiposIncapacidades.aspx.cs">
       <DependentUpon>TiposIncapacidades.aspx</DependentUpon>
@@ -480,6 +507,9 @@
     <Content Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
+    <Content Include="Vistas\Incapacidades\RespuestaIncapacidad.aspx" />
+    <Content Include="Vistas\Incapacidades\SolicitarIncapacidad.aspx" />
+    <Content Include="Vistas\Incapacidades\TablaPreviaIncapacidades.aspx" />
     <Content Include="Vistas\Incapacidades\TiposIncapacidades.aspx" />
     <Content Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx" />
     <Content Include="Vistas\Inconsistencias\EvidenciaIncosistenciaColaborador.aspx" />
@@ -498,7 +528,6 @@
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx" />
     <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx" />
-    <Content Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx" />
     <Content Include="Vistas\PaginaPrincipal\Login.aspx" />
     <Content Include="Vistas\Marcas\marcas.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacacionesJefatura.aspx" />
@@ -724,12 +753,6 @@
     </Compile>
     <Compile Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx.designer.cs">
       <DependentUpon>HistoricoHorasExtrasSupervisor.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx.cs">
-      <DependentUpon>SolicitarIncapacidadesJefatura.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Incapacidades\SolicitarIncapacidadesJefatura.aspx.designer.cs">
-      <DependentUpon>SolicitarIncapacidadesJefatura.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\PaginaPrincipal\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
