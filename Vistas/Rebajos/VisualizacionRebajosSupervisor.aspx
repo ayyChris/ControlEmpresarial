@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VisualizacionRebajosColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.VisualizacionRebajosColaborador"  MasterPageFile="~/Vistas/Site1.master"  %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="VisualizacionRebajosSupervisor.aspx.cs" Inherits="ControlEmpresarial.Vistas.VisualizacionRebajosColaborador"  MasterPageFile="~/Vistas/Site1.master"  %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
          <main>
             <section class="seccion-formulario">

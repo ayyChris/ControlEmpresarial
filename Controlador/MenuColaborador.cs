@@ -15,21 +15,19 @@ namespace ControlEmpresarial.Vistas
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            HttpCookie userCookie = Request.Cookies["UserInfo"];
+            if (userCookie != null)
             {
-                HttpCookie userCookie = Request.Cookies["UserInfo"];
-                if (userCookie != null)
-                {
-                    int idEmpleado = int.Parse(userCookie["idEmpleado"]);
-                    DateTime fechaActual = DateTime.Today;
-                    VerificarInconsistencia(idEmpleado, fechaActual);
-                }
-                else
-                {
-                    // Manejar el caso en el que la cookie no existe
-                    lblError.Text = "No se ha encontrado la cookie de usuario.";
-                    lblError.ForeColor = System.Drawing.Color.Red;
-                }
+                int idEmpleado = int.Parse(userCookie["idEmpleado"]);
+                DateTime fechaActual = DateTime.Today;
+                VerificarInconsistencia(idEmpleado, fechaActual);
+                VerificarInconsistenciasActivas(idEmpleado, fechaActual);
+            }
+            else
+            {
+                // Manejar el caso en el que la cookie no existe
+                lblError.Text = "No se ha encontrado la cookie de usuario.";
+                lblError.ForeColor = System.Drawing.Color.Red;
             }
         }
 
@@ -202,6 +200,171 @@ namespace ControlEmpresarial.Vistas
                     catch (Exception ex)
                     {
                         lblError.Text += $" - Error al enviar el correo: {ex.Message}";
+                    }
+                }
+                else
+                {
+                    lblError.Text += " - Correo del usuario no encontrado en la cookie.";
+                }
+            }
+            else
+            {
+                lblError.Text += " - Cookie de usuario no encontrada.";
+            }
+        }
+        private void VerificarInconsistenciasActivas(int empleadoId, DateTime fecha)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = @"
+        SELECT idInconsistencia
+        FROM inconsistencias
+        WHERE idEmpleado = @EmpleadoId
+          AND Estado = 'Activo'
+          AND DATEDIFF(CURDATE(), Fecha) > 3";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@EmpleadoId", empleadoId);
+
+                    try
+                    {
+                        connection.Open();
+                        using (MySqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                int idInconsistencia = reader.GetInt32("idInconsistencia");
+                                if (!ExisteRebajo(idInconsistencia, empleadoId))
+                                {
+                                    AplicarRebajo(empleadoId, fecha, idInconsistencia);
+                                }
+                                else
+                                {
+                                    lblInconsistencias.Text += $" - Ya existe un rebajo para la inconsistencia ID {idInconsistencia}.";
+                                }
+                            }
+                        }
+                        connection.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        lblError.Text = $"Error al verificar las inconsistencias activas: {ex.Message}";
+                    }
+                }
+            }
+        }
+
+
+
+        private bool ExisteRebajo(int idInconsistencia, int empleadoId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = @"
+        SELECT COUNT(*)
+        FROM rebajo
+        WHERE idEmpleado = @EmpleadoId
+          AND idInconsistencia = @IdInconsistencia";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@EmpleadoId", empleadoId);
+                    command.Parameters.AddWithValue("@IdInconsistencia", idInconsistencia);
+
+                    try
+                    {
+                        connection.Open();
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+                        connection.Close();
+
+                        return count > 0;
+                    }
+                    catch (Exception ex)
+                    {
+                        lblError.Text = $"Error al verificar la existencia de rebajo: {ex.Message}";
+                        return false;
+                    }
+                }
+            }
+        }
+
+
+
+        private void AplicarRebajo(int empleadoId, DateTime fecha, int idInconsistencia)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = @"
+                INSERT INTO rebajo (idEmpleado, TipoRebajoID, Fecha, Estado, Motivo, Monto, idInconsistencia)
+                VALUES (@IdEmpleado, @TipoRebajoID, @Fecha, @Estado, @Motivo, @Monto, @idInconsistencia)";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    int idTipoRebajo = 1; // Tipo de rebajo
+                    double monto = 5.0; // Porcentaje o cantidad del rebajo
+
+                    command.Parameters.AddWithValue("@IdEmpleado", empleadoId);
+                    command.Parameters.AddWithValue("@TipoRebajoID", idTipoRebajo);
+                    command.Parameters.AddWithValue("@Fecha", fecha.ToString("yyyy-MM-dd")); // Formato de fecha para MySQL
+                    command.Parameters.AddWithValue("@Estado", "Pendiente");
+                    command.Parameters.AddWithValue("@Motivo", $"Inconsistencia con ID {idInconsistencia} no justificada en más de 3 días.");
+                    command.Parameters.AddWithValue("@Monto", monto);
+                    command.Parameters.AddWithValue("@idInconsistencia", idInconsistencia);
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+                        connection.Close();
+
+                        lblInconsistencias.Text += $" - Rebajo aplicado por inconsistencia ID {idInconsistencia}.";
+
+                        // Enviar correo
+                        EnviarCorreoRebajo();
+                    }
+                    catch (Exception ex)
+                    {
+                        lblError.Text += $" - Error al aplicar el rebajo: {ex.Message}";
+                    }
+                }
+            }
+        }
+
+        private void EnviarCorreoRebajo()
+        {
+            HttpCookie userCookie = Request.Cookies["UserInfo"];
+            if (userCookie != null)
+            {
+                string correo = userCookie["Correo"];
+
+                if (!string.IsNullOrEmpty(correo))
+                {
+                    string fromEmail = "apsw.activity.sync@gmail.com";
+                    string fromPassword = "hpehyzvcvdfcatgn";
+                    string subject = "Rebajo Aplicado";
+                    string body = $"Estimado Usuario,\n\nSe ha aplicado un rebajo en el sistema el día {DateTime.Today.ToString("dd/MM/yyyy")} debido a inconsistencias no justificadas.\n\nSaludos,\nEl equipo de ActivitySync";
+
+                    try
+                    {
+                        var smtpClient = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587)
+                        {
+                            Credentials = new System.Net.NetworkCredential(fromEmail, fromPassword),
+                            EnableSsl = true
+                        };
+
+                        smtpClient.Send(fromEmail, correo, subject, body);
+                        lblInconsistencias.Text += " - Correo de notificación del rebajo enviado.";
+                    }
+                    catch (Exception ex)
+                    {
+                        lblError.Text += $" - Error al enviar el correo del rebajo: {ex.Message}";
                     }
                 }
                 else

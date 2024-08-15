@@ -11,43 +11,43 @@ namespace ControlEmpresarial.Vistas
 {
 
 
-    public partial class Site2
+    public partial class VisualizarHorasColaborador
     {
 
         /// <summary>
-        /// form1 control.
+        /// colaborador control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.DropDownList colaborador;
 
         /// <summary>
-        /// lblNombre control.
+        /// lblHorasMeta control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
+        protected global::System.Web.UI.WebControls.Label lblHorasMeta;
 
         /// <summary>
-        /// repeaterNotificaciones control.
+        /// lblHoras control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repeaterNotificaciones;
+        protected global::System.Web.UI.WebControls.Label lblHoras;
 
         /// <summary>
-        /// ContentPlaceHolder1 control.
+        /// lblInconsistencias control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder1;
+        protected global::System.Web.UI.WebControls.Label lblInconsistencias;
     }
 }

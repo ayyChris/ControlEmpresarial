@@ -12,7 +12,7 @@ using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas
 {
-    public partial class VisualizacionRebajosColaborador : Page
+    public partial class VisualizacionRebajosSupervisor : Page
     {
         private string cadenaConexion = "Server=138.59.135.33;Port=3306;Database=tiusr38pl_gestion;Uid=gestion;Pwd=Ihnu00&34;";
         private NotificacionService notificacionService = new NotificacionService();
