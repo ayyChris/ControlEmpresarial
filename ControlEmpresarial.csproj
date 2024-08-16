@@ -327,9 +327,6 @@
     <Compile Include="Controlador\vacacionesFestivas.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Controlador\VisualizacionRebajosSupervisor.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Controlador\VisualizarHorasColaborador.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -413,12 +410,12 @@
     <Compile Include="Vistas\Inconsistencias\PreVisualIncosistenciasColaborador.aspx.designer.cs">
       <DependentUpon>PreVisualIncosistenciasColaborador.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vistas\Rebajos\VisualizacionRebajosSupervisor.aspx.cs">
-      <DependentUpon>VisualizacionRebajosSupervisor.aspx</DependentUpon>
+    <Compile Include="Vistas\Rebajos\AceptacionNegacionRebajoSupervisor.aspx.cs">
+      <DependentUpon>AceptacionNegacionRebajoSupervisor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Vistas\Rebajos\VisualizacionRebajosSupervisor.aspx.designer.cs">
-      <DependentUpon>VisualizacionRebajosSupervisor.aspx</DependentUpon>
+    <Compile Include="Vistas\Rebajos\AceptacionNegacionRebajoSupervisor.aspx.designer.cs">
+      <DependentUpon>AceptacionNegacionRebajoSupervisor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Colaborador\VisualizarHorasColaborador.aspx.cs">
       <DependentUpon>VisualizarHorasColaborador.aspx</DependentUpon>
@@ -426,6 +423,20 @@
     </Compile>
     <Compile Include="Vistas\Colaborador\VisualizarHorasColaborador.aspx.designer.cs">
       <DependentUpon>VisualizarHorasColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Rebajos\HistorialRebajos.aspx.cs">
+      <DependentUpon>HistorialRebajos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Rebajos\HistorialRebajos.aspx.designer.cs">
+      <DependentUpon>HistorialRebajos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Rebajos\PreVisualizacionRebajosSupervisor.aspx.cs">
+      <DependentUpon>PreVisualizacionRebajosSupervisor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Rebajos\PreVisualizacionRebajosSupervisor.aspx.designer.cs">
+      <DependentUpon>PreVisualizacionRebajosSupervisor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
@@ -523,8 +534,10 @@
     <Content Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx" />
     <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
     <Content Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx" />
-    <Content Include="Vistas\Rebajos\VisualizacionRebajosSupervisor.aspx" />
+    <Content Include="Vistas\Rebajos\AceptacionNegacionRebajoSupervisor.aspx" />
     <Content Include="Vistas\Colaborador\VisualizarHorasColaborador.aspx" />
+    <Content Include="Vistas\Rebajos\HistorialRebajos.aspx" />
+    <Content Include="Vistas\Rebajos\PreVisualizacionRebajosSupervisor.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx" />
     <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx" />
@@ -541,7 +554,6 @@
     <Content Include="Vistas\Incapacidades\VisualizacionIncapacidad.aspx" />
     <Content Include="Vistas\Inconsistencias\VisualizacionInconsistencias.aspx" />
     <Content Include="Vistas\Permisos\VisualizacionPermisos.aspx" />
-    <Content Include="Vistas\Rebajos\VisualizacionRebajos.aspx" />
     <Content Include="Vistas\Vacaciones\vacacionesFestivas.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -827,13 +839,6 @@
     </Compile>
     <Compile Include="Vistas\Permisos\VisualizacionPermisos.aspx.designer.cs">
       <DependentUpon>VisualizacionPermisos.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Vistas\Rebajos\VisualizacionRebajos.aspx.cs">
-      <DependentUpon>VisualizacionRebajos.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Vistas\Rebajos\VisualizacionRebajos.aspx.designer.cs">
-      <DependentUpon>VisualizacionRebajos.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

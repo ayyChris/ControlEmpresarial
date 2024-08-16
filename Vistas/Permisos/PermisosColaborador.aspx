@@ -3,7 +3,6 @@
          <main>
             <section class="seccion-formulario">
                <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
-               <div class="tarjeta-formulario" style="max-width: 700px; margin: 0 auto;">
                   <h2><span class="fuente-delgada">Solicitud de</span><br/><span class="fuente-gruesa">Permisos</span></h2>
                   <p>Ingrese las actividades que ha realizado.</p>
                   <br />
@@ -26,7 +25,6 @@
                      <i id="likeIcon" class="fas fa-thumbs-up" style="display:none;"></i>
                      <asp:Label ID="lblMensaje" runat="server" Visible="false"></asp:Label>
                </div>
-            </div>
             </section>
             <section class="seccion-imagen">
                <img src="../../Imagenes/colaborador.png" alt="Image of office">

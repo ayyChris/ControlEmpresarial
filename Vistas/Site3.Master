@@ -232,7 +232,8 @@
                   <li class="has-submenu">
                      <a href="#">Rebajos</a>
                      <ul class="submenu">
-                        <li><a href="../Rebajos/VisualizacionRebajos.aspx">Historial de Rebajos</a></li>
+                        <li><a href="../Rebajos/PreVisualizacionRebajosSupervisor.aspx">Rebajos por revisar</a></li>
+                        <li><a href="../Rebajos/HistorialRebajos.aspx">Historial de rebajos</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">

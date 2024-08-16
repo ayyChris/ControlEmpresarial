@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ControlEmpresarial.Vistas
+namespace ControlEmpresarial.Vistas.Rebajos
 {
 
 
-    public partial class VisualizacionRebajosColaborador
+    public partial class HistorialRebajos
     {
 
         /// <summary>
