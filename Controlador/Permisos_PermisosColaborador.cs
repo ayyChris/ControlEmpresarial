@@ -18,7 +18,8 @@ namespace ControlEmpresarial.Vistas
         {
             if (!IsPostBack)
             {
-               
+                txtInicio.Attributes["min"] = DateTime.Now.ToString("yyyy-MM-dd");
+                txtFinal.Attributes["min"] = DateTime.Now.ToString("yyyy-MM-dd");
             }
         }
 
