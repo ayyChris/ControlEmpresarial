@@ -277,7 +277,6 @@
                   <div class="card">
                      <img src="../../Imagenes/icono-inconsistencias.png" alt="Inconsistencias">
                      <h3>Inconsistencias</h3>
-                     A
                      <p>Registro y justificación de inconsistencias, con un sistema de aprobación y control.</p>
                   </div>
                   <div class="card">

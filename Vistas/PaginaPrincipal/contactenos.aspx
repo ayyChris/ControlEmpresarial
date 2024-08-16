@@ -10,7 +10,6 @@
       <style>
          .contact-details {
          max-width: 600px;
-         background: white;
          border-radius: 10px;
          }
          .contact-details p {
