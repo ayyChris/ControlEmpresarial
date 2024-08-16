@@ -147,11 +147,11 @@ namespace ControlEmpresarial.Vistas.Incapacidades
         private void InsertarIncapacidad(int idEmpleado, int idDepartamento, int idTipoIncapacidad, DateTime fechaInicial, DateTime fechaFinal, string evidencia)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
-
+            int DiasReduccion = 0;
             // Consulta SQL para insertar datos
             string query = @"
-        INSERT INTO Incapacidades (idEmpleado, idDepartamento, idTipoIncapacidad, FechaInicial, FechaFinal, Evidencia, Estado)
-        VALUES (@idEmpleado, @idDepartamento, @idTipoIncapacidad, @FechaInicial, @FechaFinal, @Evidencia, 'Pendiente')";
+        INSERT INTO Incapacidades (idEmpleado, idDepartamento, idTipoIncapacidad, FechaInicial, FechaFinal, Evidencia, DiasReduccion,Estado)
+        VALUES (@idEmpleado, @idDepartamento, @idTipoIncapacidad, @FechaInicial, @FechaFinal, @Evidencia,@DiasReduccion, 'Pendiente')";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -163,6 +163,7 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                 cmd.Parameters.AddWithValue("@idTipoIncapacidad", idTipoIncapacidad);
                 cmd.Parameters.AddWithValue("@FechaInicial", fechaInicial);
                 cmd.Parameters.AddWithValue("@FechaFinal", fechaFinal);
+                cmd.Parameters.AddWithValue("@DiasReduccion", DiasReduccion);
                 cmd.Parameters.AddWithValue("@Evidencia", evidencia);
 
                 try
