@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using MySql.Data.MySqlClient;
+using Newtonsoft.Json;
 
 namespace ControlEmpresarial.Vistas.Inconsistencias
 {
@@ -40,8 +41,8 @@ namespace ControlEmpresarial.Vistas.Inconsistencias
                 // Validar que la justificación no esté vacía
                 if (!string.IsNullOrWhiteSpace(justificacion))
                 {
-                    // Insertar la justificación en la base de datos
-                    InsertarJustificacion(idInconsistencia, justificacion);
+                    string Estado = "En espera";
+                    InsertarJustificacion(idInconsistencia, justificacion, Estado);
 
                     // Actualizar el estado de la inconsistencia
                     ActualizarEstadoInconsistencia(idInconsistencia);
@@ -93,11 +94,11 @@ namespace ControlEmpresarial.Vistas.Inconsistencias
         }
 
 
-        private void InsertarJustificacion(int idInconsistencia, string justificacion)
+        private void InsertarJustificacion(int idInconsistencia, string justificacion, string Estado)
         {
             string query = @"
-        INSERT INTO justificacioninconsistencia (idInconsistencia, Justificacion, FechaJustificacion)
-        VALUES (@idInconsistencia, @justificacion, @fechaJustificacion)";
+        INSERT INTO justificacioninconsistencia (idInconsistencia, Justificacion, FechaJustificacion, Estado)
+        VALUES (@idInconsistencia, @justificacion, @fechaJustificacion, @Estado)";
 
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -106,6 +107,7 @@ namespace ControlEmpresarial.Vistas.Inconsistencias
                     cmd.Parameters.AddWithValue("@idInconsistencia", idInconsistencia);
                     cmd.Parameters.AddWithValue("@justificacion", justificacion);
                     cmd.Parameters.AddWithValue("@fechaJustificacion", DateTime.Now.Date);
+                    cmd.Parameters.AddWithValue("@Estado", Estado);
 
                     try
                     {

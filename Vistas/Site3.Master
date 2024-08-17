@@ -279,7 +279,7 @@
                   <li class="has-submenu">
                      <a href="#">Inconsistencias</a>
                      <ul class="submenu">
-                        <li><a href="../Inconsistencias/VisualizacionInconsistencias.aspx">Historial de inconsistencias</a></li>
+                        <li><a href="../Inconsistencias/InconsistenciasSupervisor.aspx">Historial de Inconsistencias</a></li>
                          <li><a href="../Inconsistencias/AgregarTipoIncosistenciasSupervisor.aspx">Agregar Incosistencias</a></li>
                      </ul>
                   </li>
@@ -289,10 +289,10 @@
                         <li><a href="../Permisos/VisualizacionPermisos.aspx">Historial de Permisos</a></li>
                      </ul>
                   </li>
-                  <li class="has-submenu">
-                     <a href="#">Reposiciones</a>
+                    <li class="has-submenu">
+                     <a href="#">Permisos</a>
                      <ul class="submenu">
-                        <li><a href="../Reposicion/.aspx">Historial de Reposiciones</a></li>
+                        <li><a href="../Permisos/VisualizacionPermisos.aspx">Historial de Permisos</a></li>
                      </ul>
                   </li>
                </ul>

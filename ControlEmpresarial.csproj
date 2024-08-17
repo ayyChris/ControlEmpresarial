@@ -243,6 +243,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controlador\AceptacionJustificacionInconsistencia.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\agregarColaboradorSupervisor.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -282,10 +285,16 @@
     <Compile Include="Controlador\EnviarMensajeColaboradores.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\InconsistenciasSupervisor.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\JustificacionIncosistencia.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\Permisos_AceptacionNegacionPermisoJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\PreAceptacionJustificacionInconsistenciaJefe.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Controlador\PreVisualIncosistenciassColaborador.cs">
@@ -391,6 +400,24 @@
     </Compile>
     <Compile Include="Vistas\Incapacidades\TiposIncapacidades.aspx.designer.cs">
       <DependentUpon>TiposIncapacidades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\AceptacionJustificacionInconsistenciaJefe.aspx.cs">
+      <DependentUpon>AceptacionJustificacionInconsistenciaJefe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\AceptacionJustificacionInconsistenciaJefe.aspx.designer.cs">
+      <DependentUpon>AceptacionJustificacionInconsistenciaJefe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\InconsistenciasSupervisor.aspx.cs">
+      <DependentUpon>InconsistenciasSupervisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\InconsistenciasSupervisor.aspx.designer.cs">
+      <DependentUpon>InconsistenciasSupervisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\PreAceptarDenegarInconsistenciasJefe.aspx.cs">
+      <DependentUpon>PreAceptarDenegarInconsistenciasJefe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Inconsistencias\PreAceptarDenegarInconsistenciasJefe.aspx.designer.cs">
+      <DependentUpon>PreAceptarDenegarInconsistenciasJefe.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx.cs">
       <DependentUpon>AgregarTipoIncosistenciasSupervisor.aspx</DependentUpon>
@@ -522,6 +549,9 @@
     <Content Include="Vistas\Incapacidades\SolicitarIncapacidad.aspx" />
     <Content Include="Vistas\Incapacidades\TablaPreviaIncapacidades.aspx" />
     <Content Include="Vistas\Incapacidades\TiposIncapacidades.aspx" />
+    <Content Include="Vistas\Inconsistencias\AceptacionJustificacionInconsistenciaJefe.aspx" />
+    <Content Include="Vistas\Inconsistencias\InconsistenciasSupervisor.aspx" />
+    <Content Include="Vistas\Inconsistencias\PreAceptarDenegarInconsistenciasJefe.aspx" />
     <Content Include="Vistas\Inconsistencias\AgregarTipoIncosistenciasSupervisor.aspx" />
     <Content Include="Vistas\Inconsistencias\EvidenciaIncosistenciaColaborador.aspx" />
     <Content Include="Vistas\Inconsistencias\PreVisualIncosistenciasColaborador.aspx" />
