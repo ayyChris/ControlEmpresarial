@@ -289,12 +289,6 @@
                         <li><a href="../Permisos/VisualizacionPermisos.aspx">Historial de Permisos</a></li>
                      </ul>
                   </li>
-                    <li class="has-submenu">
-                     <a href="#">Permisos</a>
-                     <ul class="submenu">
-                        <li><a href="../Permisos/VisualizacionPermisos.aspx">Historial de Permisos</a></li>
-                     </ul>
-                  </li>
                </ul>
             </nav>
             <div class="cabecera-derecha">

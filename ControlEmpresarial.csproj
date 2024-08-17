@@ -465,6 +465,27 @@
     <Compile Include="Vistas\Rebajos\PreVisualizacionRebajosSupervisor.aspx.designer.cs">
       <DependentUpon>PreVisualizacionRebajosSupervisor.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx.cs">
+      <DependentUpon>VisualizacionRebajosColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx.designer.cs">
+      <DependentUpon>VisualizacionRebajosColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx.cs">
+      <DependentUpon>reposicionesPendientesJefatura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx.designer.cs">
+      <DependentUpon>reposicionesPendientesJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\visualizarReposicionesColaborador.aspx.cs">
+      <DependentUpon>visualizarReposicionesColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\visualizarReposicionesColaborador.aspx.designer.cs">
+      <DependentUpon>visualizarReposicionesColaborador.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -568,6 +589,9 @@
     <Content Include="Vistas\Colaborador\VisualizarHorasColaborador.aspx" />
     <Content Include="Vistas\Rebajos\HistorialRebajos.aspx" />
     <Content Include="Vistas\Rebajos\PreVisualizacionRebajosSupervisor.aspx" />
+    <Content Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx" />
+    <Content Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx" />
+    <Content Include="Vistas\Reposicion\visualizarReposicionesColaborador.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx" />
     <Content Include="Vistas\Horas Extra\HistoricoHorasExtrasSupervisor.aspx" />
@@ -883,9 +907,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Vistas\Reposicion\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
