@@ -475,12 +475,33 @@
     <Compile Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx.designer.cs">
       <DependentUpon>VisualizacionRebajosColaborador.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Reposicion\AceptacionNegacionReposicionJefatura.aspx.cs">
+      <DependentUpon>AceptacionNegacionReposicionJefatura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\AceptacionNegacionReposicionJefatura.aspx.designer.cs">
+      <DependentUpon>AceptacionNegacionReposicionJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\EnviarEvidenciaReposicionColaborador.aspx.cs">
+      <DependentUpon>EnviarEvidenciaReposicionColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\EnviarEvidenciaReposicionColaborador.aspx.designer.cs">
+      <DependentUpon>EnviarEvidenciaReposicionColaborador.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx.cs">
       <DependentUpon>reposicionesPendientesJefatura.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx.designer.cs">
       <DependentUpon>reposicionesPendientesJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\RevisarSolicitudesReposicionJefe.aspx.cs">
+      <DependentUpon>RevisarSolicitudesReposicionJefe.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\RevisarSolicitudesReposicionJefe.aspx.designer.cs">
+      <DependentUpon>RevisarSolicitudesReposicionJefe.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Reposicion\visualizarReposicionesColaborador.aspx.cs">
       <DependentUpon>visualizarReposicionesColaborador.aspx</DependentUpon>
@@ -593,7 +614,10 @@
     <Content Include="Vistas\Rebajos\HistorialRebajos.aspx" />
     <Content Include="Vistas\Rebajos\PreVisualizacionRebajosSupervisor.aspx" />
     <Content Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx" />
+    <Content Include="Vistas\Reposicion\AceptacionNegacionReposicionJefatura.aspx" />
+    <Content Include="Vistas\Reposicion\EnviarEvidenciaReposicionColaborador.aspx" />
     <Content Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx" />
+    <Content Include="Vistas\Reposicion\RevisarSolicitudesReposicionJefe.aspx" />
     <Content Include="Vistas\Reposicion\visualizarReposicionesColaborador.aspx" />
     <Content Include="Vistas\Vacaciones\calendarioVacaciones.aspx" />
     <Content Include="Vistas\Control de Actividades\HistoricoActividadesSupervisor.aspx" />

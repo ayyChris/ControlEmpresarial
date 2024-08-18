@@ -2,6 +2,7 @@
 using System.Data;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
 
 namespace ControlEmpresarial.Vistas.Reposicion
@@ -12,10 +13,7 @@ namespace ControlEmpresarial.Vistas.Reposicion
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                CargarReposiciones();
-            }
+            CargarReposiciones();
         }
 
         private void CargarReposiciones()
@@ -32,7 +30,8 @@ namespace ControlEmpresarial.Vistas.Reposicion
                                FechaInicialReposicion, FechaFinalReposicion, 
                                HoraInicialReposicion, HoraFinalReposicion
                         FROM solicitudreposicion
-                        WHERE idEmpleado = @idEmpleado";
+                        WHERE idEmpleado = @idEmpleado
+                        AND Estado = 'Pendiente'";
 
                     using (MySqlCommand cmd = new MySqlCommand(consulta, conexion))
                     {
@@ -61,6 +60,21 @@ namespace ControlEmpresarial.Vistas.Reposicion
             {
                 // Manejo si la cookie no está disponible o el ID no es válido
                 ScriptManager.RegisterStartupScript(this, GetType(), "alert", "Swal.fire('Error', 'No se pudo obtener el ID del empleado.', 'error');", true);
+            }
+        }
+        protected void gvReposiciones_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Evidenciar")
+            {
+                // Obtener el índice de la fila
+                int index = Convert.ToInt32(e.CommandArgument);
+
+                // Obtener el ID de la reposición de la fila seleccionada
+                GridViewRow row = gvReposiciones.Rows[index];
+                string idReposicion = row.Cells[0].Text;
+
+                // Redirigir a la página de evidencia con el ID de la reposición en la URL
+                Response.Redirect($"EnviarEvidenciaReposicionColaborador.aspx?idReposicion={idReposicion}");
             }
         }
     }

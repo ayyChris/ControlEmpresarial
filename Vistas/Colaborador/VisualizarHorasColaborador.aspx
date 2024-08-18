@@ -8,16 +8,16 @@
                   <p>Visualice el rendimiento del colaborador de esta semana.</p>
                   <br />
                    <asp:DropDownList ID="colaborador" runat="server" AutoPostBack="True" OnSelectedIndexChanged="colaborador_SelectedIndexChanged"></asp:DropDownList>
-                   <label class="fuente-morada">Horas meta</label>
-                    <asp:Label CssClass="fuente-delgada" ID="lblHorasMeta" runat="server" Text="Label"></asp:Label> 
+                   <label class="fuente-morada">Horas por semana a hacer</label>
+                    <asp:Label CssClass="fuente-delgada" ID="lblHorasMeta" runat="server" Text="">40</asp:Label> 
                    <br />
                     <br />
                     <label class="fuente-morada">Horas trabajadas</label>
-                    <asp:Label CssClass="fuente-delgada" ID="lblHoras" runat="server" Text="Label"></asp:Label>
+                    <asp:Label CssClass="fuente-delgada" ID="lblHoras" runat="server" Text=""></asp:Label>
                     <br />
                    <br />
                     <label class="fuente-morada">Inconsistencias</label>
-                    <asp:Label CssClass="fuente-delgada" ID="lblInconsistencias" runat="server" Text="Label"></asp:Label>
+                    <asp:Label CssClass="fuente-delgada" ID="lblInconsistencias" runat="server" Text=""></asp:Label>
             </div>
             </section>
             <section class="seccion-imagen">

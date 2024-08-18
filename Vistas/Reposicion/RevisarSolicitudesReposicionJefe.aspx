@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="visualizarReposicionesColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.Reposicion.visualizarReposicionesColaborador" MasterPageFile="~/Vistas/Site1.master" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RevisarSolicitudesReposicionJefe.aspx.cs" Inherits="ControlEmpresarial.Vistas.Reposicion.RevisarSolicitudesReposicionJefe" MasterPageFile="~/Vistas/Site2.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
@@ -52,22 +52,19 @@
     <main>
         <section class="seccion-formulario">
             <div class="tarjeta-formulario" style="max-width: 1300px; margin: 0 auto;">
-                <h2><span class="fuente-delgada">Historial de</span><br/><span class="fuente-gruesa">Reposiciones</span></h2>
-                <p>Todos los registros de reposiciones</p>
+                <h2><span class="fuente-delgada">Revision de</span><br/><span class="fuente-gruesa">Reposiciones</span></h2>
+                <p>Todos los registros de reposiciones para revisar</p>
                 <br />
                 <br />
                 <asp:GridView ID="gvReposiciones" runat="server" AutoGenerateColumns="False" CssClass="grid-view" OnRowCommand="gvReposiciones_RowCommand">
                     <Columns>
-                        <asp:BoundField DataField="idReposicion" HeaderText="ID Reposición" />
-                        <asp:BoundField DataField="idEmpleado" HeaderText="ID Empleado" />
-                        <asp:BoundField DataField="Fecha" HeaderText="Fecha" />
+                        <asp:BoundField DataField="idEvidencia" HeaderText="Evidencia" />
+                        <asp:BoundField DataField="idReposicion" HeaderText="Reposición" />
+                        <asp:BoundField DataField="idInconsistencia" HeaderText="Inconsistencia" />
+                        <asp:BoundField DataField="EnlaceEvidencia" HeaderText="Evidencia" />
+                        <asp:BoundField DataField="FechaEvidencia" HeaderText="Fecha de Evidencia" />
                         <asp:BoundField DataField="Estado" HeaderText="Estado" />
-                        <asp:BoundField DataField="idInconsistencia" HeaderText="ID Inconsistencia" />
-                        <asp:BoundField DataField="FechaInicialReposicion" HeaderText="Fecha Inicio Reposición" />
-                        <asp:BoundField DataField="FechaFinalReposicion" HeaderText="Fecha Final Reposición" />
-                        <asp:BoundField DataField="HoraInicialReposicion" HeaderText="Hora Inicio Reposición" />
-                        <asp:BoundField DataField="HoraFinalReposicion" HeaderText="Hora Final Reposición" />
-                        <asp:ButtonField ControlStyle-CssClass="button" ButtonType="Button" CommandName="Evidenciar" Text="Evidenciar Reposicion" />
+                        <asp:ButtonField ControlStyle-CssClass="button" ButtonType="Button" CommandName="Revisar" Text="Revisar Reposicion" />
                     </Columns>
                 </asp:GridView>
             </div>

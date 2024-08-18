@@ -289,7 +289,8 @@
                     <li class="has-submenu">
                         <a href="#">Reposiciones</a>
                         <ul class="submenu">
-                            <li><a href="../Reposicion/reposicionesPendientesJefatura.aspx">Reposiciones Pendientes</a></li>
+                            <li><a href="../Reposicion/reposicionesPendientesJefatura.aspx">Asignar Reposiciones</a></li>
+                            <li><a href="../Reposicion/RevisarSolicitudesReposicionJefe.aspx">Revisar Reposiciones</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
