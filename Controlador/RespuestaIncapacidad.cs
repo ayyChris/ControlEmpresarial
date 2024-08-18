@@ -2,6 +2,8 @@
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Web.UI;
+using System.Net.Mail;
+using System.Net;
 
 namespace ControlEmpresarial.Vistas.Incapacidades
 {
@@ -132,6 +134,9 @@ namespace ControlEmpresarial.Vistas.Incapacidades
 
                         // Calcular y agregar el impacto monetario
                         CalcularImpactoMonetario(idIncapacidad, nuevoEstado);
+
+                        // Enviar correos a los jefes de departamento
+                        EnviarCorreosJefatura(idIncapacidad, nuevoEstado);
                     }
                     catch (Exception ex)
                     {
@@ -167,14 +172,11 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                                     DateTime fechaFinal = Convert.ToDateTime(lector["FechaFinal"]);
                                     int totalDias = (fechaFinal - fechaInicial).Days + 1;
 
-                                    // Cerrar el DataReader antes de realizar la siguiente consulta
                                     lector.Close();
 
-                                    // Determinar días con reducción a partir del cuarto día
                                     int diasConReduccion = totalDias > 4 ? totalDias - 4 : 0;
                                     decimal porcentajeReduccion = diasConReduccion > 0 ? 40.00m : 0.00m;
 
-                                    // Insertar el impacto monetario en la base de datos
                                     string insertQuery = @"
                                 INSERT INTO ImpactoMonetarioIncapacidad (idIncapacidad, DiasReduccidos, MontoReducido)
                                 VALUES (@idIncapacidad, @diasReduccidos, @porcentajeReduccion)";
@@ -186,7 +188,6 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                                         insertCmd.ExecuteNonQuery();
                                     }
 
-                                    // Actualizar la columna DiasReduccion en la tabla Incapacidades
                                     string updateQuery = "UPDATE Incapacidades SET DiasReduccion = @diasReduccidos WHERE idIncapacidad = @idIncapacidad";
                                     using (MySqlCommand updateCmd = new MySqlCommand(updateQuery, conexion, transaction))
                                     {
@@ -195,10 +196,7 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                                         updateCmd.ExecuteNonQuery();
                                     }
 
-                                    // Commit de la transacción
                                     transaction.Commit();
-
-                                    // Mostrar mensaje de éxito con Swal
                                     ClientScript.RegisterStartupScript(this.GetType(), "alert",
                                         $"Swal.fire({{ title: 'Éxito', text: 'El impacto monetario se ha registrado exitosamente.', icon: 'success', timer: 4500, showConfirmButton: false }});", true);
                                 }
@@ -208,13 +206,126 @@ namespace ControlEmpresarial.Vistas.Incapacidades
                 }
                 catch (Exception ex)
                 {
-                    // Rollback en caso de error
                     ClientScript.RegisterStartupScript(this.GetType(), "alert",
                         $"Swal.fire({{ title: 'Error', text: '{ex.Message}', icon: 'error', timer: 4500, showConfirmButton: false }});", true);
                 }
             }
         }
 
+
+        private void EnviarCorreosJefatura(string idIncapacidad, string estadoIncapacidad)
+        {
+            string subject = $"Notificación de Incapacidad {estadoIncapacidad}";
+            string body = ObtenerCuerpoCorreo(idIncapacidad, estadoIncapacidad);
+
+            try
+            {
+                using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+                {
+                    conexion.Open();
+                    string query = @"
+                SELECT e.Correo
+                FROM Empleado e
+                JOIN PuestoTrabajo p ON e.idPuesto = p.idPuesto
+                JOIN Departamento d ON e.idDepartamento = d.idDepartamento
+                JOIN Incapacidades i ON d.idDepartamento = i.idDepartamento
+                WHERE p.idPuesto = 1 AND i.idIncapacidad = @idIncapacidad";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idIncapacidad", idIncapacidad);
+
+                        using (MySqlDataReader lector = cmd.ExecuteReader())
+                        {
+                            while (lector.Read())
+                            {
+                                string email = lector["Correo"].ToString();
+                                EnviarCorreo(email, subject, body);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: '{ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+            }
+        }
+
+
+        private string ObtenerCuerpoCorreo(string idIncapacidad, string estadoIncapacidad)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                conexion.Open();
+                string query = @"
+            SELECT 
+                e.Nombre, e.Apellidos, i.FechaInicial, i.FechaFinal, i.Evidencia, i.Estado
+            FROM 
+                Incapacidades i
+            JOIN 
+                Empleado e ON i.idEmpleado = e.idEmpleado
+            WHERE 
+                i.idIncapacidad = @idIncapacidad";
+                using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                {
+                    cmd.Parameters.AddWithValue("@idIncapacidad", idIncapacidad);
+                    using (MySqlDataReader lector = cmd.ExecuteReader())
+                    {
+                        if (lector.Read())
+                        {
+                            string nombreEmpleado = $"{lector["Nombre"]} {lector["Apellidos"]}";
+                            string fechaInicial = Convert.ToDateTime(lector["FechaInicial"]).ToString("dd/MM/yyyy");
+                            string fechaFinal = Convert.ToDateTime(lector["FechaFinal"]).ToString("dd/MM/yyyy");
+                            string evidencia = lector["Evidencia"].ToString();
+
+                            return $"El estado de la incapacidad del empleado {nombreEmpleado} ha sido {estadoIncapacidad}.\n\n" +
+                                   $"Fecha Inicial: {fechaInicial}\n" +
+                                   $"Fecha Final: {fechaFinal}\n" +
+                                   $"Evidencia: {evidencia}";
+                        }
+                        else
+                        {
+                            return $"No se encontraron detalles para la incapacidad con ID {idIncapacidad}.";
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        private void EnviarCorreo(string correo, string subject, string body)
+        {
+            string fromEmail = "apsw.activity.sync@gmail.com";
+            string fromPassword = "hpehyzvcvdfcatgn";
+
+            try
+            {
+                MailMessage mail = new MailMessage();
+                SmtpClient smtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress(fromEmail);
+                mail.To.Add(correo);
+                mail.Subject = subject;
+                mail.Body = body;
+
+                smtpServer.Port = 587;
+                smtpServer.Credentials = new NetworkCredential(fromEmail, fromPassword);
+                smtpServer.EnableSsl = true;
+
+                smtpServer.Send(mail);
+                Console.WriteLine($"Correo enviado correctamente a {correo}.");
+            }
+            catch (SmtpException smtpEx)
+            {
+                Console.WriteLine($"Error SMTP al enviar correo a {correo}: {smtpEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al enviar correo a {correo}: {ex.Message}");
+            }
+        }
 
 
 

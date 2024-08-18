@@ -292,7 +292,7 @@
             <div class="cabecera-izquierda">
                 <img src="../../Imagenes/logo-peq.png" alt="logo pequeño" class="imagen-pequena" />
                 <div class="texto-derecha">
-                    <a href="../PaginaPrincipal/MenuSupervisor.aspx">
+                    <a href="../PaginaPrincipal/MenuColaborador.aspx">
                         <h1>Colaborador</h1>
                     </a>
                     <p>
@@ -353,6 +353,7 @@
                         <a href="#">Incapacidad</a>
                         <ul class="submenu">
                             <li><a href="../Incapacidades/SolicitarIncapacidad.aspx">Registre su incapacidad</a></li>
+                            <li><a href="../Incapacidades/VisualizacionIncapacidad.aspx">Vea las incapacidades solicitadas.</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
