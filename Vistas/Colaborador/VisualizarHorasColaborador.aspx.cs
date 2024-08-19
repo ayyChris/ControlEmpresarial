@@ -9,9 +9,5 @@ namespace ControlEmpresarial.Vistas.Reposicion
 {
     public partial class VisualizarHorasColaborador : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

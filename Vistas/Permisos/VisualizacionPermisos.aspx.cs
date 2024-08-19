@@ -1,5 +1,8 @@
-﻿using System;
+﻿using ControlEmpresarial.Services;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,9 +12,49 @@ namespace ControlEmpresarial.Vistas
 {
     public partial class VisualizacionPermisos : System.Web.UI.Page
     {
+        private string cadenaConexion = "Server=138.59.135.33;Port=3306;Database=tiusr38pl_gestion;Uid=gestion;Pwd=Ihnu00&34;";
+        private NotificacionService notificacionService = new NotificacionService();
         protected void Page_Load(object sender, EventArgs e)
         {
+            CargarPermisos();
+        }
 
+        private void CargarPermisos()
+        {
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = "SELECT idPermiso, idEmpleado, FechaPublicada, FechaDeseadaInicial, FechaDeseadaFinal, Tipo, Estado, Motivo FROM solicitudpermiso";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        using (MySqlDataAdapter sda = new MySqlDataAdapter(cmd))
+                        {
+                            DataTable dt = new DataTable();
+                            sda.Fill(dt);
+
+                            if (dt.Rows.Count > 0)
+                            {
+                                gvPermisos.DataSource = dt;
+                                gvPermisos.DataBind();
+                            }
+                            else
+                            {
+                                dt.Rows.Add(dt.NewRow());
+                                gvPermisos.DataSource = dt;
+                                gvPermisos.DataBind();
+                                gvPermisos.Rows[0].Cells.Clear();
+                                gvPermisos.Rows[0].Cells.Add(new TableCell { ColumnSpan = dt.Columns.Count, Text = "No se encontraron registros." });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Manejo de errores
+                }
+            }
         }
     }
 }

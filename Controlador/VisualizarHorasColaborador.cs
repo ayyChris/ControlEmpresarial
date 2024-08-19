@@ -57,20 +57,87 @@ namespace ControlEmpresarial.Vistas
 
             if (idEmpleado != 0)
             {
-                // Calcular las horas trabajadas en la última semana
                 double horasTrabajadas = CalcularHorasTrabajadas(idEmpleado);
                 lblHoras.Text = horasTrabajadas.ToString("F2");
 
-                // Aquí puedes agregar el cálculo de las inconsistencias
                 int inconsistencias = CalcularInconsistencias(idEmpleado);
                 lblInconsistencias.Text = inconsistencias.ToString();
+
+                // Rellenar los días de la semana
+                RellenarDiasDeSemana(idEmpleado);
             }
             else
             {
                 lblHoras.Text = "0";
                 lblInconsistencias.Text = "0";
+                LimpiarDiasDeSemana();
             }
         }
+
+        private void RellenarDiasDeSemana(int idEmpleado)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = @"SELECT DiaMarcado 
+                         FROM entradas 
+                         WHERE idEmpleado = @idEmpleado 
+                         AND WEEK(DiaMarcado) = WEEK(CURRENT_DATE)";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                conn.Open();
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    // Inicializar etiquetas
+                    LimpiarDiasDeSemana();
+
+                    while (reader.Read())
+                    {
+                        DayOfWeek dia = reader.GetDateTime("DiaMarcado").DayOfWeek;
+
+                        switch (dia)
+                        {
+                            case DayOfWeek.Monday:
+                                lblLunes.Text = "Trabajado";
+                                break;
+                            case DayOfWeek.Tuesday:
+                                lblMartes.Text = "Trabajado";
+                                break;
+                            case DayOfWeek.Wednesday:
+                                lblMiercoles.Text = "Trabajado";
+                                break;
+                            case DayOfWeek.Thursday:
+                                lblJueves.Text = "Trabajado";
+                                break;
+                            case DayOfWeek.Friday:
+                                lblViernes.Text = "Trabajado";
+                                break;
+                            case DayOfWeek.Saturday:
+                                lblSabado.Text = "Trabajado";
+                                break;
+                            case DayOfWeek.Sunday:
+                                lblDomingo.Text = "Trabajado";
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void LimpiarDiasDeSemana()
+        {
+            lblLunes.Text = "-";
+            lblMartes.Text = "-";
+            lblMiercoles.Text = "-";
+            lblJueves.Text = "-";
+            lblViernes.Text = "-";
+            lblSabado.Text = "-";
+            lblDomingo.Text = "-";
+        }
+
 
         private double CalcularHorasTrabajadas(int idEmpleado)
         {
@@ -119,8 +186,23 @@ namespace ControlEmpresarial.Vistas
         private int CalcularInconsistencias(int idEmpleado)
         {
             int inconsistencias = 0;
-            // Aquí puedes agregar la lógica para calcular las inconsistencias según tus necesidades
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                string query = @"SELECT COUNT(*) 
+                         FROM inconsistencias 
+                         WHERE idEmpleado = @idEmpleado";
+
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                conn.Open();
+
+                inconsistencias = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+
             return inconsistencias;
         }
+
     }
 }
