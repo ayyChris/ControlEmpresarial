@@ -28,7 +28,9 @@ namespace ControlEmpresarial.Vistas
                 try
                 {
                     conexion.Open();
-                    string query = "SELECT idSolicitudVacaciones, idEmpleado, FechaPublicada, FechaVacacion, DiasDisfrutados FROM SolicitudVacaciones";
+                    string query = "SELECT idSolicitudVacaciones, idEmpleado, FechaPublicada, FechaVacacion, DiasDisfrutados,Estado " +
+                                   "FROM SolicitudVacaciones WHERE Estado = 'Pendiente'";
+
                     using (MySqlCommand cmd = new MySqlCommand(query, conexion))
                     {
                         using (MySqlDataAdapter sda = new MySqlDataAdapter(cmd))
@@ -55,6 +57,7 @@ namespace ControlEmpresarial.Vistas
                 catch (Exception ex)
                 {
                     // Manejo de errores
+                    System.Diagnostics.Debug.WriteLine("Error al cargar las solicitudes: " + ex.Message);
                 }
             }
         }

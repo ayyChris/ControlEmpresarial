@@ -268,12 +268,6 @@
                         </ul>
                     </li>
                     <li class="has-submenu">
-                        <a href="#">Incapacidades</a>
-                        <ul class="submenu">
-                            <li><a href="../Incapacidades/SolicitarIncapacidadesJefatura.aspx">Registrar incapacidades</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-submenu">
                         <a href="#">Inconsistencias</a>
                         <ul class="submenu">
                             <li><a href="../Inconsistencias/PreAceptarDenegarInconsistenciasJefe.aspx">Revisar Inconsistencias.</a></li>
@@ -303,7 +297,7 @@
                     <li class="has-submenu">
                         <a href="#">Vacaciones</a>
                         <ul class="submenu">
-                            <li><a href="../Vacaciones/solicitudVacacionesJefatura.aspx">Aceptar Vacaciones de Colaboradores</a></li>
+                            <li><a href="../Vacaciones/TablaPreVisualizacionVacaciones.aspx">Aceptar Vacaciones de Colaboradores</a></li>
                             <li><a href="../Vacaciones/calendarioVacacionesJefatura.aspx">Calendario de Vacaciones</a></li>
                         </ul>
                     </li>

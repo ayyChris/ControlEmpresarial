@@ -65,6 +65,11 @@ namespace ControlEmpresarial.Vistas.Vacaciones
 
         protected void btnDenegar_Click(object sender, EventArgs e)
         {
+            string idEmpleado = lblEmpleado.Text; // Asumiendo que lblEmpleado contiene el idEmpleado
+            if (!string.IsNullOrEmpty(idEmpleado))
+            {
+                AgregarDiaRechazado(idEmpleado);
+            }
             ActualizarEstadoSolicitud("Denegada");
         }
 
@@ -116,7 +121,39 @@ namespace ControlEmpresarial.Vistas.Vacaciones
                         cmd.ExecuteNonQuery();
                     }
 
-                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Éxito', text: 'La solicitud ha sido {nuevoEstado.ToLower()}da.', icon: 'success', timer: 1500, showConfirmButton: false }});", true);
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", @"
+                Swal.fire({
+                    title: 'Éxito',
+                    text: 'La solicitud ha sido " + nuevoEstado.ToLower() + @".',
+                    icon: 'success',
+                    showConfirmButton: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'TablaPreVisualizacionVacaciones.aspx'; // Cambia a la página de destino deseada
+                    }
+                });
+            ", true);
+                }
+                catch (Exception ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: '{ex.Message}', icon: 'error', timer: 1500, showConfirmButton: false }});", true);
+                }
+            }
+        }
+
+        private void AgregarDiaRechazado(string idEmpleado)
+        {
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = "UPDATE Empleado SET DiasDeVacaciones = DiasDeVacaciones + 1 WHERE idEmpleado = @idEmpleado";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
                 catch (Exception ex)
                 {

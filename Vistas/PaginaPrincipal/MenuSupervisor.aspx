@@ -22,7 +22,7 @@
                 <h3 class="h3-footer">Colaboradores</h3>
                 <p>Vea los colaboradores de los departamentos.</p>
                 </div>
-                <div class="option-menu">
+                <div class="option-menu full-width">
               <a href="../Incapacidades/TablaPreviaIncapacidades.aspx"><img src="../../Imagenes/icono-escritura.png" alt="incapacidades" /></a>
               <h3 class="h3-footer">Incapacidades</h3>
               <p>Revise las incapacidades de los empleados.</p>

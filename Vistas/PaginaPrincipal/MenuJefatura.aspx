@@ -33,7 +33,7 @@
                     <p>Puede asignar horas extras para un cierto colaborador.</p>
                 </div>
                 <div class="option-menu">
-                    <a href="../Vacaciones/solicitudVacacionesJefatura.aspx"><img src="../../Imagenes/icono-vacaciones.png" alt="Vacaciones" /></a>
+                    <a href="../Vacaciones/TablaPreVisualizacionVacaciones.aspx"><img src="../../Imagenes/icono-vacaciones.png" alt="Vacaciones" /></a>
                     <h3 class="h3-footer">Vacaciones</h3>
                     <p>Puede validar las vacaciones solicitadas por un colaborador.</p>
                 </div>

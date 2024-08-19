@@ -13,7 +13,6 @@ namespace ControlEmpresarial.Controlador
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("HOLAAAAAAAA");
             if (!IsPostBack)
             {
                 // Obtener la cookie
@@ -36,7 +35,7 @@ namespace ControlEmpresarial.Controlador
                 }
                 else
                 {
-                    vacacionesCountLabel.Text = "Error: Cookie no encontrada.";
+                    vacacionesCountLabel.Text = "0";
                 }
             }
         }
@@ -74,7 +73,6 @@ namespace ControlEmpresarial.Controlador
                     {
                         int diasDeVacaciones = Convert.ToInt32(result);
                         vacacionesCountLabel.Text = diasDeVacaciones.ToString();
-                        System.Diagnostics.Debug.WriteLine("DiasDeVacaciones recuperado: " + diasDeVacaciones);
                     }
                     else
                     {
@@ -107,69 +105,58 @@ namespace ControlEmpresarial.Controlador
             // Verificar si las fechas son válidas
             if (!fechaInicioValida || !fechaFinalValida)
             {
-                // Manejar error de formato de fecha
                 System.Diagnostics.Debug.WriteLine("Error: Formato de fecha no válido.");
                 return;
             }
 
-            // Verificar que la fecha final sea después de la fecha de inicio
             if (fechaFinalTexto < fechaInicioTexto)
             {
-                // Manejar error de fechas
                 System.Diagnostics.Debug.WriteLine("Error: La fecha final debe ser posterior a la fecha de inicio.");
                 return;
             }
 
-            // Calcular el número de días solicitados
+            if (HayFechasNoDisponibles(fechaInicioTexto, fechaFinalTexto))
+            {
+                System.Diagnostics.Debug.WriteLine("Error: Algunas de las fechas solicitadas no están disponibles.");
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Algunas de las fechas solicitadas no están disponibles.');", true);
+                return;
+            }
             int diasSolicitados = (fechaFinalTexto - fechaInicioTexto).Days + 1; // +1 para incluir el último día
             System.Diagnostics.Debug.WriteLine("Días solicitados: " + diasSolicitados);
 
             int diasDisponibles;
             if (!int.TryParse(vacacionesCountLabel.Text, out diasDisponibles))
             {
-                // Manejar error de conversión
-                System.Diagnostics.Debug.WriteLine("Error: Días disponibles no válidos.");
-                // Mostrar mensaje al usuario o tomar otra acción
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('Días disponibles no válidos para la cantidad de dias solicitados.');", true);
                 return;
             }
 
             // Verificar si hay suficientes días disponibles
             if (diasSolicitados > diasDisponibles)
             {
-                // Manejar error de falta de días
-                System.Diagnostics.Debug.WriteLine("Error: No hay suficientes días disponibles.");
-                // Mostrar mensaje al usuario o tomar otra acción
+                ScriptManager.RegisterStartupScript(this, GetType(), "showalert", $"alert('No hay suficientes días disponibles.');", true);
                 return;
             }
 
-            // Obtener el idEmpleado de la cookie
             HttpCookie cookie = Request.Cookies["UserInfo"];
             if (cookie == null)
             {
-                // Manejar error de cookie no encontrada
                 System.Diagnostics.Debug.WriteLine("Error: Cookie no encontrada.");
-                // Mostrar mensaje al usuario o tomar otra acción
                 return;
             }
 
             string idEmpleadoValue = ConseguirCookie(cookie.Value, "idEmpleado");
             if (idEmpleadoValue == null || !int.TryParse(idEmpleadoValue, out int idEmpleado))
             {
-                // Manejar error de idEmpleado
                 System.Diagnostics.Debug.WriteLine("Error: ID de empleado no válido.");
-                // Mostrar mensaje al usuario o tomar otra acción
                 return;
             }
 
-            // Insertar solicitudes de vacaciones
             bool insercionExitosa = InsertarSolicitudes(fechaInicioTexto, fechaFinalTexto, idEmpleado);
 
             if (insercionExitosa == true)
             {
-                // Llamar a ActualizarDiasDeVacaciones solo si la inserción fue exitosa
                 ActualizarDiasDeVacaciones(idEmpleado, diasSolicitados);
-
-                // Actualizar el contador de días disponibles en el Label
                 vacacionesCountLabel.Text = (diasDisponibles - diasSolicitados).ToString();
             }
             else
@@ -185,7 +172,7 @@ namespace ControlEmpresarial.Controlador
             bool insercionExitosa = false;
             DateTime fechaActual = DateTime.Now;
             string fechaPublicada = fechaActual.ToString("yyyy-MM-dd");
-            string Estado = "Pediente";
+            string Estado = "Pendiente";
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -196,7 +183,6 @@ namespace ControlEmpresarial.Controlador
                 {
                     connection.Open();
 
-                    // Insertar una fila por cada día solicitado
                     for (DateTime fecha = fechaInicio; fecha <= fechaFinal; fecha = fecha.AddDays(1))
                     {
                         command.Parameters.Clear();
@@ -213,7 +199,6 @@ namespace ControlEmpresarial.Controlador
                 }
                 catch (Exception ex)
                 {
-                    // Manejo de errores
                     System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
                 }
             }
@@ -247,13 +232,43 @@ namespace ControlEmpresarial.Controlador
                 }
                 catch (Exception ex)
                 {
-                    // Manejo de errores
                     System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
                 }
             }
         }
 
+        private bool HayFechasNoDisponibles(DateTime fechaInicio, DateTime fechaFinal)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["MySQLConnectionString"].ConnectionString;
+            bool hayFechasNoDisponibles = false;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = "SELECT COUNT(*) FROM DiasNoDisponibles WHERE Fecha BETWEEN @FechaInicio AND @FechaFinal";
+                MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@FechaInicio", fechaInicio);
+                command.Parameters.AddWithValue("@FechaFinal", fechaFinal);
+
+                try
+                {
+                    connection.Open();
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    if (count > 0)
+                    {
+                        hayFechasNoDisponibles = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
+                }
+            }
+
+            return hayFechasNoDisponibles;
+        }
+
+
 
     }
-    
+
 }

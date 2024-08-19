@@ -74,7 +74,6 @@ namespace ControlEmpresarial.Vistas.Vacaciones
 
                         int count = Convert.ToInt32(checkCommand.ExecuteScalar());
 
-                        // Si el conteo es mayor que 0, significa que la fecha ya está en VacacionesColectivas
                         if (count > 0)
                         {
                             ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('La fecha " + fechaActual.ToString("dd/MM/yyyy") + " ya está registrada como vacaciones colectivas. No se puede solicitar en este rango.')", true);
