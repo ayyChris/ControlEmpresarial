@@ -33,13 +33,13 @@ namespace ControlEmpresarial.Vistas
         protected global::System.Web.UI.WebControls.TextBox txtFinal;
 
         /// <summary>
-        /// txtTipo control.
+        /// ddlTipoPermiso control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTipo;
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoPermiso;
 
         /// <summary>
         /// txtMotivo control.

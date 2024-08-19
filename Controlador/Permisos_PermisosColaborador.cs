@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace ControlEmpresarial.Vistas
 {
@@ -20,14 +21,44 @@ namespace ControlEmpresarial.Vistas
             {
                 txtInicio.Attributes["min"] = DateTime.Now.ToString("yyyy-MM-dd");
                 txtFinal.Attributes["min"] = DateTime.Now.ToString("yyyy-MM-dd");
+                CargarTiposPermiso(); // Cargar los tipos de permiso en el dropdown
             }
         }
+
+        private void CargarTiposPermiso()
+        {
+            using (MySqlConnection conexion = new MySqlConnection(cadenaConexion))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = "SELECT idPermiso, Tipo FROM tipoPermiso";
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            ddlTipoPermiso.DataSource = reader;
+                            ddlTipoPermiso.DataTextField = "Tipo";
+                            ddlTipoPermiso.DataValueField = "idPermiso";
+                            ddlTipoPermiso.DataBind();
+                        }
+                    }
+                    ddlTipoPermiso.Items.Insert(0, new ListItem("-- Seleccione un tipo de permiso --", "0"));
+                }
+                catch (Exception ex)
+                {
+                    lblMensaje.Text = $"Error al cargar tipos de permiso: {ex.Message}";
+                    lblMensaje.Visible = true;
+                }
+            }
+        }
+
 
         protected void submit_Click(object sender, EventArgs e)
         {
             string fechaInicio = txtInicio.Text;
             string fechaFinal = txtFinal.Text;
-            string tipo = txtTipo.Text;
+            string tipo = ddlTipoPermiso.SelectedItem.Text; // Obtener el tipo de permiso desde el dropdown
             string motivo = txtMotivo.Text;
             DateTime fecha = DateTime.Today;
 
@@ -40,7 +71,6 @@ namespace ControlEmpresarial.Vistas
                 lblMensaje.Text = "Permiso enviado correctamente!";
                 lblMensaje.Visible = true;
 
-                // Insertar la notificación
                 InsertarNotificacion(Convert.ToInt32(idEmpleado), "Permiso Solicitado", motivo, fecha);
 
                 ClientScript.RegisterStartupScript(this.GetType(), "showLikeIcon", "<script>document.getElementById('likeIcon').style.display = 'inline-block';</script>");
@@ -51,6 +81,7 @@ namespace ControlEmpresarial.Vistas
                 lblMensaje.Visible = true;
             }
         }
+
 
         private void solicitarPermiso(int idEmpleado, DateTime fechaPublicada, string fechaInicioStr, string fechaFinalStr, string tipo, string motivo)
         {

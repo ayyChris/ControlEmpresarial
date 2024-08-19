@@ -316,6 +316,7 @@
                         <a href="#">Permisos</a>
                         <ul class="submenu">
                             <li><a href="../Permisos/PermisosColaborador.aspx">Solicitar Permiso</a></li>
+                            <li><a href="../Permisos/VisualizarPermisosColaborador.aspx">Ver Permisos</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">
@@ -327,7 +328,8 @@
                     <li class="has-submenu">
                         <a href="#">Reposiciones</a>
                         <ul class="submenu">
-                            <li><a href="../Reposicion/visualizarReposicionesColaborador.aspx">Revisar Reposiciones</a></li>
+                            <li><a href="../Reposicion/visualizarReposicionesColaborador.aspx">Reposiciones Pendientes por Aceptar</a></li>
+                            <li><a href="../Reposicion/historicoReposicionesColaborador.aspx">Historial de Reposiciones</a></li>
                         </ul>
                     </li>
                     <li class="has-submenu">

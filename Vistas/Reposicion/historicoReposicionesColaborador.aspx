@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="visualizarReposicionesColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.Reposicion.visualizarReposicionesColaborador" MasterPageFile="~/Vistas/Site1.master" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="historicoReposicionesColaborador.aspx.cs" Inherits="ControlEmpresarial.Vistas.Reposicion.historicoReposicionesColaborador" MasterPageFile="~/Vistas/Site1.master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <style>
         /* Estilos para el GridView */
@@ -52,11 +51,11 @@
     <main>
         <section class="seccion-formulario">
             <div class="tarjeta-formulario" style="max-width: 1300px; margin: 0 auto;">
-                <h2><span class="fuente-delgada">Aceptar</span><br/><span class="fuente-gruesa">Reposiciones</span></h2>
+                <h2><span class="fuente-delgada">Historial de</span><br/><span class="fuente-gruesa">Reposiciones</span></h2>
                 <p>Todos los registros de reposiciones</p>
                 <br />
                 <br />
-                <asp:GridView ID="gvReposiciones" runat="server" AutoGenerateColumns="False" CssClass="grid-view" OnRowCommand="gvReposiciones_RowCommand">
+                <asp:GridView ID="gvReposiciones" runat="server" AutoGenerateColumns="False" CssClass="grid-view">
                     <Columns>
                         <asp:BoundField DataField="idReposicion" HeaderText="ID Reposición" />
                         <asp:BoundField DataField="idEmpleado" HeaderText="ID Empleado" />
@@ -67,7 +66,6 @@
                         <asp:BoundField DataField="FechaFinalReposicion" HeaderText="Fecha Final Reposición" />
                         <asp:BoundField DataField="HoraInicialReposicion" HeaderText="Hora Inicio Reposición" />
                         <asp:BoundField DataField="HoraFinalReposicion" HeaderText="Hora Final Reposición" />
-                        <asp:ButtonField ControlStyle-CssClass="button" ButtonType="Button" CommandName="Evidenciar" Text="Evidenciar Reposicion" />
                     </Columns>
                 </asp:GridView>
             </div>

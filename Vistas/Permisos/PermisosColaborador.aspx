@@ -18,7 +18,7 @@
                      </div>
                   </div>
                   <label class="fuente-morada">Tipo</label>
-                  <asp:TextBox ID="txtTipo" runat="server" placeholder="Ej: Médico"></asp:TextBox>
+                  <asp:DropDownList ID="ddlTipoPermiso" runat="server"></asp:DropDownList>
                   <label class="fuente-morada">Motivo</label>
                   <asp:TextBox ID="txtMotivo" runat="server" TextMode="MultiLine" Rows="4" Columns="40" placeholder="Ingrese el motivo de la solicitud."></asp:TextBox>
                   <asp:Button ID="submit" runat="server" Text="Enviar" CssClass="button" OnClick="submit_Click" />

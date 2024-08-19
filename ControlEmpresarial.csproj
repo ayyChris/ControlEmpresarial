@@ -458,6 +458,13 @@
     <Compile Include="Vistas\Inconsistencias\PreVisualIncosistenciasColaborador.aspx.designer.cs">
       <DependentUpon>PreVisualIncosistenciasColaborador.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vistas\Permisos\VisualizarPermisosColaborador.aspx.cs">
+      <DependentUpon>VisualizarPermisosColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Permisos\VisualizarPermisosColaborador.aspx.designer.cs">
+      <DependentUpon>VisualizarPermisosColaborador.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Vistas\Rebajos\AceptacionNegacionRebajoSupervisor.aspx.cs">
       <DependentUpon>AceptacionNegacionRebajoSupervisor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -506,6 +513,13 @@
     </Compile>
     <Compile Include="Vistas\Reposicion\EnviarEvidenciaReposicionColaborador.aspx.designer.cs">
       <DependentUpon>EnviarEvidenciaReposicionColaborador.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\historicoReposicionesColaborador.aspx.cs">
+      <DependentUpon>historicoReposicionesColaborador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vistas\Reposicion\historicoReposicionesColaborador.aspx.designer.cs">
+      <DependentUpon>historicoReposicionesColaborador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx.cs">
       <DependentUpon>reposicionesPendientesJefatura.aspx</DependentUpon>
@@ -629,6 +643,7 @@
     <Content Include="Vistas\Permisos\AceptacionNegacionPermisoJefe.aspx" />
     <Content Include="Vistas\Permisos\PermisosColaborador.aspx" />
     <Content Include="Vistas\Permisos\TablaPreVisualizacionPermisosJefe.aspx" />
+    <Content Include="Vistas\Permisos\VisualizarPermisosColaborador.aspx" />
     <Content Include="Vistas\Rebajos\AceptacionNegacionRebajoSupervisor.aspx" />
     <Content Include="Vistas\Colaborador\VisualizarHorasColaborador.aspx" />
     <Content Include="Vistas\Rebajos\HistorialRebajos.aspx" />
@@ -636,6 +651,7 @@
     <Content Include="Vistas\Rebajos\VisualizacionRebajosColaborador.aspx" />
     <Content Include="Vistas\Reposicion\AceptacionNegacionReposicionJefatura.aspx" />
     <Content Include="Vistas\Reposicion\EnviarEvidenciaReposicionColaborador.aspx" />
+    <Content Include="Vistas\Reposicion\historicoReposicionesColaborador.aspx" />
     <Content Include="Vistas\Reposicion\reposicionesPendientesJefatura.aspx" />
     <Content Include="Vistas\Reposicion\RevisarSolicitudesReposicionJefe.aspx" />
     <Content Include="Vistas\Reposicion\visualizarReposicionesColaborador.aspx" />
