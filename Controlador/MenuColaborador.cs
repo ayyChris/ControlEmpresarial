@@ -7,7 +7,8 @@ using System.Configuration;
 using System.Web;
 using System.Web.UI;
 using System.Net.Mail;
-
+using Newtonsoft.Json;
+using Mysqlx.Cursor;
 
 namespace ControlEmpresarial.Vistas
 {
@@ -19,9 +20,12 @@ namespace ControlEmpresarial.Vistas
             if (userCookie != null)
             {
                 int idEmpleado = int.Parse(userCookie["idEmpleado"]);
+                int idDepartamento = int.Parse(userCookie["idDepartamento"]);
                 DateTime fechaActual = DateTime.Today;
                 VerificarInconsistencia(idEmpleado, fechaActual);
                 VerificarInconsistenciasActivas(idEmpleado, fechaActual);
+                VerificarFalta(idEmpleado, idDepartamento, fechaActual);
+                VerificarSalidaTemprana(idEmpleado, fechaActual);
             }
             else
             {
@@ -30,6 +34,131 @@ namespace ControlEmpresarial.Vistas
                 lblError.ForeColor = System.Drawing.Color.Red;
             }
         }
+
+        private void VerificarSalidaTemprana(int empleadoId, DateTime fecha)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            int idTipoInconsistencia = 6; // Suponiendo que 6 es el id para salida temprana
+            string Detalle = "Salida Temprana";
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = @"
+            SELECT COUNT(*) AS Inconsistencias
+            FROM Entradas e
+            JOIN Empleado emp ON e.idEmpleado = emp.idEmpleado
+            JOIN horario h ON emp.idHorario = h.idHorario
+            WHERE e.idEmpleado = @EmpleadoId
+              AND e.DiaMarcado = @Fecha
+              AND e.HoraSalida < h.horaSalida
+              AND FIND_IN_SET(
+                  CASE 
+                      WHEN DAYNAME(@Fecha) = 'Monday' THEN 'Lunes'
+                      WHEN DAYNAME(@Fecha) = 'Tuesday' THEN 'Martes'
+                      WHEN DAYNAME(@Fecha) = 'Wednesday' THEN 'Miércoles'
+                      WHEN DAYNAME(@Fecha) = 'Thursday' THEN 'Jueves'
+                      WHEN DAYNAME(@Fecha) = 'Friday' THEN 'Viernes'
+                      WHEN DAYNAME(@Fecha) = 'Saturday' THEN 'Sábado'
+                      WHEN DAYNAME(@Fecha) = 'Sunday' THEN 'Domingo'
+                  END, 
+                  h.diaSemana
+              ) > 0";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@EmpleadoId", empleadoId);
+                    command.Parameters.AddWithValue("@Fecha", fecha.ToString("yyyy-MM-dd")); // Formato de fecha para MySQL
+
+                    try
+                    {
+                        connection.Open();
+                        int inconsistencias = Convert.ToInt32(command.ExecuteScalar());
+                        connection.Close();
+
+                        // Actualizar la etiqueta en la página
+                        lblInconsistencias.Text = $"Inconsistencias: {inconsistencias}";
+
+                        if (inconsistencias > 0)
+                        {
+                            // Verificar si ya existe una inconsistencia del mismo tipo en la fecha
+                            if (!ExisteInconsistencia(idTipoInconsistencia, fecha, empleadoId))
+                            {
+                                // Insertar una nueva inconsistencia
+                                InsertarInconsistencia(idTipoInconsistencia, fecha, empleadoId, Detalle);
+                            }
+                            else
+                            {
+                                lblInconsistencias.Text += " - Ya existe una inconsistencia de este tipo para el día de hoy.";
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Mostrar el error en la etiqueta
+                        lblError.Text = $"Error al verificar inconsistencias: {ex.Message}";
+                    }
+                }
+            }
+        }
+
+        private void VerificarFalta(int idEmpleado, int idDepartamento, DateTime fecha)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            string Detalle = "Falta";
+            int idTipoInconsistencia = 5;
+
+            // Verificar si es un día festivo, laboral, o si el empleado tiene permiso o está en vacaciones colectivas
+            if (!EsDiaFestivo(idDepartamento) && EsDiaLaboral(idEmpleado) && !HayPermiso(idEmpleado) && !EsVacacionColectiva())
+            {
+                using (MySqlConnection conexion = new MySqlConnection(connectionString))
+                {
+                    try
+                    {
+                        conexion.Open();
+
+                        // Verificar si hay un registro de entrada para el empleado en el día de hoy
+                        string query = @"
+                    SELECT COUNT(*)
+                    FROM entradas
+                    WHERE idEmpleado = @idEmpleado
+                    AND DiaMarcado = CURDATE()";
+
+                        using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                        {
+                            cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+
+                            int count = Convert.ToInt32(cmd.ExecuteScalar());
+
+                            // Si no hay registro de entrada, verificar la existencia de la inconsistencia
+                            if (count == 0)
+                            {
+                                // Verificar si ya existe una inconsistencia del mismo tipo en la fecha
+                                if (!ExisteInconsistencia(idTipoInconsistencia, fecha, idEmpleado))
+                                {
+                                    // Insertar una nueva inconsistencia y enviar el correo
+                                    InsertarInconsistencia(idTipoInconsistencia, fecha, idEmpleado, Detalle);
+                                    EnviarCorreoInconsistencia(Detalle);
+                                }
+                                else
+                                {
+                                    // La inconsistencia ya existe, puedes notificar esto en la etiqueta
+                                    lblInconsistencias.Text = "Ya existe una inconsistencia de tipo 'Falta' para el día de hoy.";
+                                }
+                            }
+                        }
+                    }
+                    catch (MySqlException ex)
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    }
+                    catch (Exception ex)
+                    {
+                        ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    }
+                }
+            }
+        }
+
 
         private void VerificarInconsistencia(int empleadoId, DateTime fecha)
         {
@@ -333,6 +462,152 @@ namespace ControlEmpresarial.Vistas
                     {
                         lblError.Text += $" - Error al aplicar el rebajo: {ex.Message}";
                     }
+                }
+            }
+        }
+        private bool EsDiaFestivo(int idDepartamento)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+            using (MySqlConnection conexion = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = "SELECT COUNT(*) FROM diasfestivos WHERE FechaVacacion = @FechaHoy AND idDepartamento = @idDepartamento";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@FechaHoy", DateTime.Today);
+                        cmd.Parameters.AddWithValue("@idDepartamento", idDepartamento);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+            }
+        }
+
+        private bool EsDiaLaboral(int idEmpleado)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            var diasSemana = new Dictionary<DayOfWeek, string>
+    {
+        { DayOfWeek.Monday, "Lunes" },
+        { DayOfWeek.Tuesday, "Martes" },
+        { DayOfWeek.Wednesday, "Miercoles" },
+        { DayOfWeek.Thursday, "Jueves" },
+        { DayOfWeek.Friday, "Viernes" },
+        { DayOfWeek.Saturday, "Sabado" },
+        { DayOfWeek.Sunday, "Domingo" }
+    };
+
+            string diaActual = diasSemana[DateTime.Today.DayOfWeek];
+
+            using (MySqlConnection conexion = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = @"
+            SELECT COUNT(*) 
+            FROM Horario H
+            INNER JOIN Empleado E ON E.idHorario = H.idHorario
+            WHERE E.idEmpleado = @idEmpleado
+            AND FIND_IN_SET(@diaActual, H.diaSemana) > 0";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                        cmd.Parameters.AddWithValue("@diaActual", diaActual);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error al verificar días laborales: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+            }
+        }
+
+        private bool HayPermiso(int idEmpleado)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conexion = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = @"
+            SELECT COUNT(*)
+            FROM solicitudpermiso
+            WHERE idEmpleado = @idEmpleado
+            AND @FechaHoy BETWEEN FechaDeseadaInicial AND FechaDeseadaFinal
+            AND Estado = 'Aceptada'";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@idEmpleado", idEmpleado);
+                        cmd.Parameters.AddWithValue("@FechaHoy", DateTime.Today);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+            }
+        }
+        private bool EsVacacionColectiva()
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["MySqlConnectionString"].ConnectionString;
+
+            using (MySqlConnection conexion = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conexion.Open();
+                    string query = "SELECT COUNT(*) FROM vacacionescolectivas WHERE FechaVacacion = @FechaHoy";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conexion))
+                    {
+                        cmd.Parameters.AddWithValue("@FechaHoy", DateTime.Today);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error en la base de datos: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    ClientScript.RegisterStartupScript(this.GetType(), "alert", $"Swal.fire({{ title: 'Error', text: 'Error inesperado: {ex.Message}', icon: 'error', timer: 2500, showConfirmButton: false }});", true);
+                    return false;
                 }
             }
         }
