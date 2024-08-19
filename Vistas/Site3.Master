@@ -266,6 +266,7 @@
                      <a href="#">Horas Extras</a>
                      <ul class="submenu">
                         <li><a href="../Horas Extra/HistoricoHorasExtrasSupervisor.aspx">Historial de Horas Extra</a></li>
+                         <li><a href="../Horas Extra/ControladorHorasExtraSupervisor.aspx">Control de Horas Extra</a></li>
                      </ul>
                   </li>
                   <li class="has-submenu">

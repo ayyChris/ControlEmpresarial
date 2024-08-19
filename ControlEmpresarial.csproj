@@ -282,6 +282,12 @@
     <Compile Include="Controlador\ControladorHistoricoHorasExtra.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Controlador\ControladorHorasExtraSupervisor.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controlador\ControlHorasExtraJefe.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Controlador\EnviarMensajeColaboradores.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -378,6 +384,18 @@
     </Compile>
     <Compile Include="Vistas\Control de Actividades\PreAceptacionActividadJefatura.aspx.designer.cs">
       <DependentUpon>PreAceptacionActividadJefatura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horas Extra\ControladorHorasExtraSupervisor.aspx.cs">
+      <DependentUpon>ControladorHorasExtraSupervisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horas Extra\ControladorHorasExtraSupervisor.aspx.designer.cs">
+      <DependentUpon>ControladorHorasExtraSupervisor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horas Extra\ControlHorasExtraJefe.aspx.cs">
+      <DependentUpon>ControlHorasExtraJefe.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Vistas\Horas Extra\ControlHorasExtraJefe.aspx.designer.cs">
+      <DependentUpon>ControlHorasExtraJefe.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vistas\Incapacidades\RespuestaIncapacidad.aspx.cs">
       <DependentUpon>RespuestaIncapacidad.aspx</DependentUpon>
@@ -587,6 +605,8 @@
     <Content Include="Vistas\Control de Actividades\RegistroActividadesColaborador.aspx" />
     <Content Include="Vistas\Control de Actividades\TablePreAceptacionActividadColaborador.aspx" />
     <Content Include="Vistas\Horas Extra\AceptarDenegarHorasExtraJefatura.aspx" />
+    <Content Include="Vistas\Horas Extra\ControladorHorasExtraSupervisor.aspx" />
+    <Content Include="Vistas\Horas Extra\ControlHorasExtraJefe.aspx" />
     <Content Include="Vistas\Horas Extra\EvidenciaHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\PreAceptacionHorasExtra.aspx" />
     <Content Include="Vistas\Horas Extra\RespuestaHorasExtraColaborador.aspx" />
